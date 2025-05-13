@@ -11,6 +11,7 @@ import FavoritesPage from './pages/FavoritesPage';
 import ProfilePage from './pages/ProfilePage';
 import AdminPage from './pages/AdminPage';
 import EventDetailPage from './pages/EventDetailPage';
+import 'swiper/css';
 
 function Home()
 {

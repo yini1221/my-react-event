@@ -77,3 +77,12 @@ button:focus-visible {
 .bg-gradient {
   background-image: var(--bs-gradient);
 }
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.swiper-button-prev , .swiper-button-next , .swiper-scrollbar {
+  display: none;
+}
