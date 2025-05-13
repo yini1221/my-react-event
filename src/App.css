@@ -6,22 +6,22 @@
 }
 
 .logo {
-  height: 6em;
+  height: 10em;
   padding: 1.5em;
   will-change: filter;
   transition: filter 300ms;
 }
+
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
+
 
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -46,12 +46,26 @@ span {
 }
 
 .custom-link {
-  color: rgb(158, 158, 158);
+  color: rgba(59, 52, 52, 0.767);
   font-size: 18px;
   text-decoration: none;
   transition: color 0.3s;
 }
 
 .custom-link:hover {
-  color: darkblue;
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+
+.search {
+  padding: 0;
+  width: 30%;
+  height: 30px;
+}
+
+.navbar {
+  height: 90px;
+}
+
+.form-height {
+  height: 30px;
 }

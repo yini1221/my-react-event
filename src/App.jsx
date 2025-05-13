@@ -12,7 +12,8 @@ import ProfilePage from './pages/ProfilePage';
 import AdminPage from './pages/AdminPage';
 import EventDetailPage from './pages/EventDetailPage';
 
-function Home() {
+function Home()
+{
   const [count, setCount] = useState(0);
 
   return (
@@ -23,7 +24,7 @@ function Home() {
         </a>
       </div>
       <h1>活動報名平台</h1>
-      <div className="card">
+      <div className="my-4">
         <Link to="/home" className="custom-link" onClick={() => setCount((count) => count + 1)}>
           點我進入 <span>（瀏覽次數: {count}）</span>
         </Link>
@@ -35,7 +36,8 @@ function Home() {
   );
 }
 
-function Layout() {
+function Layout()
+{
   return (
     <div className="d-flex flex-column min-vh-100">
       <Navbar />
@@ -47,7 +49,8 @@ function Layout() {
   );
 }
 
-function App() {
+function App()
+{
   return (
     <Router>
       <Routes>
