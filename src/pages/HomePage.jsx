@@ -19,17 +19,15 @@ function HomePage()
 
   return (
     <>
-      <div>
-        <div className="w-100 overflow-hidden">
-          <img
-            src="https://fakeimg.pl/1050x600/000?text=Hello"
-            alt="Banner"
-            className="w-100 object-fit-cover" />
-        </div>
+      <div className="position-relative" style={{ width: '100vw', marginLeft: 'calc(-50vw + 50%)' }}>
+        <img
+          src="https://fakeimg.pl/1920x1080/000?text=1920x1080"
+          alt="Banner"
+          className="w-100 object-fit-cover img-banner" />
       </div>
 
       {/* Bootstrap 5 輪播圖 */}
-      <div className="container mt-5">
+      <div className="container my-5">
         <div id="multiImageCarousel" className="carousel slide" data-bs-ride="carousel">
           <div className="carousel-inner">
             {groupedImages.map((group, index) => (

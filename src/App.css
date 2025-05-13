@@ -69,3 +69,9 @@ span {
 .form-height {
   height: 30px;
 }
+
+.img-banner {
+  width: 100vw;
+  height: 600px;
+  object-fit: cover;
+}
