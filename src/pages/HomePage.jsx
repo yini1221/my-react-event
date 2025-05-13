@@ -1,9 +1,62 @@
-function HomePage() {
+function HomePage()
+{
+  const images = [
+    'https://fakeimg.pl/300x200/000?text=Image+1',
+    'https://fakeimg.pl/300x200/000?text=Image+2',
+    'https://fakeimg.pl/300x200/000?text=Image+3',
+    'https://fakeimg.pl/300x200/000?text=Image+4',
+    'https://fakeimg.pl/300x200/000?text=Image+5',
+    'https://fakeimg.pl/300x200/000?text=Image+6',
+    'https://fakeimg.pl/300x200/000?text=Image+7',
+    'https://fakeimg.pl/300x200/000?text=Image+8',
+    'https://fakeimg.pl/300x200/000?text=Image+9',
+  ];
+
+  const groupedImages = [];
+  for (let i = 0; i < images.length; i += 3) {
+    groupedImages.push(images.slice(i, i + 3));
+  }
+
   return (
-    <div className="container mt-4">
-      <h1>首頁</h1>
-      <p>歡迎來到活動網站！</p>
-    </div>
+    <>
+      <div>
+        <div className="w-100 overflow-hidden">
+          <img
+            src="https://fakeimg.pl/1050x600/000?text=Hello"
+            alt="Banner"
+            className="w-100 object-fit-cover" />
+        </div>
+      </div>
+
+      {/* Bootstrap 5 輪播圖 */}
+      <div className="container mt-5">
+        <div id="multiImageCarousel" className="carousel slide" data-bs-ride="carousel">
+          <div className="carousel-inner">
+            {groupedImages.map((group, index) => (
+              <div className={`carousel-item ${index === 0 ? 'active' : ''}`} key={index}>
+                <div className="d-flex justify-content-center gap-3">
+                  {group.map((imgSrc, idx) => (
+                    <img key={idx} src={imgSrc} className="img-fluid" alt={`Slide ${idx}`} style={{ width: '30%' }} />
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* 控制箭頭 */}
+          <button className="carousel-control-prev" type="button" data-bs-target="#multiImageCarousel" data-bs-slide="prev">
+            <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span className="visually-hidden">Previous</span>
+          </button>
+          <button className="carousel-control-next" type="button" data-bs-target="#multiImageCarousel" data-bs-slide="next">
+            <span className="carousel-control-next-icon" aria-hidden="true"></span>
+            <span className="visually-hidden">Next</span>
+          </button>
+        </div>
+      </div>
+
+
+    </>
   );
 }
 
