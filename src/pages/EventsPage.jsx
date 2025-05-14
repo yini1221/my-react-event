@@ -1,36 +1,42 @@
-function EventsPage()
-{
-  return (
-    <div className="container mt-4">
-      <div id="multiImageCarousel" className="carousel slide" data-bs-ride="carousel">
-        <div className="carousel-inner">
-          <div className="carousel-item active">
-            <div className="d-flex justify-content-center gap-3">
-              <img src="https://fakeimg.pl/300x200/000?text=Image+1" className="img-fluid" style={{ width: '30%' }} />
-              <img src="https://fakeimg.pl/300x200/000?text=Image+2" className="img-fluid" style={{ width: '30%' }} />
-              <img src="https://fakeimg.pl/300x200/000?text=Image+3" className="img-fluid" style={{ width: '30%' }} />
-            </div>
-          </div>
-          <div className="carousel-item">
-            <div className="d-flex justify-content-center gap-3">
-              <img src="https://fakeimg.pl/300x200/000?text=Image+4" className="img-fluid" style={{ width: '30%' }} />
-              <img src="https://fakeimg.pl/300x200/000?text=Image+5" className="img-fluid" style={{ width: '30%' }} />
-              <img src="https://fakeimg.pl/300x200/000?text=Image+6" className="img-fluid" style={{ width: '30%' }} />
-            </div>
-          </div>
-        </div>
+import React, { useState } from 'react';
 
-        {/* 控制按鈕 */}
-        <button className="carousel-control-prev" type="button" data-bs-target="#multiImageCarousel" data-bs-slide="prev">
-          <span className="carousel-control-prev-icon" />
-          <span className="visually-hidden">Previous</span>
-        </button>
-        <button className="carousel-control-next" type="button" data-bs-target="#multiImageCarousel" data-bs-slide="next">
-          <span className="carousel-control-next-icon" />
-          <span className="visually-hidden">Next</span>
-        </button>
+function EventsPage() {
+
+  const [selectedCategory, setSelectedCategory] = useState('all');
+
+  const categories = [
+    { id: 'all', label: '所有活動' },
+    { id: 'sports', label: '運動' },
+    { id: 'art', label: '藝文' },
+    { id: 'learning', label: '學習' }
+  ];  
+
+  return (
+    <>
+      <div className="btn-group w-100" role="group">
+        {categories.map((category) => (
+          <a
+            key={category.id}
+            type="button"
+            className={`btn btn-outline-secondary btn-radius ${selectedCategory === category.id ? 'active' : ''}`}
+            onClick={() => setSelectedCategory(category.id)}
+          >
+            {category.label}
+          </a>
+        ))}
       </div>
-    </div>
+
+
+      <div className="d-flex flex-column align-items-end">
+        <p className="mb-2 ">報名人數 0/40</p>
+        <div className="d-flex gap-3">
+          <button className="btn-primary px-4">報名</button>
+          <button className="btn-outline-secondary px-4">❤♡ 收藏</button>
+        </div>
+      </div>
+
+
+    </>
   );
 }
 

@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, Outlet } from "react-router-dom";
-import reactLogo from './assets/react.svg';
 import viteLogo from '/participation.png';
 import './App.css';
 import Navbar from './components/Navbar';
@@ -42,7 +41,7 @@ function Layout()
   return (
     <div className="d-flex flex-column min-vh-100">
       <Navbar />
-      <main className="flex-grow-1 container mt-4">
+      <main className="flex-grow-1">
         <Outlet />
       </main>
       <Footer />
