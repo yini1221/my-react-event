@@ -56,17 +56,8 @@ span {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
 
-.search {
-  width: 30%;
-  height: 30px;
-}
-
 .navbar {
   height: 90px;
-}
-
-.form-height {
-  height: 30px;
 }
 
 .img-banner {
@@ -118,4 +109,8 @@ a.active::after {
 
 .toggle-theme-color{
   color: rgba(255, 255, 255, 0.55) !important;
+}
+
+.navbar-light {
+  background-color: #e3f2fd;
 }
