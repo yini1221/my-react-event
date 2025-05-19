@@ -16,10 +16,9 @@ function Navbar()
             <li className="nav-item"><Link className="nav-link custom-link" to="/admin">後台管理</Link></li>
             <li className="nav-item"><ToggleTheme /></li>
           </ul>
-          <form className="d-flex ms-auto form-height">
-            <input className="form-control me-1" type="search" placeholder="搜尋..." aria-label="Search" />
-            <button className="btn btn-outline-secondary me-3 search" type="submit">搜尋
-            </button>
+          <form className="d-flex g-3 align-items-center">
+            <input className="col-auto form-control" type="search" placeholder="搜尋..." aria-label="Search" />
+            <button className="col-auto btn btn-outline-secondary" type="submit">搜尋</button>
           </form>
         </div>
         <Link className="custom-link" to="/admin">登入</Link>
