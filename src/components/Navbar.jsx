@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import searchLogo from '/search.png';
+import ToggleTheme from './ToggleTheme';
 
 function Navbar()
 {
@@ -14,6 +14,7 @@ function Navbar()
             <li className="nav-item"><Link className="nav-link custom-link" to="/favorites">收藏</Link></li>
             <li className="nav-item"><Link className="nav-link custom-link" to="/profile">個人資訊</Link></li>
             <li className="nav-item"><Link className="nav-link custom-link" to="/admin">後台管理</Link></li>
+            <li className="nav-item"><ToggleTheme /></li>
           </ul>
           <form className="d-flex ms-auto form-height">
             <input className="form-control me-1" type="search" placeholder="搜尋..." aria-label="Search" />

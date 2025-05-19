@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import '../css/eventsPage.css';
 
 function EventsPage() {
 
@@ -13,7 +14,7 @@ function EventsPage() {
 
   return (
     <>
-      <div className="btn-group w-100" role="group">
+      <div className="btn-group w-100 " role="group">
         {categories.map((category) => (
           <a
             key={category.id}
@@ -24,16 +25,84 @@ function EventsPage() {
             {category.label}
           </a>
         ))}
+      </div> 
+      <div className='container-fluid'>
+        <ul className='list-unstyled'>
+          <li>
+            <div className="row justify-content-center flex-column flex-md-row p-4 mt-4 mx-auto w-100 bg-light shadow rounded">
+              <div className='col-md-6 col-lg-4'>
+                <img className='rounded-3 w-100' src="https://fakeimg.pl/350x250/?text=350x250" />
+              </div>
+              <div className="col-md-6 d-flex flex-column flex-grow-1 px-4">
+                <h2 className="mb-3 mt-3 mt-md-0"><strong>活動標題</strong></h2>
+                <div className="mb-3 d-md-flex justify-content-md-between text-secondary">
+                    <span>📅 日期</span><br />
+                    <span>📍 地點</span>
+                </div>
+                <div className="p-3 mb-3 bg-white rounded-3 shadow-sm events-color">
+                    Lorem ipsum dolor sit amet.
+                </div>
+                <div className="d-flex flex-column justify-content-end mt-md-auto ms-md-auto">
+                  <p className="mb-2 ms-md-auto">報名人數 0/40</p>
+                  <div className="d-flex flex-column flex-md-row gap-1 justify-content-center">
+                    <button className="btn btn-primary px-4">報名</button>
+                    <button className="btn btn-outline-secondary px-4">收藏❤</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div className="row justify-content-center flex-column flex-md-row p-4 mt-4 mx-auto w-100 bg-light shadow rounded">
+              <div className='col-md-6 col-lg-4'>
+                <img className='rounded-3 w-100' src="https://fakeimg.pl/350x200/?text=350x200" />
+              </div>
+              <div className="col-md-6 d-flex flex-column flex-grow-1 px-4">
+                <h2 className="mb-3 mt-3 mt-md-0"><strong>活動標題</strong></h2>
+                <div className="mb-3 d-md-flex justify-content-md-between text-secondary">
+                    <span>📅 日期</span><br />
+                    <span>📍 地點</span>
+                </div>
+                <div className="p-3 mb-3 bg-white rounded-3 shadow-sm events-color">
+                    Lorem ipsum dolor sit amet.
+                </div>
+                <div className="d-flex flex-column justify-content-end mt-md-auto ms-md-auto">
+                  <p className="mb-2 ms-md-auto">報名人數 0/40</p>
+                  <div className="d-flex flex-column flex-md-row gap-1 justify-content-center">
+                    <button className="btn btn-primary px-4">報名</button>
+                    <button className="btn btn-outline-secondary px-4">收藏❤</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div className="row justify-content-center flex-column flex-md-row p-4 mt-4 mx-auto w-100 bg-light shadow rounded">
+              <div className='col-md-6 col-lg-4 img-height'>
+                <img className='rounded-3 w-100 h-100' src="https://fakeimg.pl/350x400/?text=350x400" />
+              </div>
+              <div className="col-md-6 d-flex flex-column flex-grow-1 px-4">
+                <h2 className="mb-3 mt-3 mt-md-0"><strong>活動標題</strong></h2>
+                <div className="mb-3 d-md-flex justify-content-md-between text-secondary">
+                    <span>📅 日期</span><br />
+                    <span>📍 地點</span>
+                </div>
+                <div className="p-3 mb-3 bg-white rounded-3 shadow-sm events-color">
+                    Lorem ipsum dolor sit amet.
+                </div>
+                <div className="d-flex flex-column justify-content-end mt-md-auto ms-md-auto">
+                  <p className="mb-2 ms-md-auto">報名人數 0/40</p>
+                  <div className="d-flex flex-column flex-md-row gap-1 justify-content-center">
+                    <button className="btn btn-primary px-4">報名</button>
+                    <button className="btn btn-outline-secondary px-4">收藏❤</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
       </div>
 
-
-      <div className="d-flex flex-column align-items-end">
-        <p className="mb-2 ">報名人數 0/40</p>
-        <div className="d-flex gap-3">
-          <button className="btn-primary px-4">報名</button>
-          <button className="btn-outline-secondary px-4">❤♡ 收藏</button>
-        </div>
-      </div>
 
 
     </>

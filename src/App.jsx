@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, Outlet } from "react-router-dom";
-import viteLogo from '/participation.png';
 import './App.css';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -10,17 +9,24 @@ import FavoritesPage from './pages/FavoritesPage';
 import ProfilePage from './pages/ProfilePage';
 import AdminPage from './pages/AdminPage';
 import EventDetailPage from './pages/EventDetailPage';
+import ToggleTheme from './components/ToggleTheme';
 import 'swiper/css';
+import { Card, Button } from 'react-bootstrap';
 
 function Home()
 {
   const [count, setCount] = useState(0);
+  const viteLogo = '/homelogo.png';
 
   return (
     <>
       <div>
         <a href="/home" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
+          <img src="/homelogo3.png" className="logo" alt="Vite logo" 
+          onError={(e) => {
+          e.target.src = "/participation.png";
+          console.error("圖片載入失敗");
+          }} />
         </a>
       </div>
       <h1>活動報名平台</h1>
@@ -32,6 +38,7 @@ function Home()
       <p className="read-the-docs">
         提供線上報名、報名活動與查詢報名狀態的地方。
       </p>
+      <ToggleTheme />
     </>
   );
 }

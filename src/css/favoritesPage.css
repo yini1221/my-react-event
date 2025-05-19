@@ -1,0 +1,11 @@
+@media (min-width: 576px) {
+}
+
+.active {
+  font-weight: bold;
+  border-bottom: 2px solid #b4b4b458;
+}
+
+.p-height {
+    max-height: 200px;
+}
