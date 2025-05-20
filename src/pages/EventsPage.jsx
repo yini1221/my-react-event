@@ -32,7 +32,7 @@ function EventsPage() {
               <div className='col-md-6 col-lg-4'>
                 <img className='rounded-3 w-100' src="https://fakeimg.pl/350x250/ECF5FF?text=350x250" />
               </div>
-              <div className="col-md-6 d-flex flex-column flex-grow-1 px-4">
+              <div className="col-md-6 col-lg-8 d-flex flex-column flex-grow-1 px-4">
                 <h2 className="mb-3 mt-3 mt-md-0"><strong>活動標題</strong></h2>
                 <div className="mb-3 d-md-flex justify-content-md-between text-secondary">
                     <span>📅 日期</span><br />
