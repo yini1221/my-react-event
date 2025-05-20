@@ -13,7 +13,7 @@ function EventsPage() {
   ];  
 
   return (
-    <>
+    <div className='container-fluid'>
       <div className="btn-group w-100 " role="group">
         {categories.map((category) => (
           <a
@@ -26,12 +26,11 @@ function EventsPage() {
           </a>
         ))}
       </div> 
-      <div className='container-fluid'>
         <ul className='list-unstyled'>
           <li>
             <div className="row justify-content-center flex-column flex-md-row p-4 mt-4 mx-auto w-100 bg-light shadow rounded">
               <div className='col-md-6 col-lg-4'>
-                <img className='rounded-3 w-100' src="https://fakeimg.pl/350x250/?text=350x250" />
+                <img className='rounded-3 w-100' src="https://fakeimg.pl/350x250/ECF5FF?text=350x250" />
               </div>
               <div className="col-md-6 d-flex flex-column flex-grow-1 px-4">
                 <h2 className="mb-3 mt-3 mt-md-0"><strong>活動標題</strong></h2>
@@ -55,7 +54,7 @@ function EventsPage() {
           <li>
             <div className="row justify-content-center flex-column flex-md-row p-4 mt-4 mx-auto w-100 bg-light shadow rounded">
               <div className='col-md-6 col-lg-4'>
-                <img className='rounded-3 w-100' src="https://fakeimg.pl/350x200/?text=350x200" />
+                <img className='rounded-3 w-100' src="https://fakeimg.pl/350x250/D2E9FF?text=350x250" />
               </div>
               <div className="col-md-6 d-flex flex-column flex-grow-1 px-4">
                 <h2 className="mb-3 mt-3 mt-md-0"><strong>活動標題</strong></h2>
@@ -75,11 +74,11 @@ function EventsPage() {
                 </div>
               </div>
             </div>
-          </li>
+          </li>          
           <li>
             <div className="row justify-content-center flex-column flex-md-row p-4 mt-4 mx-auto w-100 bg-light shadow rounded">
-              <div className='col-md-6 col-lg-4 img-height'>
-                <img className='rounded-3 w-100 h-100' src="https://fakeimg.pl/350x400/?text=350x400" />
+              <div className='col-md-6 col-lg-4'>
+                <img className='rounded-3 w-100' src="https://fakeimg.pl/350x250/C4E1FF?text=350x250" />
               </div>
               <div className="col-md-6 d-flex flex-column flex-grow-1 px-4">
                 <h2 className="mb-3 mt-3 mt-md-0"><strong>活動標題</strong></h2>
@@ -99,13 +98,9 @@ function EventsPage() {
                 </div>
               </div>
             </div>
-          </li>
+          </li>          
         </ul>
       </div>
-
-
-
-    </>
   );
 }
 

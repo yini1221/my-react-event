@@ -7,7 +7,7 @@ import HomePage from './pages/HomePage';
 import EventsPage from './pages/EventsPage';
 import FavoritesPage from './pages/FavoritesPage';
 import ProfilePage from './pages/ProfilePage';
-import AdminPage from './pages/AdminPage';
+import AdminPage from './pages/AdminPage2';
 import EventDetailPage from './pages/EventDetailPage';
 import ToggleTheme from './components/ToggleTheme';
 import 'swiper/css';

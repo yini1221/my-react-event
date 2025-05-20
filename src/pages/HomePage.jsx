@@ -25,15 +25,15 @@ function HomePage()
   });  
 
   const images = [
-    'https://fakeimg.pl/300x200/000?text=Image+1',
-    'https://fakeimg.pl/300x200/000?text=Image+2',
-    'https://fakeimg.pl/300x200/000?text=Image+3',
-    'https://fakeimg.pl/300x200/000?text=Image+4',
-    'https://fakeimg.pl/300x200/000?text=Image+5',
-    'https://fakeimg.pl/300x200/000?text=Image+6',
-    'https://fakeimg.pl/300x200/000?text=Image+7',
-    'https://fakeimg.pl/300x200/000?text=Image+8',
-    'https://fakeimg.pl/300x200/000?text=Image+9',
+    'https://fakeimg.pl/300x200/ECF5FF?text=Image+1',
+    'https://fakeimg.pl/300x200/D2E9FF?text=Image+2',
+    'https://fakeimg.pl/300x200/C4E1FF?text=Image+3',
+    'https://fakeimg.pl/300x200/ACD6FF?text=Image+4',
+    'https://fakeimg.pl/300x200/97CBFF?text=Image+5',
+    'https://fakeimg.pl/300x200/84C1FF?text=Image+6',
+    'https://fakeimg.pl/300x200/66B3FF?text=Image+7',
+    'https://fakeimg.pl/300x200/46A3FF?text=Image+8',
+    'https://fakeimg.pl/300x200/2894FF?text=Image+9',
   ];
 
   const groupedImages = [];
@@ -46,7 +46,7 @@ function HomePage()
 
       <div className="position-relative w-100 ms-auto">
         <img
-          src="https://fakeimg.pl/1920x1080/000?text=1920x1080"
+          src="https://fakeimg.pl/1920x1080/e3f2fd?text=1920x1080"
           alt="Banner"
           className="w-100 object-fit-cover img-banner" />
       </div>      

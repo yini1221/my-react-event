@@ -2,7 +2,6 @@ function AdminPage() {
   return (
     <div style={{ padding: '20px', fontFamily: 'Arial' }}>
       <h1>活動管理系統</h1>
-
       <form style={{ marginBottom: '30px' }}>
         <fieldset>
           <legend>新增活動</legend>
@@ -32,7 +31,6 @@ function AdminPage() {
           <button type="submit">新增活動</button>
         </fieldset>
       </form>
-
       <table border="1" cellPadding="10">
         <thead>
           <tr>
@@ -44,23 +42,13 @@ function AdminPage() {
           </tr>
         </thead>
         <tbody>
-          {
-            rooms.map(event => {
-              return (
-                <tr key={event.eventId}>
-                  <td>{event.eventId}</td>
-                  <td>{event.eventName}</td>
-                  <td>{event.eventSize}</td>
-                  <td>
-                    <button onClick={() => {}}>編輯</button>
-                  </td>
-                  <td>
-                    <button onClick={() => {}}>刪除</button>
-                  </td>
-                </tr>
-              )
-            })
-          }
+          <tr>
+            <td>編號</td>
+            <td>名稱</td>
+            <td>人數</td>
+            <td>編輯</td>
+            <td>X</td>
+          </tr>
         </tbody>
       </table>
     </div>

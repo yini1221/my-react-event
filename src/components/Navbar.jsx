@@ -4,17 +4,18 @@ import ToggleTheme from './ToggleTheme';
 function Navbar()
 {
   return (
-    <>
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
         <div class="container-fluid">
           <a class="navbar-brand" href="#">Navbar</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse bg-light" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 gap-3 zindex-2">
                   <li className="nav-item"><Link className="nav-link custom-link" to="home">首頁</Link></li>
-                  <li className="nav-item"><Link className="nav-link custom-link" to="/events">活動</Link></li>
+                  <li className="nav-item"><Link className="nav-link custom-link position-relative" to="/events">活動
+                    <span class="position-absolute top-10 start-100 translate-middle badge border border-light rounded-circle bg-danger p-2"><span class="fs-7">new</span></span>
+                  </Link></li>
                   <li className="nav-item"><Link className="nav-link custom-link" to="/favorites">收藏</Link></li>
                   <li className="nav-item"><Link className="nav-link custom-link" to="/profile">個人資訊</Link></li>
                   <li className="nav-item"><Link className="nav-link custom-link" to="/admin">後台管理</Link></li>
@@ -28,7 +29,6 @@ function Navbar()
           </div>
         </div>
       </nav>
-    </>
   );
 }
 

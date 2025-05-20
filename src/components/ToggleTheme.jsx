@@ -4,7 +4,6 @@ import { Button } from 'react-bootstrap';
 function ToggleTheme() {
 
   const [isDarkMode, setIsDarkMode] = useState(false);
-
   const toggleTheme = () => setIsDarkMode(!isDarkMode);
 
   const themeStyles = {
@@ -13,8 +12,8 @@ function ToggleTheme() {
   };
 
     return (
-        <div className="">
-          <Button variant="link" onClick={toggleTheme} className="text-decoration-none toggle-theme-color">
+        <div>
+          <Button variant="link" onClick={toggleTheme} className="text-decoration-none toggle-theme-color custom-link">
             {isDarkMode ? '🌞 日間模式' : '🌙 夜間模式'}
           </Button>
         </div>

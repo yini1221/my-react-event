@@ -12,7 +12,7 @@ function FavoritesPage() {
           </div>
           <div className='row mt-3'>
             <div className='col-6'>
-              <img className='rounded-3' src="https://fakeimg.pl/350x200/?text=350x200" alt="" />
+              <img className='rounded-3' src="https://fakeimg.pl/350x250/ECF5FF?text=350x250" alt="" />
             </div>
             <div className='col-6 d-flex flex-column'>
               <div className="p-3 mb-3 bg-white rounded-3 shadow-sm events-color overflow-auto p-height">
