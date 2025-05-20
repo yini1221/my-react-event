@@ -44,6 +44,23 @@ function AdminPage() {
           </tr>
         </thead>
         <tbody>
+          {
+            rooms.map(event => {
+              return (
+                <tr key={event.eventId}>
+                  <td>{event.eventId}</td>
+                  <td>{event.eventName}</td>
+                  <td>{event.eventSize}</td>
+                  <td>
+                    <button onClick={() => {}}>編輯</button>
+                  </td>
+                  <td>
+                    <button onClick={() => {}}>刪除</button>
+                  </td>
+                </tr>
+              )
+            })
+          }
         </tbody>
       </table>
     </div>
