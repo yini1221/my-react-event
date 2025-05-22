@@ -1,3 +1,4 @@
+import RegisterButton from '../components/RegisterButton';
 import '../css/favoritesPage.css';
 
 function FavoritesPage() {
@@ -23,7 +24,7 @@ function FavoritesPage() {
                   <span>📅 2025/7/1</span>
                   <span>📍 新北市中山區</span>
                 </div>
-                <button className="btn btn-primary">報名</button>
+                <RegisterButton eventId={event.id} />
               </div>
             </div>
           </div>

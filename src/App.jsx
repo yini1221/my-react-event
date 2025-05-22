@@ -9,6 +9,7 @@ import FavoritesPage from './pages/FavoritesPage';
 import ProfilePage from './pages/ProfilePage';
 import AdminPage from './pages/AdminPage2';
 import EventDetailPage from './pages/EventDetailPage';
+import RegisterPage from './pages/RegisterPage';
 import ToggleTheme from './components/ToggleTheme';
 import 'swiper/css';
 import { Card, Button } from 'react-bootstrap';
@@ -16,13 +17,12 @@ import { Card, Button } from 'react-bootstrap';
 function Home()
 {
   const [count, setCount] = useState(0);
-  const viteLogo = '/homelogo.png';
 
   return (
     <>
       <div>
         <a href="/home" target="_blank">
-          <img src="/homelogo3.png" className="logo" alt="Vite logo" 
+          <img src="/homelogo1.png" className="logo" alt="Vite logo" 
           onError={(e) => {
           e.target.src = "/participation.png";
           console.error("圖片載入失敗");
@@ -72,6 +72,7 @@ function App()
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/admin" element={<AdminPage />} />
           <Route path="/events/:id" element={<EventDetailPage />} />
+          <Route path="/user/events/register/:id" element={<RegisterPage />} />
         </Route>
       </Routes>
     </Router>

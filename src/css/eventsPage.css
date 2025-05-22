@@ -5,3 +5,14 @@
 .img-height {
     height: 300px;
 }
+
+.text-height {
+    height: 150px;
+}
+
+@media (min-width: 1024px) {
+  .text-height {
+    height: 100px;
+  }
+
+}

@@ -1,12 +1,19 @@
 import { Link } from 'react-router-dom';
 import ToggleTheme from './ToggleTheme';
+import '../css/Navbar.css';
 
 function Navbar()
 {
   return (
       <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#">Navbar</a>
+          <a class="navbar-brand" href="#" style={{ height:'100px', width: '100px' }}>
+            <img src="/homelogo.png" className="navbar-logo" alt="home logo" 
+          onError={(e) => {
+          e.target.src = "/participation.png";
+          console.error("圖片載入失敗");
+          }} />
+          </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
