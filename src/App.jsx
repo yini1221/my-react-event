@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link, Outlet } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Link, Outlet, Navigate } from "react-router-dom";
 import './App.css';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -7,12 +7,15 @@ import HomePage from './pages/HomePage';
 import EventsPage from './pages/EventsPage';
 import FavoritesPage from './pages/FavoritesPage';
 import ProfilePage from './pages/ProfilePage';
-import AdminPage from './pages/AdminPage2';
+import AdminRegistrationsPage from './pages/AdminRegistrationsPage';
+import AdminEventsPage from './pages/AdminEventsPage';
+import AdminMembersPage from './pages/AdminMembersPage';
+import AdminDashboardPage from './pages/AdminDashboardPage';
+import AdminEventCategoriesPage from './pages/AdminEventCategoriesPage';
 import EventDetailPage from './pages/EventDetailPage';
 import RegisterPage from './pages/RegisterPage';
 import ToggleTheme from './components/ToggleTheme';
 import 'swiper/css';
-import { Card, Button } from 'react-bootstrap';
 
 function Home()
 {
@@ -70,7 +73,12 @@ function App()
           <Route path="/events" element={<EventsPage />} />
           <Route path="/favorites" element={<FavoritesPage />} />
           <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/admin" element={<AdminPage />} />
+          <Route path="/admin" element={<Navigate to="/admin/registrations" replace />} />
+          <Route path="/admin/registrations" element={<AdminRegistrationsPage />} />
+          <Route path="/admin/events" element={<AdminEventsPage />} />
+          <Route path="/admin/event-categories" element={<AdminEventCategoriesPage />} />
+          <Route path="/admin/members" element={<AdminMembersPage />} />
+          <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
           <Route path="/events/:id" element={<EventDetailPage />} />
           <Route path="/user/events/register/:id" element={<RegisterPage />} />
         </Route>
