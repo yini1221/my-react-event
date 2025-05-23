@@ -1,29 +1,11 @@
-import Swiper from 'swiper';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import { Link } from 'react-router-dom';
 
-function HomePage()
-{
-
-  const swiper = new Swiper('.swiper', {
-    // 分頁   
-    slidesPerView: 3,
-    slidesPerGroup: 3,
-    spaceBetween: 24,
-    pagination: {
-      el: '.swiper-pagination',
-      clickable: true,
-    },
-    // 左右箭頭    
-    navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev',
-    },
-    // 滾動條
-    scrollbar: {
-      el: '.swiper-scrollbar',
-      draggable: true,
-    },
-  });  
-
+function HomePage() {
   const images = [
     'https://fakeimg.pl/300x200/ECF5FF?text=Image+1',
     'https://fakeimg.pl/300x200/D2E9FF?text=Image+2',
@@ -36,50 +18,53 @@ function HomePage()
     'https://fakeimg.pl/300x200/2894FF?text=Image+9',
   ];
 
-  const groupedImages = [];
-  for (let i = 0; i < images.length; i += 3) {
-    groupedImages.push(images.slice(i, i + 3));
-  }
-
   return (
     <>
-
       <div className="position-relative w-100 ms-auto">
         <img
           src="https://fakeimg.pl/1920x1080/e3f2fd?text=1920x1080"
           alt="Banner"
-          className="w-100 object-fit-cover img-banner" />
-      </div>      
-      {/* Bootstrap 5 輪播圖 */}
-      <div className="container my-5">
-        <div id="multiImageCarousel" className="carousel slide" data-bs-ride="carousel">
-          <div className="carousel-inner">
-            {groupedImages.map((group, index) => (
-              <div className={`carousel-item ${index === 0 ? 'active' : ''}`} key={index}>
-                <div className="d-flex justify-content-center gap-3">
-                  {group.map((imgSrc, idx) => (
-                    <img key={idx} src={imgSrc} className="img-fluid" alt={`Slide ${idx}`} style={{ width: '30%' }} />
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* 控制箭頭 */}
-          <button className="carousel-control-prev" type="button" data-bs-target="#multiImageCarousel" data-bs-slide="prev">
-            <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span className="visually-hidden">Previous</span>
-          </button>
-          <button className="carousel-control-next" type="button" data-bs-target="#multiImageCarousel" data-bs-slide="next">
-            <span className="carousel-control-next-icon" aria-hidden="true"></span>
-            <span className="visually-hidden">Next</span>
-          </button>
-        </div>
+          className="w-100 object-fit-cover img-banner"
+        />
       </div>
 
-
+      {/* Swiper 輪播 */}
+      <div className="container my-5">
+        <Swiper
+          modules={[Navigation, Pagination, Scrollbar, A11y]}
+          spaceBetween={24}
+          navigation
+          pagination={{ clickable: true }}
+          scrollbar={{ draggable: true }}
+          breakpoints={{
+            // 螢幕寬度 >= 0px 時（手機）
+            0: {
+              slidesPerView: 1,
+              slidesPerGroup: 1,
+            },
+            // >= 768px（平板）
+            768: {
+              slidesPerView: 2,
+              slidesPerGroup: 2,
+            },
+            // >= 992px（桌機）
+            992: {
+              slidesPerView: 3,
+              slidesPerGroup: 3,
+            },
+          }}
+        >
+          {images.map((img, index) => (
+            <SwiperSlide key={index}>
+              <Link to={`/events/${index}`}>
+                <img src={img} className="img-fluid" alt={`Slide ${index}`} />
+              </Link>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
     </>
   );
 }
 
-export default HomePage
+export default HomePage;

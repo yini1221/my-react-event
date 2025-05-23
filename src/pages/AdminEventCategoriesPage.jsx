@@ -13,6 +13,7 @@ function AdminEventCategoriesPage() {
                         <div className="p-4 d-flex flex-column align-items-center">
                             <h2>活動分類管理</h2>
                             <table className="table table-bordered align-middle table-hover">
+                                <caption>List of categories</caption>
                                 <thead>
                                 <tr>
                                     <th>分類編號</th>

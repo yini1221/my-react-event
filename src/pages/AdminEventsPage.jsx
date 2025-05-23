@@ -99,7 +99,7 @@ function AdminEventsPage() {
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr className="">
+                                <tr>
                                     <td>2011</td>
                                     <td>【茶香繚繞・仕紳雅聚】手作茶香袋體驗</td>
                                     <td className="overflow-auto w-100" style={{ height: '200px', display: '-webkit-box' }}>過期茶包也能很有品味？香包袋用完就丟太可惜？來場結合環保設計與香氣美學的體驗，為生活注入溫度與儀式感。本次選用『猴子設計』以大稻埕風景為靈感的手作布袋，搭配大稻埕名店『聯通漢芳』嚴選的天然香草原料，讓茶葉與茶包不再只是廢棄物，而是有故事、有風格的香氣祝福。</td>
