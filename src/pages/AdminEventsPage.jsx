@@ -9,7 +9,7 @@ function AdminEventsPage() {
                 <AdminNavbar/>
                 </div>
                 <div className="col">
-                    <div class="card card-body w-100">
+                    <div class="card card-body mt-3">
                         <div className="p-4 d-flex flex-column align-items-center">
                             <h2>活動管理系統</h2>
                             <button className="mb-3" data-bs-toggle="collapse" data-bs-target="#addEventList" aria-expanded="false" aria-controls="addEventList">新增活動</button>

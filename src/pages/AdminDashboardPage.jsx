@@ -8,7 +8,7 @@ function AdminDashboardPage() {
                     <AdminNavbar/> 
                 </div>
                 <div className="col">
-                    <div className="card card-body w-100">
+                    <div className="card card-body mt-3">
                         <div className="p-4 d-flex flex-column align-items-center">
                             <h2>後台儀表板</h2>
                         </div>
