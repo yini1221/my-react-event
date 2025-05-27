@@ -13,7 +13,7 @@ function AdminEventsPage() {
                         <div className="p-4 d-flex flex-column align-items-center">
                             <h2>活動管理系統</h2>
                             <button className="mb-3" data-bs-toggle="collapse" data-bs-target="#addEventList" aria-expanded="false" aria-controls="addEventList">新增活動</button>
-                            <div class="collapse" id="addEventList">
+                            <div className="collapse w-50" id="addEventList">
                                 <form className="mb-4 d-flex flex-column gap-1">
                                     <div>
                                         <label>活動編號：</label>
@@ -70,16 +70,22 @@ function AdminEventsPage() {
                                         required
                                         />
                                     </div>
-                                    <div>
+                                    <div className='d-flex justify-content-center align-items-center'>
                                         <label>活動類別：</label>
-                                        <input
-                                        type="number"
-                                        name="categoryId"
-                                        required
-                                        />
+                                        <select class="form-select w-25" aria-label="Default select example">
+                                            <option value="1">運動</option>
+                                            <option value="2">藝文</option>
+                                            <option value="3">學習</option>
+                                        </select>
                                     </div>
-                                    <button type="submit" >新增/修改活動</button>
-                                    <button type="submit">取消</button>
+                                    <div class="mb-3">
+                                        <label for="formFile" class="form-label">上傳圖片</label>
+                                        <input className="form-control" type="file" id="formFile" accept="image/*" />
+                                    </div>
+                                    <div className='d-flex justify-content-center gap-2'>
+                                        <button type="submit" >新增/修改活動</button>
+                                        <button type="submit">取消</button>
+                                    </div>
                                 </form>
                             </div>
                             <table className="table table-bordered align-middle table-hover w-100" style={{ tableLayout: "fixed" }}>
