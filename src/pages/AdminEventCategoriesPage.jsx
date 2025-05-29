@@ -18,7 +18,7 @@ function AdminEventCategoriesPage() {
                                 <tr>
                                     <th>分類編號</th>
                                     <th>活動分類</th>
-                                    <th>活動名稱</th>
+                                    <th>活動列表</th>
                                     <th>編輯</th>
                                 </tr>
                                 </thead>
@@ -26,20 +26,27 @@ function AdminEventCategoriesPage() {
                                 <tr>
                                     <td>301</td>
                                     <td>運動</td>
-                                    <td>【茶香繚繞・仕紳雅聚】手作茶香袋體驗</td>
-                                    <td className='d-flex justify-content-center gap-3'>
-                                        <select class="form-select w-50" aria-label="Default select example">
-                                            <option value="1">運動</option>
-                                            <option value="2">藝文</option>
-                                            <option value="3">學習</option>
+                                    <td>
+                                        <select class="form-select" aria-label="Default select example">
+                                            <option value="1">編號:1<hr />【茶香繚繞・仕紳雅聚】手作茶香袋體驗</option>
+                                            <option value="2">編號:2<hr />【茶香繚繞・仕紳雅聚】手作茶香袋體驗</option>
+                                            <option value="3">編號:3<hr />【茶香繚繞・仕紳雅聚】手作茶香袋體驗</option>
                                         </select>
-                                        <button className="btn btn-light btn-sm fs-6 d-block">確認</button>
+                                    </td>
+                                    <td className='d-flex justify-content-center gap-2'>
+                                        <button className="btn btn-outline-danger fs-6">編輯</button><hr />
+                                        <button className="btn btn-outline-danger fs-6">刪除</button>
                                     </td>
                                 </tr>
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <td colSpan={4}><button>匯出分類列表</button></td>
+                                        <td colSpan={4}>
+                                            <div className='d-flex justify-content-center gap-2'>
+                                                <button className="">新增分類</button>
+                                                <button>匯出分類列表</button>
+                                            </div>
+                                         </td>
                                     </tr>
                                 </tfoot>
                             </table>                            

@@ -40,9 +40,9 @@ function AdminRegistrationsPage() {
                                 <tfoot>
                                     <tr>
                                         <td colSpan={5}>
-                                            <div className='d-flex w-100 justify-content-center gap-2'>
+                                            <div className='d-flex justify-content-center gap-2'>
                                                 <button>匯出報名列表</button>
-                                                <button className="btn btn-light btn-sm fs-6 d-block">確認</button>
+                                                <button>確認</button>
                                             </div>
                                         </td>                                        
                                     </tr>
