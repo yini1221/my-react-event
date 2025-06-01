@@ -68,7 +68,7 @@ useEffect(() => {
         {categories.map((category) => (
           <button
             key={category.id}
-            className={`btn btn-outline-secondary btn-radius ${selectedCategory === category.id ? 'active' : ''}`}
+            className={`btn btn-radius shadow-sm ${selectedCategory === category.id ? 'active' : ''}`}
             onClick={() => setSelectedCategory(category.id)}
           >
             {category.label}

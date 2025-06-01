@@ -11,6 +11,18 @@
 }
 
 .navbar {
-  height: 100px;
   --bs-navbar-padding-y:0 !important;
+}
+
+.bg-navbar {
+  background-color: #e6ddd3 !important;
+}
+
+.search-logo {
+  width: 20px;
+  height: 20px;
+}
+
+.border-none {
+  border: none !important;
 }

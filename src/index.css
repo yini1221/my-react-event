@@ -26,7 +26,8 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-  font-family: 'Arial'!important;
+  font-family: "Noto Sans" !important;
+  /* "Noto Sans", "Apple Casual", Corbel, "Microsoft JhengHei Fixed", "Microsoft JhengHei", sans-serif */
 }
 
 h1 {

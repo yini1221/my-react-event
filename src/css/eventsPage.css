@@ -10,6 +10,10 @@
     height: 150px;
 }
 
+.active {
+  border: none !important;
+}
+
 @media (min-width: 1024px) {
   .text-height {
     height: 100px;
