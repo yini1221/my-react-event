@@ -25,7 +25,7 @@ function Home()
     <>
       <div>
         <a href="/home" target="_blank">
-          <img src="/homelogo1.png" className="logo" alt="Vite logo" 
+          <img src="homelogo1.png" className="logo" alt="Vite logo" 
           onError={(e) => {
           e.target.src = "/participation.png";
           console.error("圖片載入失敗");
