@@ -62,7 +62,7 @@ function Layout()
 function App()
 {
   return (
-    <Router>
+    <Router basename="/my-react-event">
       <Routes>
         {/* 沒有 Navbar 和 Footer 的首頁 */}
         <Route path="/" element={<Home />} />
