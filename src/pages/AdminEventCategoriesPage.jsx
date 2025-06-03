@@ -27,7 +27,7 @@ function AdminEventCategoriesPage() {
                                     <td>301</td>
                                     <td>運動</td>
                                     <td>
-                                        <select class="form-select" aria-label="Default select example">
+                                        <select className="form-select" aria-label="Default select example">
                                             <option value="1">編號:1<hr />【茶香繚繞・仕紳雅聚】手作茶香袋體驗</option>
                                             <option value="2">編號:2<hr />【茶香繚繞・仕紳雅聚】手作茶香袋體驗</option>
                                             <option value="3">編號:3<hr />【茶香繚繞・仕紳雅聚】手作茶香袋體驗</option>

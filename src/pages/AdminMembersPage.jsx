@@ -33,7 +33,7 @@ function AdminMembersPage() {
                                     <td>尚未驗證</td>
                                     <td>admin</td>
                                     <td className='d-flex justify-content-center gap-3'>
-                                        <select class="form-select" aria-label="Default select example">
+                                        <select className="form-select" aria-label="Default select example">
                                             <option value="1">一般會員</option>
                                             <option value="2">管理員</option>
                                         </select>

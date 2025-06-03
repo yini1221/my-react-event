@@ -29,7 +29,7 @@ function AdminRegistrationsPage() {
                                     <td>4682</td>
                                     <td>2025/07/01</td>
                                     <td className='d-flex justify-content-center gap-3'>
-                                        <select class="form-select" aria-label="Default select example">
+                                        <select className="form-select" aria-label="Default select example">
                                             <option>待審核</option>
                                             <option value="1">報名完成</option>
                                             <option value="2">報名失敗</option>

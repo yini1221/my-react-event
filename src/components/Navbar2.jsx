@@ -16,8 +16,8 @@ function Navbar()
           }} />
           </a>
           <form className="d-flex me-2">
-              <input class="form-control me-2" type="search" placeholder="搜尋..." aria-label="Search" />
-              <button class="btn btn-outline-secondary" type="submit">Search</button>
+              <input className="form-control me-2" type="search" placeholder="搜尋..." aria-label="Search" />
+              <button className="btn btn-outline-secondary" type="submit">Search</button>
           </form>
           </div>
           <div>
@@ -28,7 +28,7 @@ function Navbar()
               <ul className="navbar-nav me-auto mb-2 mb-lg-0 gap-3 zindex-2">
                     <li className="nav-item"><Link className="nav-link custom-link" to="home">首頁</Link></li>
                     <li className="nav-item"><Link className="nav-link custom-link position-relative" to="/events">活動
-                      <span class="position-absolute top-10 start-100 translate-middle badge rounded-circle bg-danger">new</span>
+                      <span className="position-absolute top-10 start-100 translate-middle badge rounded-circle bg-danger">new</span>
                     </Link></li>
                     <li className="nav-item"><Link className="nav-link custom-link" to="/favorites">收藏</Link></li>
                     <li className="nav-item"><Link className="nav-link custom-link" to="/profile">個人資訊</Link></li>
