@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import AdminNavbar from '../components/AdminNavbar';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 const API_URL = 'http://localhost:8084/admin/events'; // 後台 API
 
@@ -243,7 +244,7 @@ function AdminEventsPage() {
                                     </tr>
                                 </tfoot>
                             </table>
-                                <p>目前共載入 {events.length} 筆資料</p>
+                            <p>目前共載入 {events.length} 筆資料</p>
                         </div>
                     </div>
                 </div>

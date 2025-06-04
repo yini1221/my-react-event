@@ -14,7 +14,7 @@ function OffcanvasExample() {
         <Navbar key={expand} expand={expand} className="bg-body-tertiary">
           <Container fluid>
             <Navbar.Brand href="#" style={{width: '80px' }}>
-              <img src="../homelogo.png" className="navbar-logo" alt="home logo" />
+              <img src={`${import.meta.env.BASE_URL}images/homelogo.png`} className="navbar-logo" alt="home logo" />
             </Navbar.Brand>
             <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />
             <Navbar.Offcanvas

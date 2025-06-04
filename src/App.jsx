@@ -16,6 +16,7 @@ import EventDetailPage from './pages/EventDetailPage';
 import RegisterPage from './pages/RegisterPage';
 import ToggleTheme from './components/ToggleTheme';
 import 'swiper/css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function Home()
 {
