@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link, Outlet, Navigate } from "react-router-dom";
+import { HashRouter as Router, Routes, Route, Link, Outlet, Navigate } from "react-router-dom";
 import './App.css';
 import Navbar from './components/Navbar2';
 import Footer from './components/Footer';
@@ -24,8 +24,8 @@ function Home()
   return (
     <>
       <div>
-        <Link to="/home" target="_blank">
-          <img src="homelogo1.png" className="logo" alt="Vite logo" 
+        <Link to="/home">
+          <img src={`${import.meta.env.BASE_URL}images/homelogo1.png`} className="logo" alt="Vite logo" 
           onError={(e) => {
           e.target.src = "/participation.png";
           console.error("圖片載入失敗");
@@ -62,7 +62,7 @@ function Layout()
 function App()
 {
   return (
-    <Router basename="/my-react-event">
+    <Router>
       <Routes>
         {/* 沒有 Navbar 和 Footer 的首頁 */}
         <Route path="/" element={<Home />} />
