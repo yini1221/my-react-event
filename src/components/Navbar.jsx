@@ -24,7 +24,7 @@ function Navbar()
               <img src="../search-o.png" className='search-logo' />
             </a>
           </form>
-          <div className="collapse navbar-collapse bg-light" id="navbarSupportedContent">
+          <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0 gap-3 zindex-2">
                   <li className="nav-item"><Link className="nav-link custom-link" to="home">首頁</Link></li>
                   <li className="nav-item"><Link className="nav-link custom-link position-relative" to="/events">活動

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, Outlet, Navigate } from "react-router-dom";
 import './App.css';
-import Navbar from './components/Navbar';
+import Navbar from './components/Navbar2';
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
 import EventsPage from './pages/EventsPage';
@@ -24,13 +24,13 @@ function Home()
   return (
     <>
       <div>
-        <a href="/home" target="_blank">
+        <Link to="/home" target="_blank">
           <img src="homelogo1.png" className="logo" alt="Vite logo" 
           onError={(e) => {
           e.target.src = "/participation.png";
           console.error("圖片載入失敗");
           }} />
-        </a>
+        </Link>
       </div>
       <h1>活動報名平台</h1>
       <div className="my-4">

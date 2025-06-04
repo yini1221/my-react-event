@@ -1,46 +1,66 @@
-import { Link } from 'react-router-dom';
-import ToggleTheme from './ToggleTheme';
+import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
+import Form from 'react-bootstrap/Form';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import NavDropdown from 'react-bootstrap/NavDropdown';
+import Offcanvas from 'react-bootstrap/Offcanvas';
 import '../css/Navbar.css';
 
-function Navbar()
-{
+function OffcanvasExample() {
   return (
-      <nav className="navbar navbar-expand-lg navbar-light bg-light sticky-top">
-        <div className="container-fluid">
-          <div className='d-flex '>
-          <a className="navbar-brand" href="/home" style={{ height:'100px', width: '100px' }}>
-            <img src="/homelogo.png" className="navbar-logo" alt="home logo" 
-          onError={(e) => {
-            e.target.src = "/participation.png";
-            console.error("圖片載入失敗");
-          }} />
-          </a>
-          <form className="d-flex me-2">
-              <input className="form-control me-2" type="search" placeholder="搜尋..." aria-label="Search" />
-              <button className="btn btn-outline-secondary" type="submit">Search</button>
-          </form>
-          </div>
-          <div>
-            <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span className="navbar-toggler-icon"></span>
-            </button>
-            <div className="collapse navbar-collapse bg-light" id="navbarSupportedContent">
-              <ul className="navbar-nav me-auto mb-2 mb-lg-0 gap-3 zindex-2">
-                    <li className="nav-item"><Link className="nav-link custom-link" to="home">首頁</Link></li>
-                    <li className="nav-item"><Link className="nav-link custom-link position-relative" to="/events">活動
-                      <span className="position-absolute top-10 start-100 translate-middle badge rounded-circle bg-danger">new</span>
-                    </Link></li>
-                    <li className="nav-item"><Link className="nav-link custom-link" to="/favorites">收藏</Link></li>
-                    <li className="nav-item"><Link className="nav-link custom-link" to="/profile">個人資訊</Link></li>
-                    <li className="nav-item"><Link className="nav-link custom-link" to="/admin">後台管理</Link></li>
-                    <li className="nav-item"><ToggleTheme /></li>
-              </ul>
-              <Link className="custom-link" to="/admin">登入</Link>
-            </div>
-          </div>
-        </div>
-      </nav>
+    <>
+      {['xl'].map((expand) => (
+        <Navbar key={expand} expand={expand} className="bg-body-tertiary">
+          <Container fluid>
+            <Navbar.Brand href="#" style={{width: '80px' }}>
+              <img src="../homelogo.png" className="navbar-logo" alt="home logo" />
+            </Navbar.Brand>
+            <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />
+            <Navbar.Offcanvas
+              id={`offcanvasNavbar-expand-${expand}`}
+              aria-labelledby={`offcanvasNavbarLabel-expand-${expand}`}
+              placement="end"
+            >
+              <Offcanvas.Header closeButton>
+                <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${expand}`}>
+                  Offcanvas
+                </Offcanvas.Title>
+              </Offcanvas.Header>
+              <Offcanvas.Body>
+                <Nav className="justify-content-end flex-grow-1 pe-3">
+                  <Nav.Link href="#action1">Home</Nav.Link>
+                  <Nav.Link href="#action2">Link</Nav.Link>
+                  <NavDropdown
+                    title="Dropdown"
+                    id={`offcanvasNavbarDropdown-expand-${expand}`}
+                  >
+                    <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
+                    <NavDropdown.Item href="#action4">
+                      Another action
+                    </NavDropdown.Item>
+                    <NavDropdown.Divider />
+                    <NavDropdown.Item href="#action5">
+                      Something else here
+                    </NavDropdown.Item>
+                  </NavDropdown>
+                </Nav>
+                <Form className="d-flex">
+                  <Form.Control
+                    type="search"
+                    placeholder="Search"
+                    className="me-2"
+                    aria-label="Search"
+                  />
+                  <Button variant="outline-success">Search</Button>
+                </Form>
+              </Offcanvas.Body>
+            </Navbar.Offcanvas>
+          </Container>
+        </Navbar>
+      ))}
+    </>
   );
 }
 
-export default Navbar
+export default OffcanvasExample;
