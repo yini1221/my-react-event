@@ -12,18 +12,18 @@ function HomePage() {
   const [selectedCategory, setSelectedCategory] = useState('all');
 
   const categories = [
-    { id: 'all', icon: 'event.png', label: '所有活動' },
-    { id: 'sports', icon: 'running.png', label: '運動' },
-    { id: 'art', icon: 'palette.png', label: '藝文' },
-    { id: 'learning', icon: 'book.png', label: '學習' }
+    { id: 'all', icon: `${import.meta.env.BASE_URL}images/event.png`, label: '所有活動' },
+    { id: 'sports', icon: `${import.meta.env.BASE_URL}images/running.png`, label: '運動' },
+    { id: 'art', icon: `${import.meta.env.BASE_URL}images/palette.png`, label: '藝文' },
+    { id: 'learning', icon: `${import.meta.env.BASE_URL}images/book.png`, label: '學習' }
   ];
 
   const images = [
-    {img: 'event5.jpg', time: '2025.06.05 (四) 19:30 - 06.19 (四) 21:30', title: '春之藝術行政專業系列課程', location: '台北市'},
-    {img: 'event4.jpg', time: '2025.05.30 (五) 10:00 - 06.08 (日) 17:30', title: '牽手 | 城市藝廊攝影聯展', location: '新北市'},
-    {img: 'event1.jpg', time: '2025.07.05 (六) 09:00 - 12:00', title: '森活四季，療癒之旅｜夏日限定・台塑楊梅有機生態農場', location: '桃園市'},
-    {img: 'event2.jpg', time: '2025.07.04 (五) 13:30 - 07.12 (六) 16:00', title: '【夏日限定】金箔大理石海螺×生命靈數精油茶燭', location: '台北市'},
-    {img: 'event3.jpg', time: '2025.06.05 (四) 14:00 - 17:00', title: '🏮老靈魂新玩法！文化創新超展開🎯｜活動通了沒 #7 (台中場)', location: '台中市'}
+    {img: `${import.meta.env.BASE_URL}images/event5.jpg`, time: '2025.06.05 (四) 19:30 - 06.19 (四) 21:30', title: '春之藝術行政專業系列課程', location: '台北市'},
+    {img: `${import.meta.env.BASE_URL}images/event4.jpg`, time: '2025.05.30 (五) 10:00 - 06.08 (日) 17:30', title: '牽手 | 城市藝廊攝影聯展', location: '新北市'},
+    {img: `${import.meta.env.BASE_URL}images/event1.jpg`, time: '2025.07.05 (六) 09:00 - 12:00', title: '森活四季，療癒之旅｜夏日限定・台塑楊梅有機生態農場', location: '桃園市'},
+    {img: `${import.meta.env.BASE_URL}images/event2.jpg`, time: '2025.07.04 (五) 13:30 - 07.12 (六) 16:00', title: '【夏日限定】金箔大理石海螺×生命靈數精油茶燭', location: '台北市'},
+    {img: `${import.meta.env.BASE_URL}images/event3.jpg`, time: '2025.06.05 (四) 14:00 - 17:00', title: '🏮老靈魂新玩法！文化創新超展開🎯｜活動通了沒 #7 (台中場)', location: '台中市'}
   ];
 
   return (
