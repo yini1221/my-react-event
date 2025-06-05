@@ -11,7 +11,7 @@ function AdminEventsPage() {
     const [form, setForm] = useState({ id: null, title: '', description: '', location: '', startTime: '', endTime: '', createdAt: '', updatedAt: '', maxParticipants: '', imageBase64: '', eventCategory: null });
     const [editing, setEditing] = useState(false); // 是否為編輯模式
 
-    // 讀取書籍資料
+    // 讀取活動資料
     const fetchEvents = async () => {
         try {
         const res = await fetch(API_URL);
