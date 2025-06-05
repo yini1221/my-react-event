@@ -48,7 +48,7 @@ function HomePage() {
       <div className="container-fluid mt-2 bg-light">
         <div>
           <img
-            src='simple3.jpg'
+            src={`${import.meta.env.BASE_URL}images/simple3.jpg`}
             alt="Banner"
             className="w-100 object-fit-cover img-banner rounded-4"
             style={{height: '47vw'}}

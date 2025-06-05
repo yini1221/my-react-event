@@ -244,7 +244,6 @@ function AdminEventsPage() {
                                     </tr>
                                 </tfoot>
                             </table>
-                            <p>目前共載入 {events.length} 筆資料</p>
                         </div>
                     </div>
                 </div>

@@ -14,8 +14,21 @@
   --bs-navbar-padding-y:0 !important;
 }
 
+.navbar-toggler {
+  padding: 0 !;
+}
+
+.navbar-brand {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
 .bg-navbar {
   background-color: #e6ddd3 !important;
+}
+
+.bg-menu {
+  background-color: #f7ede1 !important;
 }
 
 .search-logo {
@@ -25,4 +38,15 @@
 
 .border-none {
   border: none !important;
+}
+
+.custom-link {
+  color: rgba(59, 52, 52, 0.767) !important;
+  font-size: 18px;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.custom-link:hover {
+  filter: drop-shadow(0 0 2em #997141);
 }

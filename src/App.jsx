@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { HashRouter as Router, Routes, Route, Link, Outlet, Navigate } from "react-router-dom";
 import './App.css';
-import Navbar from './components/Navbar2';
+import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
 import EventsPage from './pages/EventsPage';
