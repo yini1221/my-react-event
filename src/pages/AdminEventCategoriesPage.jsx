@@ -17,8 +17,8 @@ function AdminEventCategoriesPage() {
             const result = await res.json();
             console.log('API 回傳內容：', result);
             setEventCategories(result.data || []);
-        } catch (error) {
-            console.error('讀取錯誤:', error);
+        } catch (err) {
+            console.error('讀取錯誤:', err);
         }
     }
 
@@ -30,8 +30,8 @@ function AdminEventCategoriesPage() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const method = 'POST';
-            const url = API_URL;
+            const method = editing ? 'PUT' : 'POST';
+            const url = editing? `${API_URL}/${form.id}` : API_URL;
             const res = await fetch(url, {
                 method, 
                 headers: { 'Content-Type': `application/json`},
@@ -41,6 +41,7 @@ function AdminEventCategoriesPage() {
             if (res.ok) {
                 await fetchEventCategories(); // 重新查詢所有分類
                 setForm({ name: '' })
+                setEditing(false);
                 setAdding(false);
             } else {
                 alert(result.message || '操作失敗');
@@ -50,14 +51,30 @@ function AdminEventCategoriesPage() {
         };
     }
 
+    // 刪除分類
+    const handleDelete = async (id) => {
+        if (!window.confirm('確定要刪除此分類嗎？')) return;
+        try {
+            const res = await fetch (`${API_URL}/${id}`, { method: 'DELETE'});
+            const result = await res.json();
+            if (res.ok) {
+                fetchEventCategories();
+            } else {
+                alert(result.message || '刪除失敗');
+            }
+        } catch (err) {
+            console.error('刪除錯誤', err);
+        }
+    }
+
     // 新增模式
     const handleAdd = () => {
         setAdding(true);
     }
 
     // 編輯模式
-    const handleEdit = (event) => {
-        setForm(event);
+    const handleEdit = (eventCategory) => {
+        setForm(eventCategory);
         setEditing(true);
     }
 
@@ -85,10 +102,25 @@ function AdminEventCategoriesPage() {
                                             eventCategories.map((eventCategory) => (
                                                 <tr key={eventCategory.id}>
                                                     <td>{eventCategory.id}</td>
-                                                    <td>{eventCategory.name}</td>
-                                                    <td className='d-flex justify-content-center gap-2'>
-                                                        <button className="btn btn-outline-danger fs-6">編輯</button><hr />
-                                                        <button className="btn btn-outline-danger fs-6">刪除</button>
+                                                    <td colSpan={editing ? '2' : ''}>
+                                                        {
+                                                            editing && form.id === eventCategory.id ? 
+                                                           (<form onSubmit={handleSubmit} className="d-flex gap-2">
+                                                                <input className='form-control w-50' type="text" name="name" value={form.name} onChange={(e) => setForm({...form, name: e.target.value})} placeholder="請輸入分類名稱" required />
+                                                                <div className='d-flex justify-content-center w-50'>
+                                                                    <button type="submit" className='me-2'>確認</button>
+                                                                    <button type="button" onClick={() => {
+                                                                        setEditing(false);
+                                                                    }}>取消
+                                                                    </button>
+                                                                </div>
+                                                            </form>)
+                                                            : (eventCategory.name)
+                                                        }
+                                                    </td>
+                                                    <td className={`d-flex justify-content-center gap-2 ${editing ? 'd-none' : ''}`}>
+                                                        <button onClick={() => handleEdit(eventCategory)} type='button' className="btn btn-outline-danger fs-6">編輯</button><hr />
+                                                        <button onClick={() => handleDelete(eventCategory.id)} type='button' className="btn btn-outline-danger fs-6">刪除</button>
                                                     </td>
                                                 </tr>
                                             ))
@@ -98,14 +130,14 @@ function AdminEventCategoriesPage() {
                                             <tr>
                                                 <td colSpan={3}>
                                                     <form onSubmit={handleSubmit} className="d-flex gap-2">
-                                                            <input className='form-control w-50' type="text" name="name" value={form.name} onChange={(e) => setForm({...form, name: e.target.value})} placeholder="請輸入分類名稱：" required />
-                                                            <div className='d-flex justify-content-center w-50'>
-                                                                <button type="submit" className='me-2'>加入分類</button>
-                                                                <button type="button" onClick={() => {
-                                                                    setAdding(false);
-                                                                }}>取消
-                                                                </button>
-                                                            </div>
+                                                        <input className='form-control w-50' type="text" name="name" value={form.name} onChange={(e) => setForm({...form, name: e.target.value})} placeholder="請輸入分類名稱" required />
+                                                        <div className='d-flex justify-content-center w-50'>
+                                                            <button type="submit" className='me-2'>加入分類</button>
+                                                            <button type="button" onClick={() => {
+                                                                setAdding(false);
+                                                            }}>取消
+                                                            </button>
+                                                        </div>
                                                     </form>
                                                 </td>
                                             </tr> 
