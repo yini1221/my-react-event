@@ -17,6 +17,7 @@ import RegisterPage from './pages/RegisterPage';
 import ToggleTheme from './components/ToggleTheme';
 import 'swiper/css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 function Home()
 {
@@ -52,7 +53,7 @@ function Layout()
   return (
     <div className="d-flex flex-column min-vh-100">
       <Navbar />
-      <main className="flex-grow-1">
+      <main className="flex-grow-1 bg-light">
         <Outlet />
       </main>
       <Footer />

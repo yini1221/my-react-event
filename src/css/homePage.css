@@ -5,6 +5,7 @@ a {
 
 .category {
     padding: 10px;
+    font-size: 16px;
 }
 
 .category img {
@@ -35,9 +36,6 @@ a {
   object-fit: cover;
 }
 
-.swiper-pagination {
-}
-
 .bg-white {
     background-color: #fff;
 }
@@ -65,4 +63,13 @@ a {
 .location-text {
     font-size: 14px;
     color: rgb(109, 114, 120);
+}
+
+@media (min-width: 1080px) {
+    .category-nav {
+        height: 72px;
+    }
+    .category-fs {
+        font-size: 16px;
+    }
 }

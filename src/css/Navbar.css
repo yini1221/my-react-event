@@ -50,3 +50,18 @@
 .custom-link:hover {
   filter: drop-shadow(0 0 2em #997141);
 }
+
+.btn:active {
+  border-color: transparent !important;
+}
+
+.search-icon {
+  position: absolute;
+  width: 20px;
+  right: 15px;
+  top: 10px;
+}
+
+.text-color {
+  color: #7A4E2E !important;
+}

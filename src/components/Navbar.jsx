@@ -1,18 +1,51 @@
 import { Link } from 'react-router-dom';
 import ToggleTheme from './ToggleTheme';
 import '../css/Navbar.css';
+import { useState } from 'react';
 
 function OffcanvasExample() {
+
+  const [search, setSearch] = useState(false);
+
+  const handleSearch = () => {
+    setSearch(true);
+  }
+
   return (
     <>
       <nav className="navbar navbar-light bg-navbar fixed-top" style={{ height: '50px' }}>
-        <div className="container-fluid px-2 d-flex align-items-center">
+        <div className="container-fluid px-2 d-flex align-items-center position-relative" style={{'maxWidth': '1080px'}}>
           <button style={{ width: '60px' }} className="navbar-toggler border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
             <img src={`${import.meta.env.BASE_URL}images/hamburger-menu.png`} />
           </button>
-          <Link className="navbar-brand" to="/home" style={{ width: '50px' }}>
+          <Link className="navbar-brand position-absolute top-50 start-50 translate-middle" to="/home" style={{ width: '50px' }}>
             <img src={`${import.meta.env.BASE_URL}images/homelogo.png`} />
           </Link>
+          <div className='d-flex'>
+            <button className="bg-navbar btn btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#searchCollapse" aria-expanded="false" aria-controls="searchCollapse">
+              <img src={`${import.meta.env.BASE_URL}images/search-o.png`} style={{ width: '30px' }} />
+            </button>
+            <div className='d-none d-lg-block'>
+              <span className='text-white'>｜</span>
+              <button type="button" className="btn text-color" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                登入
+              </button>
+              <button type="button" className="btn text-color" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                註冊
+              </button>
+            </div>
+          </div>
+          <div className="collapse w-100" id="searchCollapse">
+              <form className="d-flex align-items-center w-100 p-2 gap-1">
+                <div className='position-relative w-100'>
+                  <input className="form-control rounded-5" type="search" placeholder="尋找活動" aria-label="Search" />
+                  <span className='search-icon'>
+                    <img src={`${import.meta.env.BASE_URL}images/search-o.png`} style={{ width: '30px' }} />
+                  </span>
+                </div>
+                <button className="btn-close text-reset d-flex " type="button" data-bs-toggle="collapse" data-bs-target="#searchCollapse" aria-label="Close" style={{width: '20px'}}></button>
+              </form>
+            </div>
           <div className="offcanvas offcanvas-start bg-menu" tabIndex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
             <div className="offcanvas-header">
               <h5 className="offcanvas-title" id="offcanvasNavbarLabel">探索身邊有趣的活動！</h5>
@@ -44,10 +77,6 @@ function OffcanvasExample() {
                 </li>
                 <li className="nav-item"><ToggleTheme /></li>
               </ul>
-              <form className="d-flex">
-                <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                <button className="btn btn-outline-success" type="submit">Search</button>
-              </form>
             </div>
           </div>
         </div>

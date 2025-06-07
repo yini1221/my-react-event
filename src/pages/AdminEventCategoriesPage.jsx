@@ -27,8 +27,7 @@ function AdminEventCategoriesPage() {
     }, []);
 
     // 新增/編輯 資料
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const handleSubmit = async () => {
         try {
             const method = editing ? 'PUT' : 'POST';
             const url = editing? `${API_URL}/${form.id}` : API_URL;
@@ -102,25 +101,18 @@ function AdminEventCategoriesPage() {
                                             eventCategories.map((eventCategory) => (
                                                 <tr key={eventCategory.id}>
                                                     <td>{eventCategory.id}</td>
-                                                    <td colSpan={editing ? '2' : ''}>
+                                                    <td>
                                                         {
                                                             editing && form.id === eventCategory.id ? 
-                                                           (<form onSubmit={handleSubmit} className="d-flex gap-2">
-                                                                <input className='form-control w-50' type="text" name="name" value={form.name} onChange={(e) => setForm({...form, name: e.target.value})} placeholder="請輸入分類名稱" required />
-                                                                <div className='d-flex justify-content-center w-50'>
-                                                                    <button type="submit" className='me-2'>確認</button>
-                                                                    <button type="button" onClick={() => {
-                                                                        setEditing(false);
-                                                                    }}>取消
-                                                                    </button>
-                                                                </div>
-                                                            </form>)
+                                                            (<form ><input className='form-control w-50' type="text" name="name" value={form.name} onChange={(e) => setForm({...form, name: e.target.value})} placeholder="請輸入分類名稱" required /></form>)
                                                             : (eventCategory.name)
                                                         }
                                                     </td>
-                                                    <td className={`d-flex justify-content-center gap-2 ${editing ? 'd-none' : ''}`}>
-                                                        <button onClick={() => handleEdit(eventCategory)} type='button' className="btn btn-outline-danger fs-6">編輯</button><hr />
-                                                        <button onClick={() => handleDelete(eventCategory.id)} type='button' className="btn btn-outline-danger fs-6">刪除</button>
+                                                    <td className={`d-flex justify-content-center gap-2`}>
+                                                        <button onClick={() => handleEdit(eventCategory)} type='button' className={`btn btn-outline-danger fs-6 ${editing ? 'd-none' : ''}`}>編輯</button><hr />
+                                                        <button onClick={() => handleDelete(eventCategory.id)} type='button' className={`btn btn-outline-danger fs-6 ${editing ? 'd-none' : ''}`}>刪除</button>
+                                                        <button onClick={() => handleSubmit()} type='button' className={`btn btn-outline-danger fs-6 ${!editing || form.id !== eventCategory.id ? 'd-none' : ''}`}>確認</button><hr />
+                                                        <button onClick={() => setEditing(false)} type='button' className={`btn btn-outline-danger fs-6 ${!editing || form.id !== eventCategory.id ? 'd-none' : ''}`}>取消</button>
                                                     </td>
                                                 </tr>
                                             ))
