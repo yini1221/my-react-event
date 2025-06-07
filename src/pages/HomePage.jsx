@@ -27,7 +27,7 @@ function HomePage() {
   ];
 
   return (<>
-  <div className='container-fluid shadow mb-3 mt-5'>
+  <div className='container-fluid shadow mb-3'>
       <ul style={{'maxWidth': '1080px'}} className="btn-group w-100 list-unstyled my-0 mx-auto category-nav" role="group">
         {categories.map((category) => (
           <li

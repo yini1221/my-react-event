@@ -35,15 +35,15 @@ function OffcanvasExample() {
               </button>
             </div>
           </div>
-          <div className="collapse w-100" id="searchCollapse">
-              <form className="d-flex align-items-center w-100 p-2 gap-1">
+          <div className="collapse w-100 position-absolute end-0 bg-navbar" id="searchCollapse">
+              <form className="d-flex align-items-center w-100 px-2 gap-1">
                 <div className='position-relative w-100'>
                   <input className="form-control rounded-5" type="search" placeholder="尋找活動" aria-label="Search" />
-                  <span className='search-icon'>
+                  <span type="submit" className='search-icon'>
                     <img src={`${import.meta.env.BASE_URL}images/search-o.png`} style={{ width: '30px' }} />
                   </span>
                 </div>
-                <button className="btn-close text-reset d-flex " type="button" data-bs-toggle="collapse" data-bs-target="#searchCollapse" aria-label="Close" style={{width: '20px'}}></button>
+                <button className="btn-close text-reset d-flex" type="button" data-bs-toggle="collapse" data-bs-target="#searchCollapse" aria-label="Close" style={{width: '20px'}}></button>
               </form>
             </div>
           <div className="offcanvas offcanvas-start bg-menu" tabIndex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">

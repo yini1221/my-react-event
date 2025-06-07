@@ -53,7 +53,7 @@ function Layout()
   return (
     <div className="d-flex flex-column min-vh-100">
       <Navbar />
-      <main className="flex-grow-1 bg-light">
+      <main className="flex-grow-1 bg-light mt-5">
         <Outlet />
       </main>
       <Footer />

@@ -47,6 +47,9 @@ function AdminEventsPage() {
                 headers: { 'Content-Type': `application/json`},
                 body: JSON.stringify(form)
             });
+            console.log('id:', `${form.stringify}`);
+            console.log('id:', `${form.eventCategory?.id}`);
+            console.log(`${form.eventCategory?.title}`);
             const result = await res.json();
             if (res.ok) {
                 await fetchEvents(); // 重新查詢所有活動
@@ -100,11 +103,11 @@ function AdminEventsPage() {
                 </div>
                 <div className="col">
                     <div className="card card-body mt-3">
-                        <div className="p-4 d-flex flex-column align-items-center">
-                            <h2>📅 活動管理系統</h2>
+                        <div className="p-4 d-flex flex-column align-items-center position-relative">
+                            <h2 className='mb-3'>📅 活動管理系統</h2>
                             {
                                 editing ? <h4 className='m-3'>編輯模式</h4> :
-                                <button className="mb-3" data-bs-toggle="collapse" data-bs-target="#addEventList" aria-expanded="false" aria-controls="addEventList">新增活動</button>
+                                <button className="position-absolute top-0 end-0" data-bs-toggle="collapse" data-bs-target="#addEventList" aria-expanded="false" aria-controls="addEventList">新增活動</button>
                             }
                             <div className={ editing ? "show" : "collapse"} id="addEventList">
                                 <form onSubmit={handleSubmit} className="mb-4 d-flex flex-column gap-1">
@@ -117,6 +120,24 @@ function AdminEventsPage() {
                                             </li>
                                             : ''
                                         }
+                                        <li className='form-floating'>
+                                            <select className="form-select" id='eventCategory' 
+                                                name='eventCategory' value={form.eventCategory?.id || ''} 
+                                                onChange={(e) => {
+                                                    const selectedId = e.target.value;
+                                                    setForm((prev) => ({
+                                                        ...prev, eventCategory: selectedId ? { id: parseInt(selectedId) } : null 
+                                                    }));
+                                                }}
+                                                required
+                                                aria-label="Floating label select">
+                                                <option value="">請選擇活動類別</option>
+                                                <option value="301">運動</option>
+                                                <option value="302">藝文</option>
+                                                <option value="303">學習</option>
+                                           </select>
+                                            <label className='form-label' htmlFor="eventCategory">活動類別：</label>
+                                        </li>
                                         <li className='form-floating'>
                                             <input className='form-control' id='title' type="text" name="title" value={form.title} onChange={handleChange} placeholder="【茶香繚繞・仕紳雅聚】手作茶香袋體驗..." required />
                                             <label className='form-label' htmlFor="title">活動名稱：</label>
@@ -139,24 +160,6 @@ function AdminEventsPage() {
                                             <input className='form-control' id='maxParticipants' type="number" name="maxParticipants" value={form.maxParticipants} onChange={handleChange} placeholder="40" required />
                                             <label className='form-label' htmlFor="maxParticipants">人數上限：</label>
                                         </li>
-                                        <li className='form-floating'>
-                                            <select className="form-select" id='eventCategory' 
-                                                    name='eventCategory' value={form.eventCategory?.id || ''} 
-                                                    onChange={(e) => {
-                                                        const selectedId = e.target.value;
-                                                        setForm((prev) => ({
-                                                            ...prev, eventCategory: selectedId ? { id: parseInt(selectedId) } : null 
-                                                        }));
-                                                    }}
-                                                    required
-                                                    aria-label="Floating label select">
-                                                <option value="">請選擇活動類別</option>
-                                                <option value="301">運動</option>
-                                                <option value="302">藝文</option>
-                                                <option value="303">學習</option>
-                                           </select>
-                                            <label className='form-label' htmlFor="eventCategory">活動類別：</label>
-                                        </li>
                                         <li className='d-flex flex-cloumn align-items-center'>
                                             <label htmlFor="formFile" className="form-label" style={{ marginBottom: '0px' }}>圖片上傳：</label>
                                             <input className="form-control w-75"
@@ -176,63 +179,62 @@ function AdminEventsPage() {
                                                     if (file) {
                                                     reader.readAsDataURL(file);
                                                     }
-                                                }}/>
+                                               }}/>
                                         </li>
                                         <li className='d-flex justify-content-center gap-2'>
                                             <button type="submit">
                                                 {editing ? '修改' : '送出'}
-                                                </button>
-                                            {
-                                                editing && (
-                                                    <button type="button" onClick={() => {
-                                                        setEditing(false);
-                                                        setForm({ id: null, title: '', description: '', location: '', startTime: '', endTime: '', createdAt: '', updatedAt: '', maxParticipants: '', imageBase64: '', eventCategory: null });
-                                                    }}>取消</button>
-
-                                                )
-                                            }
+                                            </button>
+                                            <button data-bs-toggle="collapse" data-bs-target="#addEventList" type="button" onClick={() => {
+                                                setEditing(false);
+                                                setForm({ id: null, title: '', description: '', location: '', startTime: '', endTime: '', createdAt: '', updatedAt: '', maxParticipants: '', imageBase64: '', eventCategory: null });
+                                            }}>取消</button>
                                         </li>
                                     </ul>
                                 </form>
                             </div>
-                            <table className="table table-bordered align-middle table-hover w-100" style={{ tableLayout: "fixed" }}>
+                            <table className="table align-middle table-hover w-100">
                                 <caption>目前共載入 {events.length} 筆資料</caption>
                                 <thead>
                                 <tr>
-                                    <th>活動編號</th>
-                                    <th>活動名稱</th>
-                                    <th>活動內容</th>
-                                    <th>地點</th>
-                                    <th>活動時間</th>
-                                    <th>人數上限</th>
-                                    <th>類別編號</th>
-                                    <th>建立人員</th>
-                                    <th>時間</th>
-                                    <th>編輯 / 刪除</th>
+                                    <th scope="col">編號</th>
+                                    <th scope="col">分類</th>
+                                    <th scope="col">活動名稱</th>
+                                    {/* <th scope="col">內容</th> */}
+                                    {/* <th scope="col">地點</th> */}
+                                    <th scope="col">活動時間</th>
+                                    <th scope="col">人數上限</th>
+                                    <th scope="col">建立者</th>
+                                    <th scope="col">創建日期</th>
+                                    <th scope="col">更動</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                     {
                                         events.map((event) => (
                                             <tr key={event.id}>
-                                                <td>{event.id}</td>
+                                                <th scope="row">{event.id}</th>
+                                                <td>{event.eventCategory?.name}</td>
                                                 <td>{event.title}</td>
-                                                <td className="overflow-auto w-100" style={{ height: '200px', display: '-webkit-box' }}>{event.description}</td>
-                                                <td>{event.location}</td>
+                                                {/* <td className="overflow-auto w-100" style={{ height: '200px', display: '-webkit-box' }}>{event.description}</td> */}
+                                                {/* <td>{event.location}</td> */}
                                                 <td>
                                                     {formatDateTime(event.startTime, 'startTime')}~{formatDateTime(event.endTime, 'endTime')}
                                                 </td>
                                                 <td>{event.maxParticipants}</td>
-                                                <td>{event.eventCategory?.id} - {event.eventCategory?.name}</td>
                                                 <td>Yini</td>
-                                                <td>
+                                                <td className='text-secondary'>
                                                     {formatDateTime(event.createdAt, 'createdAt')} 建立
-                                                    <hr />
+                                                    <br />
                                                     {formatDateTime(event.updatedAt, 'updatedAt')} 更新
                                                 </td>
                                                 <td>
-                                                    <button onClick={() => handleEdit(event)} className="btn btn-outline-danger fs-6">編輯</button><hr />
-                                                    <button onClick={() => handleDelete(event.id)} className="btn btn-outline-danger fs-6">刪除</button>
+                                                    <span onClick={() => handleEdit(event)} className="btn p-0">
+                                                        <img src={`${import.meta.env.BASE_URL}images/settings.png`} style={{ width: '30px' }} />
+                                                    </span>
+                                                    <span onClick={() => handleDelete(event.id)} className="btn p-0">
+                                                        <img src={`${import.meta.env.BASE_URL}images/garbage.png`} style={{ width: '30px' }} />
+                                                    </span>
                                                 </td>
                                             </tr>
                                         ))
@@ -240,7 +242,17 @@ function AdminEventsPage() {
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <td colSpan={10}><button>匯出活動列表</button></td>
+                                        <td colSpan={8} className='position-relative'>
+                                            <button>匯出活動列表</button>
+                                            <div className='d-flex position-absolute top-50 end-0 translate-middle-y'>
+                                                <span className='btn btn-sm btn-outline-secondary me-2'>
+                                                    上一頁
+                                                </span>
+                                                <span className='btn btn-sm btn-outline-secondary'>
+                                                    下一頁
+                                                </span>
+                                            </div>
+                                        </td>
                                     </tr>
                                 </tfoot>
                             </table>
