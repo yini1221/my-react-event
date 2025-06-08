@@ -87,13 +87,13 @@ function AdminEventCategoriesPage() {
                     <div className="card card-body mt-3">
                         <div className="p-4 d-flex flex-column align-items-center">
                             <h2>活動分類管理</h2>
-                            <table className="table table-bordered align-middle table-hover">
+                            <table className="table align-middle table-hover">
                                 <caption>目前共載入 {eventCategories.length} 筆資料</caption>
                                     <thead>
                                     <tr>
                                         <th>分類編號</th>
                                         <th>活動分類</th>
-                                        <th>編輯</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                     <tbody>
@@ -104,15 +104,19 @@ function AdminEventCategoriesPage() {
                                                     <td>
                                                         {
                                                             editing && form.id === eventCategory.id ? 
-                                                            (<form ><input className='form-control w-50' type="text" name="name" value={form.name} onChange={(e) => setForm({...form, name: e.target.value})} placeholder="請輸入分類名稱" required /></form>)
+                                                            (<form ><input className='form-control w-100 text-center' type="text" name="name" value={form.name} onChange={(e) => setForm({...form, name: e.target.value})} placeholder="請輸入分類名稱" required /></form>)
                                                             : (eventCategory.name)
                                                         }
                                                     </td>
-                                                    <td className={`d-flex justify-content-center gap-2`}>
-                                                        <button onClick={() => handleEdit(eventCategory)} type='button' className={`btn btn-outline-danger fs-6 ${editing ? 'd-none' : ''}`}>編輯</button><hr />
-                                                        <button onClick={() => handleDelete(eventCategory.id)} type='button' className={`btn btn-outline-danger fs-6 ${editing ? 'd-none' : ''}`}>刪除</button>
-                                                        <button onClick={() => handleSubmit()} type='button' className={`btn btn-outline-danger fs-6 ${!editing || form.id !== eventCategory.id ? 'd-none' : ''}`}>確認</button><hr />
-                                                        <button onClick={() => setEditing(false)} type='button' className={`btn btn-outline-danger fs-6 ${!editing || form.id !== eventCategory.id ? 'd-none' : ''}`}>取消</button>
+                                                    <td>
+                                                        <span onClick={() => handleEdit(eventCategory)} type='button' className={`btn fs-6 ${editing ? 'd-none' : ''}`}>
+                                                            <img src={`${import.meta.env.BASE_URL}images/settings.png`} style={{ width: '30px' }} />
+                                                        </span>
+                                                        <span onClick={() => handleDelete(eventCategory.id)} type='button' className={`btn fs-6 ${editing ? 'd-none' : ''}`}>
+                                                            <img src={`${import.meta.env.BASE_URL}images/garbage.png`} style={{ width: '30px' }} />
+                                                        </span>
+                                                        <button onClick={() => handleSubmit()} type='button' className={`me-2 fs-6 ${!editing || form.id !== eventCategory.id ? 'd-none' : ''}`}>確認</button>
+                                                        <button onClick={() => setEditing(false)} type='button' className={`fs-6 ${!editing || form.id !== eventCategory.id ? 'd-none' : ''}`}>取消</button>
                                                     </td>
                                                 </tr>
                                             ))

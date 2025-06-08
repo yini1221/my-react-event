@@ -14,6 +14,10 @@
   border: none !important;
 }
 
+.font-sm {
+  font-size: 11px;
+}
+
 @media (min-width: 1024px) {
   .text-height {
     height: 100px;

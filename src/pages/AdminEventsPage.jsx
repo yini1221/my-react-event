@@ -3,18 +3,19 @@ import dayjs from 'dayjs';
 import AdminNavbar from '../components/AdminNavbar';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 
-const API_URL = 'http://localhost:8084/admin/events'; // 後台 API
+const API_URL = 'http://localhost:8084/admin'; // 後台 API
 
 function AdminEventsPage() {
 
     const [events, setEvents] = useState([]);
     const [form, setForm] = useState({ id: null, title: '', description: '', location: '', startTime: '', endTime: '', createdAt: '', updatedAt: '', maxParticipants: '', imageBase64: '', eventCategory: null });
     const [editing, setEditing] = useState(false); // 是否為編輯模式
+    const [categories, setCategories] = useState([]);
 
     // 讀取活動資料
     const fetchEvents = async () => {
         try {
-        const res = await fetch(API_URL);
+        const res = await fetch(`${API_URL}/events`);
         const result = await res.json();
         console.log('API 回傳內容：', result);
         setEvents(result.data || []);
@@ -23,8 +24,21 @@ function AdminEventsPage() {
         }
     };
 
+    // 讀取分類資料
+    const fetchCategory = async () => {
+        try {
+        const res = await fetch(`${API_URL}/event-categories`);
+        const result = await res.json();
+        console.log('API 回傳內容：', result);
+        setCategories(result.data || []);
+        } catch (error) {
+        console.error('讀取錯誤:', error);
+        }
+    }
+
     useEffect(() => {
         fetchEvents();
+        fetchCategory();
     }, []);
 
     // 表單變更
@@ -41,15 +55,12 @@ function AdminEventsPage() {
         e.preventDefault();
         try {
             const method = editing ? 'PUT' : 'POST';
-            const url = editing ? `${API_URL}/${form.id}` : API_URL;
+            const url = editing ? `${API_URL}/events/${form.id}` : `${API_URL}/events`;
             const res = await fetch(url, {
                 method, 
                 headers: { 'Content-Type': `application/json`},
                 body: JSON.stringify(form)
             });
-            console.log('id:', `${form.stringify}`);
-            console.log('id:', `${form.eventCategory?.id}`);
-            console.log(`${form.eventCategory?.title}`);
             const result = await res.json();
             if (res.ok) {
                 await fetchEvents(); // 重新查詢所有活動
@@ -68,7 +79,7 @@ function AdminEventsPage() {
         if (!window.confirm('確定要刪除此活動嗎？')) return;
         try {
             const res = await fetch(
-                `${API_URL}/${id}`,{method : 'DELETE'});
+                `${API_URL}/events/${id}`,{method : 'DELETE'});
             const result = await res.json();
             if (res.ok) {
                 fetchEvents();
@@ -104,7 +115,12 @@ function AdminEventsPage() {
                 <div className="col">
                     <div className="card card-body mt-3">
                         <div className="p-4 d-flex flex-column align-items-center position-relative">
-                            <h2 className='mb-3'>📅 活動管理系統</h2>
+                            <div className='d-flex mb-3 gap-1'>
+                                <span>
+                                    <img src={`${import.meta.env.BASE_URL}images/admin.png`} style={{ width: '40px' }} />
+                                </span> 
+                                <h2>活動管理系統</h2>
+                            </div>
                             {
                                 editing ? <h4 className='m-3'>編輯模式</h4> :
                                 <button className="position-absolute top-0 end-0" data-bs-toggle="collapse" data-bs-target="#addEventList" aria-expanded="false" aria-controls="addEventList">新增活動</button>
@@ -132,10 +148,12 @@ function AdminEventsPage() {
                                                 required
                                                 aria-label="Floating label select">
                                                 <option value="">請選擇活動類別</option>
-                                                <option value="301">運動</option>
-                                                <option value="302">藝文</option>
-                                                <option value="303">學習</option>
-                                           </select>
+                                                {
+                                                    categories.map((category) => (
+                                                        <option key={category.id} value={category.id}>{category.name}</option>
+                                                    ))
+                                                }
+                                            </select>
                                             <label className='form-label' htmlFor="eventCategory">活動類別：</label>
                                         </li>
                                         <li className='form-floating'>
@@ -206,7 +224,7 @@ function AdminEventsPage() {
                                     <th scope="col">人數上限</th>
                                     <th scope="col">建立者</th>
                                     <th scope="col">創建日期</th>
-                                    <th scope="col">更動</th>
+                                    <th scope="col"></th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -223,7 +241,7 @@ function AdminEventsPage() {
                                                 </td>
                                                 <td>{event.maxParticipants}</td>
                                                 <td>Yini</td>
-                                                <td className='text-secondary'>
+                                                <td className='text-secondary font-sm'>
                                                     {formatDateTime(event.createdAt, 'createdAt')} 建立
                                                     <br />
                                                     {formatDateTime(event.updatedAt, 'updatedAt')} 更新

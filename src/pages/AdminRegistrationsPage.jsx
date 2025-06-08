@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import AdminNavbar from '../components/AdminNavbar';
 
 function AdminRegistrationsPage() {
@@ -11,8 +12,8 @@ function AdminRegistrationsPage() {
                     <div className="card card-body mt-3">
                          <div className="p-4 d-flex flex-column align-items-center">
                             <h2>報名列表</h2>
-                            <table className="table table-bordered table-hover">
-                                <caption>List of registrations</caption>
+                            <table className="table align-middle table-hover w-100">
+                                <caption>目前共載入 3 筆資料</caption>
                                 <thead>
                                 <tr>
                                     <th>報名編號</th>
@@ -24,11 +25,49 @@ function AdminRegistrationsPage() {
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td>101</td>
                                     <td>0001</td>
-                                    <td>4682</td>
-                                    <td>2025/07/01</td>
-                                    <td className='d-flex justify-content-center gap-3'>
+                                    <td className=''>
+                                        <Link to="/admin/members" className='text-decoration-underline text-decoration-none text-primary fs-6'>004003 - Alexis</Link>
+                                    </td>
+                                    <td>
+                                        <Link to="/admin/events" className='text-decoration-underline text-decoration-none text-primary fs-6 p-5'>5</Link>
+                                    </td>
+                                    <td>2025/06/08 </td>
+                                    <td>
+                                        <select className="form-select" aria-label="Default select example">
+                                            <option>待審核</option>
+                                            <option value="1">報名完成</option>
+                                            <option value="2">報名失敗</option>
+                                        </select>
+                                    </td>                                      
+                                </tr>
+                                <tr>
+                                    <td>0002</td>
+                                    <td>
+                                        <Link to="/admin/members" className='text-decoration-underline text-decoration-none text-primary fs-6'>004008 - Tiffany</Link>
+                                    </td>
+                                    <td>
+                                        <Link to="/admin/events" className='text-decoration-underline text-decoration-none text-primary fs-6 p-5'>3</Link>
+                                    </td>
+                                    <td>2025/06/03</td>
+                                    <td>
+                                        <select className="form-select" aria-label="Default select example">
+                                            <option>待審核</option>
+                                            <option value="1">報名完成</option>
+                                            <option value="2">報名失敗</option>
+                                        </select>
+                                    </td>                                      
+                                </tr>
+                                <tr>
+                                    <td>0003</td>
+                                    <td>
+                                        <Link to="/admin/members" className='text-decoration-underline text-decoration-none text-primary fs-6'>004011 - Nigel</Link>
+                                    </td>
+                                    <td>
+                                        <Link to="/admin/events" className='text-decoration-underline text-decoration-none text-primary fs-6 p-5'>2</Link>
+                                    </td>
+                                    <td>2025/06/11</td>
+                                    <td>
                                         <select className="form-select" aria-label="Default select example">
                                             <option>待審核</option>
                                             <option value="1">報名完成</option>
