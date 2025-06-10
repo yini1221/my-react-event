@@ -28,10 +28,10 @@ function OffcanvasExample() {
             <div className='d-none d-lg-block'>
               <span className='text-white'>｜</span>
               <button type="button" className="btn text-color" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                登入
+                <Link to="/auth/login" className="nav-link custom-link" aria-current="login">登入</Link>
               </button>
               <button type="button" className="btn text-color" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                註冊
+                <Link to="/auth/register" className="nav-link custom-link" aria-current="register">註冊</Link>
               </button>
             </div>
           </div>

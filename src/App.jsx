@@ -4,6 +4,8 @@ import './App.css';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
+import LoginPage from './pages/LoginPage';
+import RegistrationForm from './pages/RegistrationForm';
 import EventsPage from './pages/EventsPage';
 import FavoritesPage from './pages/FavoritesPage';
 import ProfilePage from './pages/ProfilePage';
@@ -72,6 +74,8 @@ function App()
         {/* 有 Navbar 和 Footer 的其他頁面 */}
         <Route element={<Layout />}>
           <Route path="/home" element={<HomePage />} />
+          <Route path="/auth/login" element={<LoginPage />} />
+          <Route path="/auth/register" element={<RegistrationForm />} />
           <Route path="/events" element={<EventsPage />} />
           <Route path="/favorites" element={<FavoritesPage />} />
           <Route path="/profile" element={<ProfilePage />} />
