@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 
 const API_URL = 'http://localhost:8084/auth/register'; // 後台 API
@@ -20,9 +21,9 @@ function RegistrationForm() {
         e.preventDefault();
         try {
             const res = await fetch(API_URL, {
-                method: 'POST', 
-                headers: { 'Content-Type': `application/json`},
-                body: JSON.stringify(form)
+              method: 'POST', 
+              headers: { 'Content-Type': `application/json`},
+              body: JSON.stringify(form)
             });
             const result = await res.json();            
             if (res.ok) {
@@ -81,6 +82,12 @@ function RegistrationForm() {
         </div>
         <button type="submit" className="btn btn-primary">註冊</button>
       </form>
+      <p style={{ marginTop: 10 }}>
+        已經有帳號？{" "}
+        <span>
+          <Link to="/auth/login" className="link-info fs-6" aria-current="register">登入</Link>
+        </span>
+      </p>
     </div>
   );
 }
