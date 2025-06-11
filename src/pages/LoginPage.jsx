@@ -12,10 +12,14 @@ function LoginPage() {
     try {
       const res = await fetch(`${API_URL}/authcode`, {
         credentials: "include"
-      })
+      });
       const result = await res.json();
-      if (res.ok) {
-        setCaptchaImg(`data:image/jpeg;base64,${result.data.authCodeImage}`);
+      console.log("Captcha 回傳：", result);
+      if (res.ok && result.data?.image) {
+        setCaptchaImg(`data:image/jpeg;base64,${result.data.image}`);
+      } else {
+        console.error("載入驗證碼失敗：資料結構錯誤", result);
+        return;
       }
     } catch (err) {
       console.error('載入驗證碼失敗:', err);
@@ -87,7 +91,7 @@ function LoginPage() {
 					<label htmlFor="authcode">🔢 驗證碼</label>
 					<input 
             id="authcode" 
-            name="authcode" 
+            name="authCode" 
             type="text" 
             value={form.authCode} 
             onChange={handleChange}
