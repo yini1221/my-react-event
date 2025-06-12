@@ -15,19 +15,26 @@ function AdminEventsPage() {
     // 讀取活動資料
     const fetchEvents = async () => {
         try {
-        const res = await fetch(`${API_URL}/events`);
-        const result = await res.json();
-        console.log('API 回傳內容：', result);
-        setEvents(result.data || []);
+            const res = await fetch(`${API_URL}/events`, {
+                credentials: "include"
+            });
+            if (!res.ok) {
+                throw new Error(`HTTP error! status: ${res.status}`);
+            }
+            const result = await res.json();
+            console.log('API 回傳內容：', result);
+            setEvents(result.data || []);
         } catch (error) {
-        console.error('讀取錯誤:', error);
+            console.error('讀取錯誤:', error);
         }
     };
 
     // 讀取分類資料
     const fetchCategory = async () => {
         try {
-        const res = await fetch(`${API_URL}/event-categories`);
+        const res = await fetch(`${API_URL}/event-categories`, {
+            credentials: "include"
+        });
         const result = await res.json();
         console.log('API 回傳內容：', result);
         setCategories(result.data || []);
@@ -58,6 +65,7 @@ function AdminEventsPage() {
             const url = editing ? `${API_URL}/events/${form.id}` : `${API_URL}/events`;
             const res = await fetch(url, {
                 method, 
+                credentials: "include",
                 headers: { 'Content-Type': `application/json`},
                 body: JSON.stringify(form)
             });
@@ -78,8 +86,10 @@ function AdminEventsPage() {
     const handleDelete = async (id) => {
         if (!window.confirm('確定要刪除此活動嗎？')) return;
         try {
-            const res = await fetch(
-                `${API_URL}/events/${id}`,{method : 'DELETE'});
+            const res = await fetch(`${API_URL}/events/${id}`,{
+                method : 'DELETE',
+                credentials: "include"
+            });
             const result = await res.json();
             if (res.ok) {
                 fetchEvents();

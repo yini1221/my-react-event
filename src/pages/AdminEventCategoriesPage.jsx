@@ -13,7 +13,9 @@ function AdminEventCategoriesPage() {
     // 讀取分類資料
     const fetchEventCategories = async() => {
         try {
-            const res = await fetch(API_URL);
+            const res = await fetch(API_URL, {
+                credentials: "include"
+            });
             const result = await res.json();
             console.log('API 回傳內容：', result);
             setEventCategories(result.data || []);
@@ -33,6 +35,7 @@ function AdminEventCategoriesPage() {
             const url = editing? `${API_URL}/${form.id}` : API_URL;
             const res = await fetch(url, {
                 method, 
+                credentials: "include",
                 headers: { 'Content-Type': `application/json`},
                 body: JSON.stringify(form)
             });

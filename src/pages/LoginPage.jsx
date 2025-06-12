@@ -14,7 +14,6 @@ function LoginPage() {
         credentials: "include"
       });
       const result = await res.json();
-      console.log("Captcha 回傳：", result);
       if (res.ok && result.data?.image) {
         setCaptchaImg(`data:image/jpeg;base64,${result.data.image}`);
       } else {
@@ -47,12 +46,16 @@ function LoginPage() {
       const result = await res.json(); 
       if (res.ok) {
         alert('登入成功！');
+        const username = result.data.userdto.username;
+        const userRole = result.data.userdto.role;
+        localStorage.setItem('username', username);
+        localStorage.setItem('userRole', userRole);
         navigate("/home"); // 登入成功後導向首頁
       } else {
         alert('登入失敗！' + result.message);
         loadCaptcha();
       }   
-    } catch (error) {
+    } catch (err) {
       console.error('登入時發生錯誤:', err);
       loadCaptcha();    
     }
