@@ -1,9 +1,6 @@
-a {
+.category {
     color: #b5bac1 !important;
     font-size: 12px;
-}
-
-.category {
     padding: 10px;
     font-size: 16px;
 }

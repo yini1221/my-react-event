@@ -57,7 +57,10 @@ function AdminEventCategoriesPage() {
     const handleDelete = async (id) => {
         if (!window.confirm('確定要刪除此分類嗎？')) return;
         try {
-            const res = await fetch (`${API_URL}/${id}`, { method: 'DELETE'});
+            const res = await fetch (`${API_URL}/${id}`, {
+                method: 'DELETE',
+                credentials: "include"
+                });
             const result = await res.json();
             if (res.ok) {
                 fetchEventCategories();
