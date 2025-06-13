@@ -29,14 +29,14 @@ function Navbar() {
       const res = await fetch(`${API_URL}/logout`, {
         credentials: "include"
       })
-      const result = await res.josn();
+      const result = await res.json();
       if (res.ok) {
         alert('登出成功! ');
         localStorage.removeItem('username');
         localStorage.removeItem('userRole');
         setUser(null);
         setUserRole(null);
-        navigate('/login');
+        navigate('/auth/login');
       } else {
         alert('登出失敗: ' + result.message);
         }
