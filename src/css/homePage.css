@@ -24,13 +24,17 @@
 }
 
 .swiper {
-    height: 322px !important;
+    height: 340px !important;
 }
 
 .swiper-slide {
   width: 340px !important;
-  height: auto;
+  height: 100% !important;
   object-fit: cover;
+}
+
+.h-card {
+    height: 375px !important;
 }
 
 .bg-white {
@@ -60,6 +64,12 @@
 .location-text {
     font-size: 14px;
     color: rgb(109, 114, 120);
+}
+
+@media (min-width: 576px) {
+    .h-card {
+        height: 322px !important;
+    }
 }
 
 @media (min-width: 1080px) {

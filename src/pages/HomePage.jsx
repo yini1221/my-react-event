@@ -154,8 +154,8 @@ function HomePage() {
                 >
                   {events.map((event) => (
                   <SwiperSlide key={event.id}>
-                      <Link to={`/events/${event.id}`}>
-                        <div className='card p-0 card-rounded'>
+                      <Link to={`/events/${event.id}`} className='h-100'>
+                        <div className='card p-0 card-rounded h-100'>
                           <img src={`data:image/jpeg;base64,${event.imageBase64}`} className="card-img-top card-img-rounded" alt={`Slide ${event.id}`} />
                           <div className='card-body text-start'>
                             <p className="card-text m-0 time-text ">
@@ -176,11 +176,12 @@ function HomePage() {
           </div>
           )
           : (
-            <div className="container overflow-hidden">
+            <div className="container overflow-hidden mb-3">
               <div className="row gy-5">
                 {events.map((event) => (
-                <div className="col-4" key={event.id}>
-                  <div className='card p-0 card-rounded'>
+                <div className="col-md-4 col-sm-6 h-card" key={event.id}>
+                  <Link to={`/events/${event.id}`} className='h-100'>
+                  <div className='card h-100 p-0 card-rounded'>
                     <img src={`data:image/jpeg;base64,${event.imageBase64}`} className="card-img-top card-img-rounded" alt={`Slide ${event.id}`} />
                     <div className='card-body text-start'>
                       <p className="card-text m-0 time-text ">
@@ -193,6 +194,7 @@ function HomePage() {
                       </div>
                     </div>
                   </div>
+                  </Link>
                 </div>
                 ))}
               </div>
