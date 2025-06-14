@@ -115,14 +115,22 @@ function AdminEventCategoriesPage() {
                                                         }
                                                     </td>
                                                     <td>
-                                                        <span onClick={() => handleEdit(eventCategory)} type='button' className={`btn fs-6 ${editing ? 'd-none' : ''}`}>
-                                                            <img src={`${import.meta.env.BASE_URL}images/settings.png`} style={{ width: '30px' }} />
-                                                        </span>
-                                                        <span onClick={() => handleDelete(eventCategory.id)} type='button' className={`btn fs-6 ${editing ? 'd-none' : ''}`}>
-                                                            <img src={`${import.meta.env.BASE_URL}images/garbage.png`} style={{ width: '30px' }} />
-                                                        </span>
-                                                        <button onClick={() => handleSubmit()} type='button' className={`me-2 fs-6 ${!editing || form.id !== eventCategory.id ? 'd-none' : ''}`}>確認</button>
-                                                        <button onClick={() => setEditing(false)} type='button' className={`fs-6 ${!editing || form.id !== eventCategory.id ? 'd-none' : ''}`}>取消</button>
+                                                        {
+                                                            editing && form.id === eventCategory.id ? 
+                                                            <div>
+                                                                <button onClick={() => handleSubmit()} type='button' className='me-2 fs-6'>確認</button>
+                                                                <button onClick={() => setEditing(false)} type='button' className='fs-6'>取消</button>
+                                                            </div>                                                    
+                                                            :
+                                                            <div>                                                            
+                                                                <span onClick={() => handleEdit(eventCategory)} type='button' className='btn fs-6'>
+                                                                    <img src={`${import.meta.env.BASE_URL}images/settings.png`} style={{ width: '30px' }} />
+                                                                </span>
+                                                                <span onClick={() => handleDelete(eventCategory.id)} type='button' className='btn fs-6'>
+                                                                    <img src={`${import.meta.env.BASE_URL}images/garbage.png`} style={{ width: '30px' }} />
+                                                                </span>
+                                                            </div>
+                                                        }
                                                     </td>
                                                 </tr>
                                             ))
