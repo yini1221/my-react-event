@@ -45,11 +45,9 @@ function LoginPage() {
       })
       const result = await res.json(); 
       if (res.ok) {
+        const { userdto } = result.data;
         alert('登入成功！');
-        const username = result.data.userdto.username;
-        const userRole = result.data.userdto.role;
-        localStorage.setItem('username', username);
-        localStorage.setItem('userRole', userRole);
+        localStorage.setItem('user', JSON.stringify({ id: userdto.id, username: userdto.username, role: userdto.role }));
         navigate("/home"); // 登入成功後導向首頁
       } else {
         alert('登入失敗！' + result.message);
