@@ -8,18 +8,18 @@ const API_URL = 'http://localhost:8084/user'; // 後台 API
 function Navbar() {
 
   const [search, setSearch] = useState(false);
-  const [user, setUser] = useState(null);
-  const [userRole, setUserRole] = useState(null);
+  const [userId, setUserId] = useState(null);
+  const [username, setUsername] = useState(null);
+  const [role, setRole] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const storedUser = localStorage.getItem('username');
-    const storedUserRole = localStorage.getItem('userRole');
+    const storedUser = localStorage.getItem('user');
     if(storedUser) {
-      setUser(storedUser);
-    }
-    if(storedUserRole) {
-      setUserRole(storedUserRole);
+      const userObj = JSON.parse(storedUser);
+      setUserId(userObj.id);
+      setUsername(userObj.username);
+      setRole(userObj.role);
     }
   }, []);
 
@@ -32,10 +32,10 @@ function Navbar() {
       const result = await res.json();
       if (res.ok) {
         alert('登出成功! ');
-        localStorage.removeItem('username');
-        localStorage.removeItem('userRole');
-        setUser(null);
-        setUserRole(null);
+        localStorage.removeItem('user');
+        setUserId(null);
+        setUsername(null);
+        setRole(null);
         navigate('/auth/login');
       } else {
         alert('登出失敗: ' + result.message);
@@ -66,11 +66,11 @@ function Navbar() {
             <div className='d-none d-lg-block'>
               <span className='text-white'>｜</span>
               {
-                user ? 
+                userId ? 
                 (<>
                   <span>
-                    <Link to="/profile" className='text-color'>
-                      {user}{userRole === 'ADMIN' && (<span>(管理員)</span>)}
+                    <Link to={`/user/profile/${userId}`} className='text-color'>
+                      {username}{role === 'ADMIN' && (<span>(管理員)</span>)}
                     </Link> 你好!
                   </span>
                   <button type="button" className="btn text-color" onClick={handleLogout}>登出</button>
@@ -107,13 +107,13 @@ function Navbar() {
             </div>
             <div className="offcanvas-body">
               <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
-                <li className="nav-item"><Link className="nav-link custom-link" aria-current="page" to="home">首頁</Link></li>
-                <li className="nav-item"><Link className="nav-link custom-link position-relative" to="/events">活動
+                <li className="nav-item"><Link to="home" className="nav-link custom-link" aria-current="page">首頁</Link></li>
+                <li className="nav-item"><Link to="/events" className="nav-link custom-link position-relative">活動
                     <span className="position-absolute top-0 start-50 badge rounded-circle bg-danger">new</span></Link>
                 </li>
-                <li className="nav-item"><Link className="nav-link custom-link" to="/favorites">收藏</Link></li>
-                <li className="nav-item"><Link className="nav-link custom-link" to="/profile">個人資訊</Link></li>
-                { userRole === 'ADMIN' && (
+                <li className="nav-item"><Link to={`/user/favorites/${userId}`} className="nav-link custom-link">收藏</Link></li>
+                <li className="nav-item"><Link to={`/user/profile/${userId}`} className="nav-link custom-link">個人資訊</Link></li>
+                { role === 'ADMIN' && (
                   <li className="nav-item dropdown">
                     <a className="nav-link custom-link dropdown-toggle" id="offcanvasNavbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                       後台管理

@@ -63,6 +63,11 @@ function Layout()
   );
 }
 
+function PrivateRoute({ children }) {
+  const user = localStorage.getItem('user');
+  return user ? children : <Navigate to="/auth/login" replace />;
+}
+
 function App()
 {
   return (
@@ -77,8 +82,16 @@ function App()
           <Route path="/auth/login" element={<LoginPage />} />
           <Route path="/auth/register" element={<RegistrationForm />} />
           <Route path="/events" element={<EventsPage />} />
-          <Route path="/favorites" element={<FavoritesPage />} />
-          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/user/favorites:id" element={
+            <PrivateRoute>
+            <FavoritesPage />
+            </PrivateRoute>
+            } />
+          <Route path="/user/profile/:id" element={
+            <PrivateRoute>
+              <ProfilePage />
+            </PrivateRoute>
+          } />
           <Route path="/admin" element={<Navigate to="/admin/registrations" replace />} />
           <Route path="/admin/registrations" element={<AdminRegistrationsPage />} />
           <Route path="/admin/events" element={<AdminEventsPage />} />
