@@ -98,7 +98,7 @@ function App()
           <Route path="/admin/event-categories" element={<AdminEventCategoriesPage />} />
           <Route path="/admin/members" element={<AdminMembersPage />} />
           <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
-          <Route path="/events/:id" element={<EventDetailPage />} />
+          <Route path="/events/:eventId" element={<EventDetailPage />} />
           <Route path="/user/events/register/:id" element={<RegisterPage />} />
         </Route>
       </Routes>
