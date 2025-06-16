@@ -1,0 +1,7 @@
+.btn-blue {
+    background-color: #00aaf5 !important;
+}
+
+.btn-blue:hover {
+    opacity: .8;
+}

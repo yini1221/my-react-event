@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import RegisterButton from '../components/RegisterButton';
 import { Link, useParams } from 'react-router-dom';
+import '../css/eventDetailPage.css';
 
 const API_URL = 'http://localhost:8084/events'; // 後台 API
 
@@ -24,6 +25,7 @@ function EventDetailPage() {
   }
 
   const fetchRandomEvents = async(categoryId) => {
+    if (!categoryId) return;
     try {
       const res = await fetch(`${API_URL}/random-events/${categoryId}`, {
         credentials: "include"
@@ -36,19 +38,15 @@ function EventDetailPage() {
     }
   }
 
-  useEffect(() => {
-      fetchEvent();
-      fetchRandomEvents();
-  }, [])
+useEffect(() => {
+  fetchEvent();
+},[])
 
   useEffect(() => {
-  if (event && event.eventCategories && event.eventCategories.id) {
-    fetchRandomEvents(event.eventCategories.id);
+  if (event && event.eventCategory && event.eventCategory?.id) {
+    fetchRandomEvents(event.eventCategory.id);
   }
 }, [event]);
-
-
-  
 
   if (!event) return <p>載入中...</p>;
 
@@ -62,7 +60,7 @@ function EventDetailPage() {
             <div className='row p-4'>
               <div className='col-lg-8'>
                 <div className='text-start mb-2'>
-                  <Link className='btn btn-sm btn-primary'>{event.eventCategory?.name}</Link>
+                  <Link className='btn btn-sm btn-blue text-white'>{event.eventCategory?.name}</Link>
                   </div>
                 <h2 className="mb-3 mt-3 mt-md-0 text-start"><strong>{event.title}</strong></h2>
                 <div className='border rounded-4 shadow-sm p-4'>
@@ -75,10 +73,6 @@ function EventDetailPage() {
                       <img className='me-3' src={`${import.meta.env.BASE_URL}images/placeholder.png`} style={{width: '25px'}}/>
                       {event.location}
                     </div>
-                    <div className='mb-2'>
-                      <img className='me-3' src={`${import.meta.env.BASE_URL}images/date.png`} style={{width: '25px'}}/>
-                      報名截止日期：
-                      </div>
                   </div>
                   <div className="p-3 events-color border rounded-5 ">
                       {event.description}
@@ -91,7 +85,7 @@ function EventDetailPage() {
                     <p className="">目前報名人數 0/{event.maxParticipants}</p>
                   </div>
                   <div className="d-flex flex-column flex-md-row gap-1 ms-md-auto">
-                    <RegisterButton eventId={1} />
+                    <RegisterButton eventId={event.id} />
                     <button className="btn btn-outline-secondary">收藏❤</button>
                   </div>
                 </div>
@@ -103,7 +97,7 @@ function EventDetailPage() {
             <div className="container mb-3">
               <div className="row gy-5">
                 {events.map((event) => (
-                <div className="col-md-4 col-sm-6 h-card">
+                <div key={event.id} className="col-lg-4 col-md-6">
                   <Link to={`/events/${event.id}`} className='h-100'>
                   <div className='card h-100 p-0 card-rounded'>
                     <img src={`data:image/jpeg;base64,${event.imageBase64}`} className="card-img-top card-img-rounded" />
