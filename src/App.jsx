@@ -92,6 +92,11 @@ function App()
               <ProfilePage />
             </PrivateRoute>
           } />
+          <Route path="/user/events/register/:eventId" element={
+            <PrivateRoute>
+              <RegisterPage />
+            </PrivateRoute>
+          } />
           <Route path="/admin" element={<Navigate to="/admin/registrations" replace />} />
           <Route path="/admin/registrations" element={<AdminRegistrationsPage />} />
           <Route path="/admin/events" element={<AdminEventsPage />} />
@@ -99,7 +104,6 @@ function App()
           <Route path="/admin/members" element={<AdminMembersPage />} />
           <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
           <Route path="/events/:eventId" element={<EventDetailPage />} />
-          <Route path="/user/events/register/:id" element={<RegisterPage />} />
         </Route>
       </Routes>
     </Router>
