@@ -6,7 +6,7 @@ const API_URL = 'http://localhost:8084/user/events/register'; // 後台 API
 
 function RegisterPage() {
     const { eventId } = useParams();
-    const [ registrationId, setRegistrationId ] = useState(null);
+    const [registrationId, setRegistrationId] = useState(null);
     const [event, setEvent] = useState(null);
     const [message, setMessage] = useState('');
     const [status, setStatus] = useState('');
@@ -50,6 +50,7 @@ function RegisterPage() {
                        result.data.status === 'confirmed' ? '報名成功，請準時前往 !' : 
                        result.data.status === 'cancelled' ? '報名已取消，請重新報名 !' : 
                        '');
+            
             setRegistrationId(result.data.id);
         } else {
             setStatus('');
@@ -75,9 +76,8 @@ function RegisterPage() {
 
     }, [userId, eventId]);
    
-    const handleSubmit = async(e) => {
+    const handleSubmit = async() => {
         if (!window.confirm('確定要報名嗎？')) return;
-        e.preventDefault();
         try {
             const res = await fetch(`${API_URL}/${eventId}`, {
               method: 'POST', 
@@ -85,11 +85,16 @@ function RegisterPage() {
               credentials: 'include',
               body: JSON.stringify({ userId, eventId })
             });
-            const result = await res.json();            
+            const result = await res.json();
+            if (!res.ok) {
+                console.error('後端錯誤回應:', result.message);
+                setMessage(result.message || '報名失敗');
+            }         
             if (res.ok) {
                 setMessage(result.message || '已申請，請靜待審核');
                 if (result.data && result.data.status) {
                 setStatus(result.data.status);
+                setRegistrationId(result.data.id)
                 }
             } else {
                 setMessage(result.message || '報名失敗');
@@ -104,15 +109,15 @@ function RegisterPage() {
         if (!window.confirm('確定要取消報名嗎？')) return;
         console.log('registrationId: ', registrationId)
         try {
-            const res = await fetch(`${API_URL}/cancel`,{
+            const res = await fetch(`${API_URL}/cancel/${registrationId}`,{
                 method : 'PUT',
                 headers: { 'Content-Type': `application/json`},
                 credentials: "include",
-                body: JSON.stringify({ id: registrationId })
+                body: JSON.stringify()
             });
             const result = await res.json();
             if (res.ok) {
-                setStatus(result.data.status);
+                setStatus('');
                 alert('取消成功');
             } else {
                 alert(result.message || '取消失敗');
@@ -189,15 +194,13 @@ function RegisterPage() {
                         <li>
                             {
                                 status === '' ? 
-                            <button type="submit" className="btn btn-blue text-white">立即報名</button>
-                            :   status === 'cancelled' ? 
-                            <button type="button" className="btn btn-blue text-white">再次報名</button>
-                            :   
-                            <div>
-                                <button type="submit" className="btn btn-blue text-white me-3" disabled>已報名</button>
-                                <button onClick={() => handleCancel()} type="button" className="btn btn-blue text-white">取消報名</button>
-                                {message && <p className='fs-6 align-middle' style={{ color: message.includes('成功') ? 'green' : 'red' }}>{message}</p>}
-                            </div>
+                                <button type="submit" className="btn btn-blue text-white">立即報名</button>
+                                :   
+                                <div>
+                                    <button type="button" className="btn btn-blue text-white me-3" disabled>已報名</button>
+                                    <button onClick={() => handleCancel()} type="button" className="btn btn-blue text-white">取消報名</button>
+                                    {message && <p className='fs-6 align-middle' style={{ color: message.includes('成功') ? 'green' : 'red' }}>{message}</p>}
+                                </div>
                             }
                         </li>
                     </ul>
