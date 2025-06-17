@@ -164,7 +164,7 @@ function ProfilePage() {
                   <button className="btn btn-outline-secondary" onClick={() => setEditingPassword(true)}>更改密碼</button>
                 )}
               </li>
-              <li><Link className="btn btn-outline-secondary" to="/events">查看報名紀錄</Link></li>
+              <li><Link className="btn btn-outline-secondary" to={`/user/${userId}/registrations`}>查看報名紀錄</Link></li>
             </ul>
           </div>
         </div>
