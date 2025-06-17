@@ -1,4 +1,4 @@
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import '../css/registerPage.css';
 import { useEffect, useState } from 'react';
 
@@ -6,20 +6,14 @@ const API_URL = 'http://localhost:8084/user/events/register'; // 後台 API
 
 function RegisterPage() {
     const { eventId } = useParams();
+    const [ registrationId, setRegistrationId ] = useState(null);
     const [event, setEvent] = useState(null);
     const [message, setMessage] = useState('');
+    const [status, setStatus] = useState('');
+    const navigate = useNavigate();
 
     const user = JSON.parse(localStorage.getItem('user'));
     const userId = user ? user.id : null;
-
-    useEffect(() => {
-        if (!userId) {
-        alert('請先登入');
-        // 可導向登入頁
-        // navigate('/login');
-        return;
-        }
-    }, [userId]);
 
     const fetchEvent = async() => {
         try {
@@ -37,41 +31,97 @@ function RegisterPage() {
         }
     }
 
-    const handleSubmit = async(e) => {
-        e.preventDefault();
-        
-        const registrationDto = {
-            userId: userId,
-            eventId: (eventId)
-        };
-
+    const fetchRegistrationStatus = async() => {
         try {
-            const res = await fetch(`${API_URL}/${eventId}`, {
-              method: 'POST', 
+            const res = await fetch(`${API_URL}/status`, {
+              method: 'POST',
               headers: { 'Content-Type': `application/json`},
-              body: JSON.stringify(form)
+              credentials: 'include',
+              body: JSON.stringify({ userId, eventId })
             });
-            const result = await res.json();            
-            if (res.ok) {
-                alert(`註冊成功！暱稱：${form.username}，帳號：${form.email}`);
-                setForm({ username: '', email: '', password: '' })
-                navigate("/auth/login");
-            } else {
-                alert(result.message || '操作失敗');
-            }
+        if (!res.ok) {
+            throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        const result = await res.json();
+        console.log('API 回傳內容：', result);
+        if (result.data && result.data.status) {
+            setStatus(result.data.status);
+            setMessage(result.data.status === 'pending' ? '已申請，請靜待審核' :
+                       result.data.status === 'confirmed' ? '報名成功，請準時前往 !' : 
+                       result.data.status === 'cancelled' ? '報名已取消，請重新報名 !' : 
+                       '');
+            setRegistrationId(result.data.id);
+        } else {
+            setStatus('');
+        }
         } catch (err) {
-            console.error('提交錯誤:', err);
-            alert('註冊時發生錯誤，請稍後再試');
+            console.error('讀取錯誤:', err);
         }
     }
 
     useEffect(() => {
+        if (!userId) {
+            alert('請先登入');
+            navigate('/auth/login');
+            return;
+        }
+
         if(eventId) {
             fetchEvent();
+            fetchRegistrationStatus();
         } else {
             console.error('缺少 eventId 參數');
         }
-    },[eventId])
+
+    }, [userId, eventId]);
+   
+    const handleSubmit = async(e) => {
+        if (!window.confirm('確定要報名嗎？')) return;
+        e.preventDefault();
+        try {
+            const res = await fetch(`${API_URL}/${eventId}`, {
+              method: 'POST', 
+              headers: { 'Content-Type': `application/json`},
+              credentials: 'include',
+              body: JSON.stringify({ userId, eventId })
+            });
+            const result = await res.json();            
+            if (res.ok) {
+                setMessage(result.message || '已申請，請靜待審核');
+                if (result.data && result.data.status) {
+                setStatus(result.data.status);
+                }
+            } else {
+                setMessage(result.message || '報名失敗');
+            }
+        } catch (err) {
+            setMessage('發生錯誤：' + err.message);
+            console.error('提交錯誤:', err);
+        }
+    }
+
+    const handleCancel = async() => {
+        if (!window.confirm('確定要取消報名嗎？')) return;
+        console.log('registrationId: ', registrationId)
+        try {
+            const res = await fetch(`${API_URL}/cancel`,{
+                method : 'PUT',
+                headers: { 'Content-Type': `application/json`},
+                credentials: "include",
+                body: JSON.stringify({ id: registrationId })
+            });
+            const result = await res.json();
+            if (res.ok) {
+                setStatus(result.data.status);
+                alert('取消成功');
+            } else {
+                alert(result.message || '取消失敗');
+            }
+        } catch (err) {
+            console.error('刪除錯誤', err);
+            alert('取消失敗，請稍後再試');
+        }
+    }
 
     if (!event) return <p>載入中...</p>;
 
@@ -95,7 +145,7 @@ function RegisterPage() {
                 </div>
             </div>
             <div className="col-md-9 d-flex flex-column flex-grow-1">
-                <form onSubmit>
+                <form onSubmit={handleSubmit}>
                     <ul className="list-unstyled">
                         <li>
                             <div className="border bg-secondary bg-gradient d-inline-block rounded-3 w-25 mb-1" style={{'--bs-bg-opacity': '.4'}}>聲明與切結</div>
@@ -137,7 +187,18 @@ function RegisterPage() {
                             </div>
                         </li>
                         <li>
-                            <button type="submit" className="btn btn-primary">確認報名</button>
+                            {
+                                status === '' ? 
+                            <button type="submit" className="btn btn-blue text-white">立即報名</button>
+                            :   status === 'cancelled' ? 
+                            <button type="button" className="btn btn-blue text-white">再次報名</button>
+                            :   
+                            <div>
+                                <button type="submit" className="btn btn-blue text-white me-3" disabled>已報名</button>
+                                <button onClick={() => handleCancel()} type="button" className="btn btn-blue text-white">取消報名</button>
+                                {message && <p className='fs-6 align-middle' style={{ color: message.includes('成功') ? 'green' : 'red' }}>{message}</p>}
+                            </div>
+                            }
                         </li>
                     </ul>
                 </form>

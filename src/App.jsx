@@ -87,16 +87,8 @@ function App()
             <FavoritesPage />
             </PrivateRoute>
             } />
-          <Route path="/user/profile/:id" element={
-            <PrivateRoute>
-              <ProfilePage />
-            </PrivateRoute>
-          } />
-          <Route path="/user/events/register/:eventId" element={
-            <PrivateRoute>
-              <RegisterPage />
-            </PrivateRoute>
-          } />
+          <Route path="/user/profile/:id" element={<ProfilePage />} />
+          <Route path="/user/events/register/:eventId" element={<RegisterPage />} />
           <Route path="/admin" element={<Navigate to="/admin/registrations" replace />} />
           <Route path="/admin/registrations" element={<AdminRegistrationsPage />} />
           <Route path="/admin/events" element={<AdminEventsPage />} />
