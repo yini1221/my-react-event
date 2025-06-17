@@ -9,6 +9,7 @@ import RegistrationForm from './pages/RegistrationForm';
 import EventsPage from './pages/EventsPage';
 import FavoritesPage from './pages/FavoritesPage';
 import ProfilePage from './pages/ProfilePage';
+import Registrations from './pages/RegistrationsPage';
 import AdminRegistrationsPage from './pages/AdminRegistrationsPage';
 import AdminEventsPage from './pages/AdminEventsPage';
 import AdminMembersPage from './pages/AdminMembersPage';
@@ -88,6 +89,7 @@ function App()
             </PrivateRoute>
             } />
           <Route path="/user/profile/:id" element={<ProfilePage />} />
+          <Route path="/user/:id/registrations" element={<RegistrationsPage />} />
           <Route path="/user/events/register/:eventId" element={<RegisterPage />} />
           <Route path="/admin" element={<Navigate to="/admin/registrations" replace />} />
           <Route path="/admin/registrations" element={<AdminRegistrationsPage />} />
