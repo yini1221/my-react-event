@@ -1,4 +1,4 @@
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import '../css/profilePage.css';
 import { useEffect, useState } from 'react';
 
@@ -12,6 +12,10 @@ function ProfilePage() {
   const [passwords, setPasswords] = useState({ oldPassword: '', newPassword: '', confirmPassword: ''});
   const [editingUsername, setEditingUsername] = useState(false); // 編輯暱稱模式
   const [editingPassword, setEditingPassword] = useState(false); // 編輯密碼模式
+  const navigate = useNavigate();
+
+  const user = JSON.parse(localStorage.getItem('user'));
+  const userId = user ? user.id : null;
   
   const fetchUser = async() => {
     try {
@@ -27,8 +31,13 @@ function ProfilePage() {
   }
 
   useEffect(() => {
+      if (!userId) {
+          alert('請先登入');
+          navigate('/auth/login');
+          return;
+      }
       fetchUser();
-  }, [])
+  }, [userId])
 
   const handlePasswordChange = (e) => {
     setPasswords(prev => ({ ...prev, [e.target.name]: e.target.value }));
