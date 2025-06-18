@@ -49,8 +49,8 @@ function EventDetailPage() {
       const res = await fetch(`${FAVORITE_URL}/check/${userId}/${eventId}`, {
          credentials: 'include' 
         });
-      const favorited = await res.json();
-      setIsFavorited(favorited);
+      const result = await res.json();
+      setIsFavorited(result.data);
     } catch (err) {
       console.error('收藏錯誤:', err);
     }
@@ -62,19 +62,26 @@ function EventDetailPage() {
       return;
     }
     try {
+      let res;
       if (isFavorited) {
-        await fetch(`${FAVORITE_URL}/${userId}/${eventId}`, {
+        res = await fetch(`${FAVORITE_URL}/${userId}/${eventId}`, {
           method: 'DELETE',
           credentials: 'include',
         });
         setIsFavorited(false);
       } else {
-        await fetch(`${FAVORITE_URL}/${userId}/${eventId}`, {
+        res = await fetch(`${FAVORITE_URL}/${userId}/${eventId}`, {
           method: 'POST',
           credentials: 'include',
         });
-        setIsFavorited(true);
       }
+      if (!res.ok) {
+        const result = await res.json();
+        console.error('API 錯誤:', result);
+        alert('操作失敗，請稍後再試');
+        return;
+     }
+      setIsFavorited(!isFavorited)
     } catch (err) {
       console.error('切換收藏錯誤:', err);
     }
@@ -133,7 +140,7 @@ useEffect(() => {
                   <div className="d-flex flex-column flex-md-row gap-1 ms-md-auto">
                     <RegisterButton eventId={event.id} />
                     <button className={`btn ${isFavorited ? 'btn-danger' : 'btn-outline-secondary'}`}
-                    onClick={toggleFavorite}>
+                    onClick={() => toggleFavorite()}>
                     {isFavorited ? '已收藏 ❤' : '收藏 ♡'}
                   </button>
                   </div>
