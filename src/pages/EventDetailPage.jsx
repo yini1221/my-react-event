@@ -4,13 +4,18 @@ import { Link, useParams } from 'react-router-dom';
 import '../css/eventDetailPage.css';
 
 const API_URL = 'http://localhost:8084/events'; // 後台 API
+const FAVORITE_URL = 'http://localhost:8084/user/favorite'; // 收藏 API
 
 function EventDetailPage() {
 
   const { eventId } = useParams();
   const [event, setEvent] = useState(null);
   const [events, setEvents] = useState([]);
+  const [isFavorited, setIsFavorited] = useState(false);
   
+  const user = JSON.parse(localStorage.getItem('user'));
+  const userId = user ? user.id : null;
+
   const fetchEvent = async() => {
     try {
       const res = await fetch(`${API_URL}/${eventId}`, {
@@ -38,15 +43,56 @@ function EventDetailPage() {
     }
   }
 
+  const checkFavorite = async () => {
+    if (!userId) return;
+    try {
+      const res = await fetch(`${FAVORITE_URL}/check/${userId}/${eventId}`, {
+         credentials: 'include' 
+        });
+      const favorited = await res.json();
+      setIsFavorited(favorited);
+    } catch (err) {
+      console.error('收藏錯誤:', err);
+    }
+  };
+
+  const toggleFavorite = async () => {
+    if (!userId) {
+      alert('請先登入才能收藏');
+      return;
+    }
+    try {
+      if (isFavorited) {
+        await fetch(`${FAVORITE_URL}/${userId}/${eventId}`, {
+          method: 'DELETE',
+          credentials: 'include',
+        });
+        setIsFavorited(false);
+      } else {
+        await fetch(`${FAVORITE_URL}/${userId}/${eventId}`, {
+          method: 'POST',
+          credentials: 'include',
+        });
+        setIsFavorited(true);
+      }
+    } catch (err) {
+      console.error('切換收藏錯誤:', err);
+    }
+  };
+
 useEffect(() => {
   fetchEvent();
 },[])
 
-  useEffect(() => {
+useEffect(() => {
   if (event && event.eventCategory && event.eventCategory?.id) {
     fetchRandomEvents(event.eventCategory.id);
   }
 }, [event]);
+
+useEffect(() => {
+  checkFavorite();
+}, [eventId, userId]);
 
   if (!event) return <p>載入中...</p>;
 
@@ -86,7 +132,10 @@ useEffect(() => {
                   </div>
                   <div className="d-flex flex-column flex-md-row gap-1 ms-md-auto">
                     <RegisterButton eventId={event.id} />
-                    <button className="btn btn-outline-secondary">收藏❤</button>
+                    <button className={`btn ${isFavorited ? 'btn-danger' : 'btn-outline-secondary'}`}
+                    onClick={toggleFavorite}>
+                    {isFavorited ? '已收藏 ❤' : '收藏 ♡'}
+                  </button>
                   </div>
                 </div>
               </div>
