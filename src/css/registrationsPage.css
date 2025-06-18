@@ -1,7 +1,21 @@
 .bd-registration {
-    background-color: #e9ecef;
+    background-color: #faf6f3;
 }
 
 .fs-sm {
     font-size: 13px;
+}
+
+.btn-blue {
+    background-color: #00aaf5 !important;
+}
+.btn-blue:hover {
+    opacity: .8;
+}
+
+.btn-red {
+    background-color: #eb5252 !important;
+}
+.btn-red:hover {
+    opacity: .8;
 }
