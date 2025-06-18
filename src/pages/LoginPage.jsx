@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 const API_URL = 'http://localhost:8084/auth'; // 後台 API
 
-function LoginPage() {
+function LoginPage({ onLoginSuccess  }) {
   const [form, setForm] = useState({ email: '', password: '', authCode: '' });
   const [captchaImg, setCaptchaImg] = useState("");
   const navigate = useNavigate();
@@ -46,8 +46,10 @@ function LoginPage() {
       const result = await res.json(); 
       if (res.ok) {
         const { userdto } = result.data;
+        console.log('登入回應結果:', result);
         alert('登入成功！');
         localStorage.setItem('user', JSON.stringify({ id: userdto.id, username: userdto.username, role: userdto.role }));
+        onLoginSuccess(userdto);
         navigate("/home"); // 登入成功後導向首頁
       } else {
         alert('登入失敗！' + result.message);

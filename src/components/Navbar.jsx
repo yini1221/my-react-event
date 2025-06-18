@@ -5,37 +5,29 @@ import { useEffect, useState } from 'react';
 
 const API_URL = 'http://localhost:8084/user'; // 後台 API
 
-function Navbar() {
+function Navbar({ isLogin, userId, username, role, onLogout }) {
 
   const [search, setSearch] = useState(false);
-  const [userId, setUserId] = useState(null);
-  const [username, setUsername] = useState(null);
-  const [role, setRole] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
     if(storedUser) {
       const userObj = JSON.parse(storedUser);
-      setUserId(userObj.id);
-      setUsername(userObj.username);
-      setRole(userObj.role);
     }
   }, []);
 
   const handleLogout = async (e) => {
-    e.preventDefault();
     try {
-      const res = await fetch(`${API_URL}/logout`, {
-        credentials: "include"
+      const res = await fetch('http://localhost:8084/logout', {
+        method: 'POST',
+        credentials: "include",
       })
       const result = await res.json();
       if (res.ok) {
         alert('登出成功! ');
         localStorage.removeItem('user');
-        setUserId(null);
-        setUsername(null);
-        setRole(null);
+        onLogout();
         navigate('/auth/login');
       } else {
         alert('登出失敗: ' + result.message);
@@ -66,14 +58,14 @@ function Navbar() {
             <div className='d-none d-lg-block'>
               <span className='text-white'>｜</span>
               {
-                userId ? 
+                isLogin ? 
                 (<>
                   <span>
                     <Link to={`/user/profile/${userId}`} className='text-color'>
                       {username}{role === 'ADMIN' && (<span>(管理員)</span>)}
                     </Link> 你好!
                   </span>
-                  <button type="button" className="btn text-color" onClick={handleLogout}>登出</button>
+                  <button type="button" className="btn text-color" onClick={() => handleLogout()}>登出</button>
                 </>) 
                 : (<>
                   <button type="button" className="btn text-color" data-bs-toggle="modal" data-bs-target="#exampleModal">

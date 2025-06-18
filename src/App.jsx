@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { HashRouter as Router, Routes, Route, Link, Outlet, Navigate } from "react-router-dom";
 import './App.css';
 import Navbar from './components/Navbar';
@@ -22,10 +22,7 @@ import 'swiper/css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
-function Home()
-{
-  const [count, setCount] = useState(0);
-
+function Home() {
   return (
     <>
       <div>
@@ -39,8 +36,8 @@ function Home()
       </div>
       <h1>活動報名平台</h1>
       <div className="my-4">
-        <Link to="/home" className="custom-link" onClick={() => setCount((count) => count + 1)}>
-          點我進入 <span>（瀏覽次數: {count}）</span>
+        <Link to="/home" className="custom-link">
+          點我進入
         </Link>
       </div>
       <p className="read-the-docs">
@@ -51,11 +48,14 @@ function Home()
   );
 }
 
-function Layout()
-{
+function Layout({ isLogin, userId, username, role, onLogout }) {
   return (
     <div className="d-flex flex-column min-vh-100">
-      <Navbar />
+      <Navbar isLogin={isLogin}
+        userId={userId}
+        username={username}
+        role={role}
+        onLogout={onLogout}/>
       <main className="flex-grow-1 bg-light mt-5">
         <Outlet />
       </main>
@@ -69,8 +69,59 @@ function PrivateRoute({ children }) {
   return user ? children : <Navigate to="/auth/login" replace />;
 }
 
-function App()
-{
+function App() {
+
+  const [isLogin, setIsLogin] = useState(false);
+  const [userId, setUserId] = useState(null);
+  const [username, setUsername] = useState(null);
+  const [role, setRole] = useState(null);
+
+  const handleLoginSuccess = (user) => {
+    setIsLogin(true);
+    setUserId(user.id);
+    setUsername(user.username);
+    setRole(user.role);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('user');
+    setIsLogin(false);
+    setUserId(null);
+    setUsername(null);
+    setRole(null);
+  };
+
+    useEffect(() => {
+    const checkLogin = async () => {
+      try {
+        const res = await fetch('http://localhost:8084/auth/check-login', {
+          credentials: 'include',
+        });
+        const result = await res.json();
+        if (res.ok && result.data === true) {
+          const storedUser = localStorage.getItem('user');
+          if (storedUser) {
+            const userObj = JSON.parse(storedUser);
+            setUserId(userObj.id);
+            setUsername(userObj.username);
+            setRole(userObj.role);
+            setIsLogin(true);
+          }
+        } else {
+          setIsLogin(false);
+          setUserId(null);
+          setUsername(null);
+          setRole(null);
+          localStorage.removeItem('user');
+        }
+      } catch (error) {
+        console.error('登入時發生錯誤:', error);
+      }
+    };
+
+    checkLogin();
+  }, []);
+
   return (
     <Router>
       <Routes>
@@ -78,9 +129,15 @@ function App()
         <Route path="/" element={<Home />} />
 
         {/* 有 Navbar 和 Footer 的其他頁面 */}
-        <Route element={<Layout />}>
+        <Route element={<Layout 
+              isLogin={isLogin}
+              userId={userId}
+              username={username}
+              role={role}
+              onLogout={handleLogout}
+            />}>
           <Route path="/home" element={<HomePage />} />
-          <Route path="/auth/login" element={<LoginPage />} />
+          <Route path="/auth/login" element={<LoginPage onLoginSuccess={handleLoginSuccess} />} />
           <Route path="/auth/register" element={<RegistrationForm />} />
           <Route path="/events" element={<EventsPage />} />
           <Route path="/user/favorites:id" element={
