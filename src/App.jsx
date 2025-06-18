@@ -9,7 +9,7 @@ import RegistrationForm from './pages/RegistrationForm';
 import EventsPage from './pages/EventsPage';
 import FavoritesPage from './pages/FavoritesPage';
 import ProfilePage from './pages/ProfilePage';
-import Registrations from './pages/RegistrationsPage';
+import RegistrationsPage from './pages/RegistrationsPage';
 import AdminRegistrationsPage from './pages/AdminRegistrationsPage';
 import AdminEventsPage from './pages/AdminEventsPage';
 import AdminMembersPage from './pages/AdminMembersPage';
