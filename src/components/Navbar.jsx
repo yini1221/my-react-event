@@ -58,7 +58,7 @@ function Navbar({ isLogin, userId, username, role, onLogout }) {
             <div className='d-none d-lg-block'>
               <span className='text-white'>｜</span>
               {
-                isLogin ? 
+                isLogin && userId ? 
                 (<>
                   <span>
                     <Link to={`/user/profile/${userId}`} className='text-color'>
