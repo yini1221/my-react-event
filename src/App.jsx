@@ -154,7 +154,7 @@ function App() {
           <Route path="/auth/login" element={<LoginPage onLoginSuccess={handleLoginSuccess} />} />
           <Route path="/auth/register" element={<RegistrationForm />} />
           <Route path="/events" element={<EventsPage />} />
-          <Route path="/user/favorites:id" element={
+          <Route path="/user/favorites/:userId" element={
             <PrivateRoute>
             <FavoritesPage />
             </PrivateRoute>
