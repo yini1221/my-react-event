@@ -33,7 +33,6 @@ function RegistrationsPage() {
 
     const handleCancel = async(registrationId) => {
         if (!window.confirm('確定要取消報名嗎？')) return;
-        console.log('registrationId: ', registrationId)
         try {
             const res = await fetch(`${API_URL}/events/register/cancel/${registrationId}`,{
                 method : 'PUT',
