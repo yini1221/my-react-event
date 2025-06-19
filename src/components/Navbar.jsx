@@ -100,9 +100,6 @@ function Navbar({ isLogin, userId, username, role, onLogout }) {
             <div className="offcanvas-body">
               <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
                 <li className="nav-item"><Link to="home" className="nav-link custom-link" aria-current="page">首頁</Link></li>
-                <li className="nav-item"><Link to="/events" className="nav-link custom-link position-relative">活動
-                    <span className="position-absolute top-0 start-50 badge rounded-circle bg-danger">new</span></Link>
-                </li>
                 <li className="nav-item"><Link to={`/user/favorites/${userId}`} className="nav-link custom-link">收藏</Link></li>
                 <li className="nav-item"><Link to={`/user/profile/${userId}`} className="nav-link custom-link">個人資訊</Link></li>
                 { role === 'ADMIN' && (
@@ -115,7 +112,6 @@ function Navbar({ isLogin, userId, username, role, onLogout }) {
                       <li><Link to="/admin/events" className='dropdown-item custom-link'>活動管理</Link></li>
                       <li><Link to="/admin/event-categories" className='dropdown-item custom-link'>活動分類管理</Link></li>
                       <li><Link to="/admin/members" className='dropdown-item custom-link'>會員管理</Link></li>
-                      <li><Link to="/admin/dashboard" className='dropdown-item custom-link'>後台儀表板</Link></li>
                       <li><Link to="/admin/dashboard" className='dropdown-item custom-link'>後台儀表板</Link></li>
                     </ul>
                   </li>
