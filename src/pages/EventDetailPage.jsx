@@ -12,6 +12,7 @@ function EventDetailPage() {
   const [event, setEvent] = useState(null);
   const [events, setEvents] = useState([]);
   const [isFavorited, setIsFavorited] = useState(false);
+  const [registrationCount, setRegistrationCount] = useState(0);
   
   const user = JSON.parse(localStorage.getItem('user'));
   const userId = user ? user.id : null;
@@ -27,7 +28,7 @@ function EventDetailPage() {
     } catch (err) {
       console.error('讀取錯誤:', err);
     }
-  }
+  };
 
   const fetchRandomEvents = async(categoryId) => {
     if (!categoryId) return;
@@ -41,7 +42,7 @@ function EventDetailPage() {
     } catch (err) {
         console.error('讀取錯誤:', err);
     }
-  }
+  };
 
   const checkFavorite = async () => {
     if (!userId) return;
@@ -58,7 +59,7 @@ function EventDetailPage() {
 
   const toggleFavorite = async () => {
     if (!userId) {
-      alert('請先登入才能收藏');
+      alert('請先登入');
       return;
     }
     try {
@@ -87,9 +88,27 @@ function EventDetailPage() {
     }
   };
 
+  const fetchRegistrationCount = async() => {
+    try {
+      const res = await fetch(`${API_URL}/${eventId}/registration-count`, {
+        credentials: "include"
+      })
+      const result = await res.json();
+      if(res.ok) {
+        console.log('API 回傳內容：', result);
+        setRegistrationCount(result.data)
+      } else {
+        console.error('取得報名人數錯誤：', result.message);
+      }
+    } catch (err) {
+        console.error('讀取錯誤:', err);      
+    }
+  };
+
 useEffect(() => {
   fetchEvent();
-},[])
+  fetchRegistrationCount();
+},[eventId])
 
 useEffect(() => {
   if (event && event.eventCategory && event.eventCategory?.id) {
@@ -135,7 +154,7 @@ useEffect(() => {
               <div className='col-lg-4'>
                 <div className='rounded-3 shadow-sm p-5'>
                   <div className='d-flex flex-column flex-md-row justify-content-between align-items-center'>
-                    <p className="">目前報名人數 0/{event.maxParticipants}</p>
+                    <p className="">目前報名人數 {registrationCount}/{event.maxParticipants}</p>
                   </div>
                   <div className="d-flex flex-column flex-md-row gap-1 ms-md-auto">
                     <RegisterButton eventId={event.id} />

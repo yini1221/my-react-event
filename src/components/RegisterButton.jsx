@@ -9,7 +9,7 @@ function RegisterButton({ eventId, className = "btn btn-blue px-4 text-white", l
     };
 
     return(
-        <button onClick={goToRegisterPage} className={className}>
+        <button onClick={goToRegisterPage} type='button' className={className}>
             {label}
         </button>
     )
