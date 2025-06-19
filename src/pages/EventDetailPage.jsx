@@ -4,7 +4,7 @@ import { Link, useParams } from 'react-router-dom';
 import '../css/eventDetailPage.css';
 
 const API_URL = 'http://localhost:8084/events'; // 後台 API
-const FAVORITE_URL = 'http://localhost:8084/user/favorite'; // 收藏 API
+const FAVORITE_URL = 'http://localhost:8084/user/favorites'; // 收藏 API
 
 function EventDetailPage() {
 
