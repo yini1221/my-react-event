@@ -7,10 +7,10 @@ const API_URL = 'http://localhost:8084/admin/registrations'; // 後台 API
 function AdminRegistrationsPage() {
 
     const [registrations, setRegistrations] = useState([]);
-    const [status, setStatus] = useState({});
-    const [editing, setEditing] = useState(null);
+    const [form, setForm] = useState({ status: ''});
+    const [editing, setEditing] = useState(false);
 
-    const fetchERegistrations = async () => {
+    const fetchRegistrations = async () => {
             try {
                 const res = await fetch(`${API_URL}`, {
                     credentials: "include"
@@ -27,29 +27,38 @@ function AdminRegistrationsPage() {
         };
 
     useEffect(() => {
-        fetchERegistrations();
+        fetchRegistrations();
     }, []);
 
-    const handleStatusChange = (e, registrationId) => {
-        const newStatus = e.target.value;
-        setRegistrations(prev =>
-        prev.map(reg =>
-            reg.id === registrationId ? { ...reg, status: newStatus } : reg
-        )
+    const handleStatusChange = (e) => {
+        setForm({
+            ...form, status: e.target.value}
         );
     };
 
-    const handleStatusSubmit = async () => {
+    const handleStatusSubmit = async (registrationId) => {
         try {
-            const res = await fetch(`${API_URL}/${registrations.id}/status`, {
+            const res = await fetch(`${API_URL}/${registrationId}/status`, {
               method: 'PATCH', 
               credentials: "include",
               headers: { 'Content-Type': `application/json`},
-              body: JSON.stringify({ username })
+              body: JSON.stringify({ status: form.status })
           });
+          const result = await res.json();
+          if(res.ok) {
+              setEditing(false);
+              fetchRegistrations();
+          } else {
+                alert(result.message || '更改失敗');
+          }
         } catch (err) {
             console.error('提交錯誤:', err);
         }
+    }
+
+    const handleEdit = (registration) => {
+        setForm(registration);
+        setEditing(true);
     }
 
     return(
@@ -71,6 +80,7 @@ function AdminRegistrationsPage() {
                                     <th>活動編號</th>
                                     <th>報名時間</th>
                                     <th>報名狀態</th>
+                                    <th></th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -87,27 +97,33 @@ function AdminRegistrationsPage() {
                                             <td>{registration.registeredAt} </td>
                                             <td>
                                                 {
-                                                  editing === registration.id ? 
-                                                    <form className='d-flex'>
-                                                        <select value={registration.status} className="form-select me-2 w-50" aria-label="Default select example" 
-                                                        onChange={(e) => handleStatusChange(e, registration.id)}>
+                                                  editing && form.id === registration.id ? 
+                                                    <form>
+                                                        <select value={form.status} className="form-select me-2" aria-label="Default select example" 
+                                                        onChange={(e) => handleStatusChange(e)}>
                                                             <option value='pending'>待審核</option>
                                                             <option value='confirmed'>報名完成</option>
                                                         </select>
-                                                        <div>
-                                                            <button onClick={() => handleStatusSubmit()} type='button' className='me-2 p-2'>確認</button>
-                                                            <button onClick={() => setEditing(null)} type='button' className='fs-6 p-2'>取消</button>
-                                                        </div> 
                                                     </form>
                                                     :
-                                                    <div>
-                                                        {
-                                                        registration.status == 'pending' ? '待審核' : '報名完成'
-                                                        }
-                                                        <span onClick={() => {setEditing(registration.id)}} type='button' className='btn fs-6 p-0 px-3'>
-                                                            <img src={`${import.meta.env.BASE_URL}images/pencil.png`} style={{ width: '25px' }} />
+                                                    <div className='row align-items-center'>
+                                                        <span className='fs-6'>
+                                                            {registration.status == 'pending' ? '待審核' : '報名完成'}
                                                         </span>
                                                     </div>
+                                                }
+                                            </td>
+                                            <td>
+                                                {
+                                                    editing && form.id === registration.id ?
+                                                    <div>
+                                                        <button onClick={() => handleStatusSubmit(registration.id)} type='button' className='me-2 p-2'>確認</button>
+                                                        <button onClick={() => setEditing(false)} type='button' className='fs-6 p-2'>取消</button>
+                                                    </div> 
+                                                    :
+                                                    <span onClick={() => {handleEdit(registration)}} type='button' className='btn fs-6 p-0 px-3'>
+                                                        <img src={`${import.meta.env.BASE_URL}images/settings.png`} style={{ width: '25px' }} />
+                                                    </span>
                                                 }
                                             </td>
                                         </tr>
@@ -116,10 +132,9 @@ function AdminRegistrationsPage() {
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <td colSpan={5}>
+                                        <td colSpan={6}>
                                             <div className='d-flex justify-content-center gap-2'>
                                                 <button>匯出報名列表</button>
-                                                <button onClick={() => handleStatusSubmit()}>確認</button>
                                             </div>
                                         </td>                                        
                                     </tr>
