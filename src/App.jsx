@@ -91,7 +91,18 @@ function App() {
     setRole(null);
   };
 
-    useEffect(() => {
+  const handleUsernameChange = (newUsername) => {
+    setUsername(newUsername);
+    const user = localStorage.getItem('user');
+    if(storedUser) {
+      const userObj = JSON.parse(storedUser);
+      userObj.username = newUsername;
+      localStorage.setItem('user', JSON.stringify(userObj));
+    }
+
+  }
+
+  useEffect(() => {
     const checkLogin = async () => {
       try {
         const res = await fetch('http://localhost:8084/auth/check-login', {
@@ -117,7 +128,7 @@ function App() {
       } catch (error) {
         console.error('登入時發生錯誤:', error);
       }
-    };
+  };
 
     checkLogin();
   }, []);
@@ -145,7 +156,7 @@ function App() {
             <FavoritesPage />
             </PrivateRoute>
             } />
-          <Route path="/user/profile/:id" element={<ProfilePage />} />
+          <Route path="/user/profile/:id" element={<ProfilePage onUsernameChange={handleUsernameChange} />} />
           <Route path="/user/:id/registrations" element={<RegistrationsPage />} />
           <Route path="/user/events/register/:eventId" element={<RegisterPage />} />
           <Route path="/admin" element={<Navigate to="/admin/registrations" replace />} />

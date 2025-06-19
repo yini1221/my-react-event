@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 
 const API_URL = 'http://localhost:8084/user/profile'; // 後台 API
 
-function ProfilePage() {
+function ProfilePage({ onUsernameChange }) {
 
   const { id } = useParams();
   const [profile, setProfile] = useState(null);
@@ -57,6 +57,9 @@ function ProfilePage() {
               await fetchUser(); // 重新查詢所有分類
               setUsername('');
               setEditingUsername(false);
+              if(onUsernameChange) {
+                onUsernameChange(username);
+              }
           } else {
               alert(result.message || '修改暱稱失敗');
           }
