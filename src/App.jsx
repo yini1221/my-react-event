@@ -18,6 +18,7 @@ import AdminEventCategoriesPage from './pages/AdminEventCategoriesPage';
 import EventDetailPage from './pages/EventDetailPage';
 import RegisterPage from './pages/RegisterPage';
 import ToggleTheme from './components/ToggleTheme';
+import EventSearch from './pages/EventSearch';
 import 'swiper/css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
@@ -151,6 +152,7 @@ function App() {
               onLogout={handleLogout}
             />}>
           <Route path="/home" element={<HomePage />} />
+          <Route path="/home/search" element={<EventSearch />} />
           <Route path="/auth/login" element={<LoginPage onLoginSuccess={handleLoginSuccess} />} />
           <Route path="/auth/register" element={<RegistrationForm />} />
           <Route path="/events" element={<EventsPage />} />

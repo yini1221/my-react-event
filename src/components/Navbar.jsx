@@ -7,8 +7,8 @@ const API_URL = 'http://localhost:8084/user'; // 後台 API
 
 function Navbar({ isLogin, userId, username, role, onLogout }) {
 
-  const [search, setSearch] = useState(false);
   const navigate = useNavigate();
+  const [searchKeyword, setSearchKeyword] = useState('');
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
@@ -37,9 +37,11 @@ function Navbar({ isLogin, userId, username, role, onLogout }) {
       }   
   };
 
-  const handleSearch = () => {
-    setSearch(true);
-  }
+  const handleSearchSubmit = (e) => {
+    if (searchKeyword.trim() === '') return;
+    navigate(`/home/search?keyword=${encodeURIComponent(searchKeyword.trim())}`);
+    setSearchKeyword('');
+  };
 
   return (
     <>
@@ -81,8 +83,8 @@ function Navbar({ isLogin, userId, username, role, onLogout }) {
           <div className="collapse w-100 position-absolute end-0 bg-navbar" id="searchCollapse">
               <form className="d-flex align-items-center w-100 px-2 gap-1">
                 <div className='position-relative w-100'>
-                  <input className="form-control rounded-5" type="search" placeholder="尋找活動" aria-label="Search" />
-                  <span type="submit" className='search-icon'>
+                  <input value={searchKeyword} onChange={(e) => setSearchKeyword(e.target.value)} className="form-control rounded-5" type="text" placeholder="尋找活動" aria-label="Search" />
+                  <span onClick={() => handleSearchSubmit()} type='button' className='search-icon'>
                     <img src={`${import.meta.env.BASE_URL}images/search-o.png`} style={{ width: '30px' }} />
                   </span>
                 </div>
