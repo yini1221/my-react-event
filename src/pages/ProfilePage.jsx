@@ -1,4 +1,4 @@
-import { Link, useParams, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import '../css/profilePage.css';
 import { useEffect, useState } from 'react';
 
@@ -6,20 +6,18 @@ const API_URL = 'http://localhost:8084/user/profile'; // 後台 API
 
 function ProfilePage({ onUsernameChange }) {
 
-  const { id } = useParams();
   const [profile, setProfile] = useState(null);
   const [username, setUsername] = useState('');
   const [passwords, setPasswords] = useState({ oldPassword: '', newPassword: '', confirmPassword: ''});
   const [editingUsername, setEditingUsername] = useState(false); // 編輯暱稱模式
   const [editingPassword, setEditingPassword] = useState(false); // 編輯密碼模式
-  const navigate = useNavigate();
 
   const user = JSON.parse(localStorage.getItem('user'));
   const userId = user ? user.id : null;
   
   const fetchUser = async() => {
     try {
-      const res = await fetch(`${API_URL}/${id}`, {
+      const res = await fetch(`${API_URL}/${userId}`, {
         credentials: 'include',
       })
       const result = await res.json();
@@ -31,11 +29,6 @@ function ProfilePage({ onUsernameChange }) {
   }
 
   useEffect(() => {
-      if (!userId) {
-          alert('請先登入');
-          navigate('/auth/login');
-          return;
-      }
       fetchUser();
   }, [userId])
 

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { HashRouter as Router, Routes, Route, Link, Outlet, Navigate } from "react-router-dom";
+import { HashRouter as Router, Routes, Route, Link, Outlet, Navigate, useLocation  } from "react-router-dom";
 import './App.css';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -66,7 +66,11 @@ function Layout({ isLogin, userId, username, role, onLogout }) {
 
 function PrivateRoute({ children }) {
   const user = localStorage.getItem('user');
-  return user ? children : <Navigate to="/auth/login" replace />;
+  const location = useLocation();
+  if (!user) {
+    return <Navigate to="/auth/login" state={{ from: location }} replace />;
+  }
+  return children;
 }
 
 function App() {
@@ -81,6 +85,7 @@ function App() {
     setUserId(user.id);
     setUsername(user.username);
     setRole(user.role);
+    localStorage.setItem('user', JSON.stringify(user));
   };
 
   const handleLogout = () => {
@@ -99,7 +104,6 @@ function App() {
       userObj.username = newUsername;
       localStorage.setItem('user', JSON.stringify(userObj));
     }
-
   }
 
   useEffect(() => {
@@ -129,7 +133,6 @@ function App() {
         console.error('登入時發生錯誤:', error);
       }
   };
-
     checkLogin();
   }, []);
 
@@ -156,9 +159,17 @@ function App() {
             <FavoritesPage />
             </PrivateRoute>
             } />
-          <Route path="/user/profile/:id" element={<ProfilePage onUsernameChange={handleUsernameChange} />} />
+          <Route path="/user/profile/:userId" element={
+            <PrivateRoute>
+            <ProfilePage onUsernameChange={handleUsernameChange} />
+            </PrivateRoute>
+            } />
           <Route path="/user/:id/registrations" element={<RegistrationsPage />} />
-          <Route path="/user/events/register/:eventId" element={<RegisterPage />} />
+          <Route path="/user/events/register/:eventId" element={
+            <PrivateRoute>
+            <RegisterPage />
+            </PrivateRoute>
+            } />
           <Route path="/admin" element={<Navigate to="/admin/registrations" replace />} />
           <Route path="/admin/registrations" element={<AdminRegistrationsPage />} />
           <Route path="/admin/events" element={<AdminEventsPage />} />

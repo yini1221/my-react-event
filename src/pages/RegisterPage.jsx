@@ -47,10 +47,8 @@ function RegisterPage() {
         if (result.data && result.data.status) {
             setStatus(result.data.status);
             setMessage(result.data.status === 'pending' ? '已申請，請靜待審核' :
-                       result.data.status === 'confirmed' ? '報名成功，請準時前往 !' : 
-                       result.data.status === 'cancelled' ? '報名已取消，請重新報名 !' : 
-                       '');
-            
+                       '報名成功，請準時前往 !'
+                      );
             setRegistrationId(result.data.id);
         } else {
             setStatus('');
@@ -61,12 +59,6 @@ function RegisterPage() {
     }
 
     useEffect(() => {
-        if (!userId) {
-            alert('請先登入');
-            navigate('/auth/login');
-            return;
-        }
-
         if(eventId) {
             fetchEvent();
             fetchRegistrationStatus();
