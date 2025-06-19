@@ -125,9 +125,9 @@ function AdminMembersPage() {
                                                             <span onClick={() => handleEdit(use)} type='button' className="btn p-0">
                                                                 <img src={`${import.meta.env.BASE_URL}images/settings.png`} style={{ width: '30px' }} />
                                                             </span>
-                                                            <span className="btn p-0">
+                                                            {/* <span className="btn p-0">
                                                                 <img src={`${import.meta.env.BASE_URL}images/garbage.png`} style={{ width: '30px' }} />
-                                                            </span>
+                                                            </span> */}
                                                         </div>
                                                     ) 
                                                 }
