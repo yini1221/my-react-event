@@ -13,7 +13,7 @@ import RegistrationsPage from './pages/RegistrationsPage';
 import AdminRegistrationsPage from './pages/AdminRegistrationsPage';
 import AdminEventsPage from './pages/AdminEventsPage';
 import AdminMembersPage from './pages/AdminMembersPage';
-import AdminDashboardPage from './pages/AdminDashboardPage';
+import ExportExample from './pages/ExportExample';
 import AdminEventCategoriesPage from './pages/AdminEventCategoriesPage';
 import EventDetailPage from './pages/EventDetailPage';
 import RegisterPage from './pages/RegisterPage';
@@ -99,7 +99,7 @@ function App() {
 
   const handleUsernameChange = (newUsername) => {
     setUsername(newUsername);
-    const user = localStorage.getItem('user');
+    const storedUser = localStorage.getItem('user');
     if(storedUser) {
       const userObj = JSON.parse(storedUser);
       userObj.username = newUsername;
@@ -177,7 +177,7 @@ function App() {
           <Route path="/admin/events" element={<AdminEventsPage />} />
           <Route path="/admin/event-categories" element={<AdminEventCategoriesPage />} />
           <Route path="/admin/members" element={<AdminMembersPage />} />
-          <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
+          <Route path="/admin/dashboard" element={<ExportExample />} />
           <Route path="/events/:eventId" element={<EventDetailPage />} />
         </Route>
       </Routes>
