@@ -41,6 +41,7 @@ function AdminEventCategoriesPage() {
             });
             const result = await res.json();
             if (res.ok) {
+                alert(result.message);
                 await fetchEventCategories(); // 重新查詢所有分類
                 setForm({ name: '' })
                 setEditing(false);
@@ -64,6 +65,7 @@ function AdminEventCategoriesPage() {
             const result = await res.json();
             if (res.ok) {
                 fetchEventCategories();
+                alert(result.message);
             } else {
                 alert(result.message || '刪除失敗');
             }

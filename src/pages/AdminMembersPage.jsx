@@ -43,6 +43,7 @@ function AdminMembersPage() {
             const result = await res.json();
             if(res.ok) {
                 await fetchMembers();
+                alert(result.message);
                 setForm({role: ''});
                 setEditing(false);
             } else {

@@ -52,6 +52,7 @@ function AdminRegistrationsPage() {
           if(res.ok) {
               setEditing(false);
               fetchRegistrations();
+              alert(result.message);
           } else {
                 alert(result.message || '更改失敗');
           }

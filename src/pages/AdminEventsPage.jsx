@@ -71,6 +71,7 @@ function AdminEventsPage() {
             const result = await res.json();
             if (res.ok) {
                 await fetchEvents(); // 重新查詢所有活動
+                alert(result.message);
                 setForm({ id: null, title: '', description: '', location: '', startTime: '', endTime: '', createAt: '', updateAt: '', maxParticipants: '', imageBase64: '', eventCategory: null })
                 setEditing(false);
             } else {
@@ -91,6 +92,7 @@ function AdminEventsPage() {
             });
             const result = await res.json();
             if (res.ok) {
+                alert(result.message);
                 fetchEvents();
             } else {
                 alert(result.message || '刪除失敗');
@@ -224,8 +226,7 @@ function AdminEventsPage() {
                                 </form>
                             </div>
                             <div className="d-flex align-items-center align-middle mb-3 w-100 position-absolute top-0 start-0">
-                                <label htmlFor="categoryFilter" className="form-label m-0">篩選：</label>
-                                <select id="categoryFilter" className="form-select w-auto"
+                                <select className="form-select w-auto"
                                         value={selectedCategoryId} onChange={(e) => setSelectedCategoryId(e.target.value)}>
                                 <option value="">全部分類</option>
                                 {categories.map(category => (

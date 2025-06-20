@@ -38,7 +38,7 @@ function ProfilePage({ onUsernameChange }) {
 
   const handleSubmit = async () => {
     try {
-          const url = `${API_URL}/${id}/username`;
+          const url = `${API_URL}/${userId}/username`;
           const res = await fetch(url, {
               method: 'PATCH', 
               credentials: "include",
@@ -48,6 +48,7 @@ function ProfilePage({ onUsernameChange }) {
           const result = await res.json();
           if (res.ok) {
               await fetchUser(); // 重新查詢所有分類
+              alert(result.message);
               setUsername('');
               setEditingUsername(false);
               if(onUsernameChange) {
@@ -63,7 +64,7 @@ function ProfilePage({ onUsernameChange }) {
 
   const handlePasswordSubmit = async () => {
     try {
-          const url = `${API_URL}/${id}/password`;
+          const url = `${API_URL}/${userId}/password`;
           const res = await fetch(url, {
               method: 'PATCH', 
               credentials: "include",
@@ -73,7 +74,9 @@ function ProfilePage({ onUsernameChange }) {
           const result = await res.json();
           if (res.ok) {
               await fetchUser(); // 重新查詢所有分類
+              console.log('API 回傳內容：', result);
               setPasswords({ oldPassword: '', newPassword: '', confirmPassword: ''});
+              alert(result.message);
               setEditingPassword(false);
           } else {
               alert(result.message || '修改密碼失敗');
