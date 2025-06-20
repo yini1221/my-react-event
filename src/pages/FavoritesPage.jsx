@@ -1,4 +1,5 @@
 import { Link, useParams, useLocation } from 'react-router-dom';
+import dayjs from 'dayjs';
 import { useState, useEffect } from 'react';
 import RegisterButton from '../components/RegisterButton';
 import '../css/favoritesPage.css';
@@ -52,6 +53,14 @@ function FavoritesPage() {
     }
   }, [userId]);
 
+  const formatDateTime = (datetime, type) => {
+    if (!datetime) return 'N/A';
+    if (type === 'startTime' || type === 'endTime') {
+        return dayjs(datetime).format('YYYY-MM-DD HH:mm');
+        }
+    return dayjs(datetime).format('YYYY-MM-DD HH:mm:ss');
+  };
+
   return (
         <div className="container-fluid">
             <div className='px-3 mx-auto' style={{'maxWidth': '1080px'}}>
@@ -76,11 +85,11 @@ function FavoritesPage() {
                                             <Link to={`/events/${favorite.id}`} className='event-link'>
                                                 <h3>{favorite.title}</h3>
                                             </Link>
-                                            <p className='m-1'>{favorite.startTime}</p>
+                                            <p className='m-1'>{formatDateTime(favorite.startTime, 'startTime')}</p>
                                             <div className='mb-3 mb-md-0'>{favorite.location}</div>
                                         </div>
                                         <div className='position-absolute bottom-0 end-0 translate-middle-y'>
-                                            <RegisterButton eventId={favorite.id} />
+                                            <RegisterButton className='btn btn-sm btn-blue text-white me-1' eventId={favorite.id} />
                                             <button onClick={() => handleDelete(favorite.id)} className='btn btn-sm btn-red text-white' >取消收藏</button>
                                         </div>
                                     </div>

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import dayjs from 'dayjs';
 import AdminNavbar from '../components/AdminNavbar';
 import { useEffect, useState } from 'react';
 
@@ -61,6 +62,14 @@ function AdminRegistrationsPage() {
         setEditing(true);
     }
 
+    const formatDateTime = (datetime, type) => {
+    if (!datetime) return 'N/A';
+    if (type === 'startTime' || type === 'endTime') {
+        return dayjs(datetime).format('YYYY-MM-DD HH:mm');
+        }
+    return dayjs(datetime).format('YYYY-MM-DD HH:mm:ss');
+    };
+
     return(
         <div className="container-fluid">
             <div className="row">
@@ -94,7 +103,7 @@ function AdminRegistrationsPage() {
                                             <td>
                                                 <Link to="/admin/events" className='text-decoration-underline text-decoration-none text-primary fs-6 p-5'>{registration.eventId}</Link>
                                             </td>
-                                            <td>{registration.registeredAt} </td>
+                                            <td>{formatDateTime(registration.registeredAt, 'registeredAt')} </td>
                                             <td>
                                                 {
                                                   editing && form.id === registration.id ? 
