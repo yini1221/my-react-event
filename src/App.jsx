@@ -6,7 +6,6 @@ import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import RegistrationForm from './pages/RegistrationForm';
-import EventsPage from './pages/EventsPage';
 import FavoritesPage from './pages/FavoritesPage';
 import ProfilePage from './pages/ProfilePage';
 import RegistrationsPage from './pages/RegistrationsPage';
@@ -155,7 +154,6 @@ function App() {
           <Route path="/home/search" element={<EventSearch />} />
           <Route path="/auth/login" element={<LoginPage onLoginSuccess={handleLoginSuccess} />} />
           <Route path="/auth/register" element={<RegistrationForm />} />
-          <Route path="/events" element={<EventsPage />} />
           <Route path="/user/favorites/:userId" element={
             <PrivateRoute>
             <FavoritesPage />
