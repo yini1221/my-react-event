@@ -92,7 +92,7 @@ function AdminEventCategoriesPage() {
                 <div className="col">
                     <div className="card card-body mt-3">
                         <div className="p-4 d-flex flex-column align-items-center">
-                            <h2>活動分類管理</h2>
+                            <h2 className='mt-3'>活動分類管理</h2>
                             <table className="table align-middle table-hover">
                                 <caption>目前共載入 {eventCategories.length} 筆資料</caption>
                                     <thead>

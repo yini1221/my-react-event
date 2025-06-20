@@ -127,7 +127,7 @@ function AdminEventsPage() {
                 <div className="col">
                     <div className="card card-body mt-3">
                         <div className="p-4 d-flex flex-column align-items-center position-relative">
-                            <div className='d-flex mb-3 gap-1'>
+                            <div className='d-flex mb-3 gap-1 mt-3'>
                                 <span>
                                     <img src={`${import.meta.env.BASE_URL}images/admin.png`} style={{ width: '40px' }} />
                                 </span> 
@@ -223,7 +223,7 @@ function AdminEventsPage() {
                                     </ul>
                                 </form>
                             </div>
-                            <div className="d-flex align-items-center align-middle mb-3 w-100">
+                            <div className="d-flex align-items-center align-middle mb-3 w-100 position-absolute top-0 start-0">
                                 <label htmlFor="categoryFilter" className="form-label m-0">篩選：</label>
                                 <select id="categoryFilter" className="form-select w-auto"
                                         value={selectedCategoryId} onChange={(e) => setSelectedCategoryId(e.target.value)}>

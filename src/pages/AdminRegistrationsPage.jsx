@@ -9,6 +9,9 @@ function AdminRegistrationsPage() {
 
     const [registrations, setRegistrations] = useState([]);
     const [form, setForm] = useState({ status: ''});
+    const [searchUserId, setSearchUserId] = useState('');
+    const [searchName, setSearchName] = useState('');
+    const [searchEventId, setSearchEventId] = useState(''); 
     const [editing, setEditing] = useState(false);
 
     const fetchRegistrations = async () => {
@@ -56,6 +59,12 @@ function AdminRegistrationsPage() {
             console.error('提交錯誤:', err);
         }
     }
+    const filteredRegistrations = registrations.filter(reg => {
+        const matchUser = searchUserId ? reg.userId.toString().includes(searchUserId) : true;
+        const matchName = searchName ? reg.username.toLowerCase().toString().includes(searchName.toLowerCase()) : true;
+        const matchEvent = searchEventId ? reg.eventId.toString().includes(searchEventId) : true;
+        return matchUser && matchName && matchEvent;
+    });
 
     const handleEdit = (registration) => {
         setForm(registration);
@@ -78,8 +87,41 @@ function AdminRegistrationsPage() {
                 </div>
                 <div className="col">
                     <div className="card card-body mt-3">
-                         <div className="p-4 d-flex flex-column align-items-center">
-                            <h2>報名列表</h2>
+                         <div className="p-4 d-flex flex-column align-items-center position-relative">
+                            <div className="position-absolute top-0 start-0 d-flex gap-3">
+                                <input
+                                    type="text"
+                                    placeholder="會員編號"
+                                    className="form-control"
+                                    value={searchUserId}
+                                    onChange={(e) => setSearchUserId(e.target.value)}
+                                    style={{ width: '100px' }}
+                                />
+                                <input
+                                    type="text"
+                                    placeholder="會員名稱"
+                                    className="form-control"
+                                    value={searchName}
+                                    onChange={(e) => setSearchName(e.target.value)}
+                                    style={{ width: '100px' }}
+                                />
+                                <input
+                                    type="text"
+                                    placeholder="活動編號"
+                                    className="form-control"
+                                    value={searchEventId}
+                                    onChange={(e) => setSearchEventId(e.target.value)}
+                                    style={{ width: '100px' }}
+                                />
+                                <button className="btn btn-secondary" onClick={() => {
+                                    setSearchUserId('');
+                                    setSearchName('');
+                                    setSearchEventId('');
+                                    fetchRegistrations();
+                                }}>清除
+                                </button>
+                            </div>
+                            <h2 className='mt-3'>報名列表</h2>
                             <table className="table align-middle table-hover w-100">
                                 <caption>目前共載入 {registrations.length} 筆資料</caption>
                                 <thead>
@@ -94,14 +136,14 @@ function AdminRegistrationsPage() {
                                 </thead>
                                 <tbody>
                                     {
-                                        registrations.map((registration) => (
+                                        filteredRegistrations.map((registration) => (
                                         <tr key={registration.id}>
                                             <td>{registration.id}</td>
                                             <td>
-                                                <Link to="/admin/members" className='text-decoration-underline text-decoration-none text-primary fs-6'>{registration.userId} - {registration.username}</Link>
+                                                <span to="/admin/members" className='fs-6'>{registration.userId} (<span className='fs-6'>{registration.username}</span>)</span>
                                             </td>
                                             <td>
-                                                <Link to="/admin/events" className='text-decoration-underline text-decoration-none text-primary fs-6 p-5'>{registration.eventId}</Link>
+                                                <Link to={`/events/${registration.eventId}`} className='text-decoration-underline text-decoration-none text-primary fs-6'>{registration.eventId}</Link>
                                             </td>
                                             <td>{formatDateTime(registration.registeredAt, 'registeredAt')} </td>
                                             <td>

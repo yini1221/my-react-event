@@ -7,6 +7,7 @@ function AdminMembersPage() {
 
     const [users, setUsers] = useState([]);
     const [form, setForm] = useState({ role: '' });
+    const [searchName, setSearchName] = useState('');
     const [editing, setEditing] = useState(false);
 
     const fetchMembers = async () => {
@@ -52,6 +53,9 @@ function AdminMembersPage() {
         };
     }
 
+    const filteredUsers = users.filter(user =>
+        user.username.toLowerCase().includes(searchName.toLowerCase())
+    );
 
     const handleEdit = (use) => {
         setForm(use);
@@ -66,8 +70,20 @@ function AdminMembersPage() {
                 </div>
                 <div className="col">
                     <div className="card card-body mt-3">
-                        <div className="p-4 d-flex flex-column align-items-center">
-                            <h2>會員管理</h2>
+                        <div className="p-4 d-flex flex-column align-items-center position-relative">
+                            <h2 className='mt-3'>會員管理</h2>
+                            <div className="mb-3 d-flex align-items-center gap-2 position-absolute top-0 start-0">
+                                <input
+                                    type="text"
+                                    placeholder="會員名稱"
+                                    className="form-control w-auto"
+                                    value={searchName}
+                                    onChange={(e) => setSearchName(e.target.value)}
+                                />
+                                <button className="btn btn-secondary" onClick={() => setSearchName('')}>
+                                    清除
+                                </button>
+                            </div>
                             <table className="table align-middle table-hover w-100">
                                 <caption>目前共載入 {users.length} 筆資料</caption>
                                 <thead>
@@ -83,7 +99,7 @@ function AdminMembersPage() {
                                 </thead>
                                 <tbody>
                                     {
-                                        users.map((use) => (
+                                        filteredUsers.map((use) => (
                                         <tr key={use.id}>
                                             <td>{use.id}</td>
                                             <td>{use.username}</td>
