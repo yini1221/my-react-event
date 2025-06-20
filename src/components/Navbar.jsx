@@ -47,7 +47,7 @@ function Navbar({ isLogin, userId, username, role, onLogout }) {
     <>
       <nav className="navbar navbar-light bg-navbar fixed-top" style={{ height: '50px' }}>
         <div className="container-fluid px-2 d-flex align-items-center position-relative" style={{'maxWidth': '1080px'}}>
-          <button style={{ width: '60px' }} className="navbar-toggler border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+          <button style={{ width: '60px' }} className="navbar-toggler border-0 navbar-button" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
             <img src={`${import.meta.env.BASE_URL}images/hamburger-menu.png`} />
           </button>
           <Link className="navbar-brand position-absolute top-50 start-50 translate-middle" to="/home" style={{ width: '50px' }}>
@@ -67,11 +67,11 @@ function Navbar({ isLogin, userId, username, role, onLogout }) {
                       {username}{role === 'ADMIN' && (<span>(管理員)</span>)}
                     </Link> 你好!
                   </span>
-                  <button type="button" className="btn text-color" onClick={() => handleLogout()}>登出</button>
+                  <button type="button" className="btn text-color navbar-button" onClick={() => handleLogout()}>登出</button>
                 </>) 
                 : (<>
                   <button type="button" className="btn text-color" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    <Link to="/auth/login" className="nav-link custom-link" aria-current="login">登入</Link>
+                    <Link to="/auth/login" className="nav-link custom-link navbar-button" aria-current="login">登入</Link>
                   </button>
                   <button type="button" className="btn text-color" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     <Link to="/auth/register" className="nav-link custom-link" aria-current="register">註冊</Link>
@@ -88,7 +88,7 @@ function Navbar({ isLogin, userId, username, role, onLogout }) {
                     <img src={`${import.meta.env.BASE_URL}images/search-o.png`} style={{ width: '30px' }} />
                   </span>
                 </div>
-                <button className="btn-close text-reset d-flex" type="button" data-bs-toggle="collapse" data-bs-target="#searchCollapse" aria-label="Close" style={{width: '20px'}}></button>
+                <button className="btn-close text-reset d-flex navbar-button" type="button" data-bs-toggle="collapse" data-bs-target="#searchCollapse" aria-label="Close" style={{width: '20px'}}></button>
               </form>
             </div>
           <div className="offcanvas offcanvas-start bg-menu" tabIndex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">

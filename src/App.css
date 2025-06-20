@@ -32,6 +32,32 @@
   }
 }
 
+/* 日間模式 */
+body.light-theme {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+/* 夜間模式 */
+body.dark-theme {
+  background-color: #121212;
+  color: #f0f0f0;
+}
+
+.navbar.bg-navbar {
+  background-color: var(--navbar-bg);
+  transition: background-color 0.3s ease;
+}
+
+body.light-theme .navbar.bg-navbar {
+  --navbar-bg: #f8f9fa;
+}
+
+body.dark-theme .navbar.bg-navbar {
+  --navbar-bg: #1f1f1f;
+  color: #eee;
+}
+
 .card {
   padding: 2em;
 }

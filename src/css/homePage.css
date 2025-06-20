@@ -1,3 +1,48 @@
+/* 預設日間模式 */
+body.light-theme .card {
+  background-color: #fff;
+  color: #000;
+}
+
+body.light-theme .bg-light {
+  background-color: #f8f9fa !important;
+}
+
+/* 夜間模式 */
+body.dark-theme .card {
+  background-color: #2c2c2c;
+  color: #eee;
+}
+
+body.dark-theme .bg-light {
+  background-color: #1c1c1c !important;
+}
+
+body.dark-theme .location-text {
+  color: #ccc;
+}
+
+body.dark-theme .time-text {
+  color: #bbb;
+}
+
+body.dark-theme button {
+    background-color: #2c2c2c;
+}
+
+body.dark-theme .category {  
+    color: #eee !important;
+}
+
+body.dark-theme .time-text {  
+    color: #eee;
+}
+
+body.dark-theme .text-dark {  
+    color: #eee !important;
+}
+
+
 .category {
     color: #b5bac1 !important;
     font-size: 12px;

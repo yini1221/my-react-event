@@ -1,23 +1,37 @@
-import React, { useState } from 'react';
-import { Button } from 'react-bootstrap';
+import { useEffect, useState } from 'react';
 
 function ToggleTheme() {
+  // 讀取 localStorage 的主題，預設為 light
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem('theme') || 'light';
+  });
 
-  const [isDarkMode, setIsDarkMode] = useState(false);
-  const toggleTheme = () => setIsDarkMode(!isDarkMode);
-
-  const themeStyles = {
-    backgroundColor: isDarkMode ? '#1e1e2d' : '#f9f9f9',
-    color: isDarkMode ? '#f9f9f9' : '#1e1e2d',
+  // 切換主題函式
+  const toggleTheme = () => {
+    setTheme(prev => (prev === 'light' ? 'dark' : 'light'));
   };
 
-    return (
-        <div>
-          <Button variant="link" onClick={toggleTheme} className="text-decoration-none toggle-theme-color custom-link">
-            {isDarkMode ? '🌞 日間模式' : '🌙 夜間模式'}
-          </Button>
-        </div>
-    );
+  // 當 theme 改變時，更新 localStorage 和 body class
+  useEffect(() => {
+    localStorage.setItem('theme', theme);
+    if (theme === 'dark') {
+      document.body.classList.add('dark-theme');
+      document.body.classList.remove('light-theme');
+    } else {
+      document.body.classList.add('light-theme');
+      document.body.classList.remove('dark-theme');
+    }
+  }, [theme]);
+
+  return (
+    <button 
+      onClick={toggleTheme} 
+      className="btn btn-outline-secondary"
+      aria-label="切換主題"
+    >
+      {theme === 'light' ? '🌞 日間模式' : '🌙 夜間模式'}
+    </button>
+  );
 }
 
-export default ToggleTheme
+export default ToggleTheme;
