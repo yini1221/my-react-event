@@ -7,10 +7,6 @@
     box-shadow: 0 0 0 0 !important;
 }
 
-.row {
-    --bs-gutter-x: 0 !important;
-}
-
 .btn-login {
     display: inline-block;
     padding: .25rem 7rem;
