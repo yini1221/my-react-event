@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import '../css/loginPage.css';
 
 const API_URL = 'http://localhost:8084/auth'; // 後台 API
 
@@ -18,8 +19,10 @@ function LoginPage({ onLoginSuccess  }) {
       const result = await res.json();
       if (res.ok && result.data?.image) {
         setCaptchaImg(`data:image/jpeg;base64,${result.data.image}`);
+        setForm({ password: '', authCode: '' })
       } else {
-        console.error("載入驗證碼失敗：資料結構錯誤", result);
+        console.error("載入驗證碼失敗：", result);
+        setForm({ password: '', authCode: '' })
         return;
       }
     } catch (err) {
@@ -65,54 +68,54 @@ function LoginPage({ onLoginSuccess  }) {
 
   return (
     <div className="container mt-5">
-      <h2>登入</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label>帳號 (Email)</label>
-          <input 
-            type="email" 
-            name="email" 
-            value={form.email} 
-            onChange={handleChange} 
-            className="form-control" 
-            required 
-            autoFocus 
-            placeholder="請輸入電子郵件"
-          />
-        </div>
-        <div className="mb-3">
-          <label>密碼</label>
-          <input 
-            type="password" 
-            name="password" 
-            value={form.password} 
-            onChange={handleChange} 
-            className="form-control" 
-            required 
-            placeholder="請輸入密碼"
-          />
-        </div>
-        <div className="mb-3">
-					<label htmlFor="authcode">🔢 驗證碼</label>
-					<input 
-            id="authcode" 
-            name="authCode" 
-            type="text" 
-            value={form.authCode} 
-            onChange={handleChange}
-            className="form-control" 
-            placeholder="請輸入驗證碼" 
-            required />
-					<img src={captchaImg} onClick={loadCaptcha} valign="middle" title="點擊重新取得驗證碼" alt="驗證碼" />
-				</div>
-        <button type="submit" className="btn btn-primary">登入</button>
-      </form>
-      <p style={{ marginTop: 10 }}>
-        還沒有帳號？{" "}
-        <span>
-          <Link to="/auth/register" className="link-info fs-6" aria-current="register">註冊</Link>
-        </span>
-      </p>
+      <div className="mx-auto" style={{'maxWidth': '270px'}}>
+        <img src={`${import.meta.env.BASE_URL}images/personal-information.png`} style={{ width: '150px' }} alt="profile" />
+        <form onSubmit={handleSubmit}>
+          <div>
+            <input 
+              type="email" 
+              name="email" 
+              value={form.email} 
+              onChange={handleChange} 
+              className="form-control" 
+              required 
+              autoFocus 
+              placeholder="電子郵件"
+            />
+          </div>
+          <div>
+            <input 
+              type="password" 
+              name="password" 
+              value={form.password} 
+              onChange={handleChange} 
+              className="form-control" 
+              required 
+              placeholder="密碼"
+            />
+          </div>
+          <div className='d-flex mb-2'>
+            <input 
+              id="authcode" 
+              name="authCode" 
+              type="text" 
+              value={form.authCode} 
+              onChange={handleChange}
+              className="form-control" 
+              placeholder="驗證碼" 
+              style={{'height': '38px'}}
+              required />
+            <img className="border" src={captchaImg} onClick={loadCaptcha} valign="middle" title="點擊重新取得驗證碼" alt="驗證碼" />
+          </div>
+          <button type="submit" className="btn-login">登入</button>
+        </form>
+        <p style={{ marginTop: 10 }}>
+          還沒有帳號？{" "}
+          <span>
+            <Link to="/auth/register" className="link-info fs-6" aria-current="register">註冊</Link>
+          </span>
+        </p>
+      </div>
     </div>
   );
 }
