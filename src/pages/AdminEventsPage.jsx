@@ -22,7 +22,6 @@ function AdminEventsPage() {
                 throw new Error(`HTTP error! status: ${res.status}`);
             }
             const result = await res.json();
-            console.log('API 回傳內容：', result);
             setEvents(result.data || []);
         } catch (error) {
             console.error('讀取錯誤:', error);
@@ -36,7 +35,6 @@ function AdminEventsPage() {
             credentials: "include"
         });
         const result = await res.json();
-        console.log('API 回傳內容：', result);
         setCategories(result.data || []);
         } catch (error) {
         console.error('讀取錯誤:', error);
@@ -100,7 +98,6 @@ function AdminEventsPage() {
             console.error('刪除錯誤', err);
         }
     }
-
 
     // 編輯模式
     const handleEdit = (event) => {
@@ -228,8 +225,6 @@ function AdminEventsPage() {
                                     <th scope="col">編號</th>
                                     <th scope="col">分類</th>
                                     <th scope="col">活動名稱</th>
-                                    {/* <th scope="col">內容</th> */}
-                                    {/* <th scope="col">地點</th> */}
                                     <th scope="col">活動時間</th>
                                     <th scope="col">人數上限</th>
                                     <th scope="col">建立者</th>
@@ -244,10 +239,8 @@ function AdminEventsPage() {
                                                 <th scope="row">{event.id}</th>
                                                 <td>{event.eventCategory?.name}</td>
                                                 <td>{event.title}</td>
-                                                {/* <td className="overflow-auto w-100" style={{ height: '200px', display: '-webkit-box' }}>{event.description}</td> */}
-                                                {/* <td>{event.location}</td> */}
                                                 <td>
-                                                    {formatDateTime(event.startTime, 'startTime')}~{formatDateTime(event.endTime, 'endTime')}
+                                                    {formatDateTime(event.startTime, 'startTime')}<br />{formatDateTime(event.endTime, 'endTime')}
                                                 </td>
                                                 <td>{event.maxParticipants}</td>
                                                 <td>Yini</td>
