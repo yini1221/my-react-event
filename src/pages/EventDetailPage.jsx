@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import RegisterButton from '../components/RegisterButton';
 import { Link, useParams } from 'react-router-dom';
+import EventReviews from '../pages/EventReviews';
 import '../css/eventDetailPage.css';
 
 const API_URL = 'http://localhost:8084/events'; // 後台 API
@@ -121,6 +122,8 @@ useEffect(() => {
 }, [eventId, userId]);
 
   if (!event) return <p>載入中...</p>;
+  
+  const eventStarted = new Date(event.startTime) <= new Date();
 
   return (
       <div className="container-fluid d-flex justify-content-center flex-column p-4 mx-auto bg-light">
@@ -167,6 +170,11 @@ useEffect(() => {
               </div>
             </div>
           </div>
+            {eventStarted ? (
+              <EventReviews eventId={eventId} user={user} />
+            ) : (
+              <p>活動尚未開始，暫時無法發表心得分享。</p>
+            )}
           <div>
             <h2>你可能會喜歡這些活動</h2>
             <div className="container mb-3">
