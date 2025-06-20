@@ -11,6 +11,7 @@ function AdminEventsPage() {
     const [form, setForm] = useState({ id: null, title: '', description: '', location: '', startTime: '', endTime: '', createdAt: '', updatedAt: '', maxParticipants: '', imageBase64: '', eventCategory: null });
     const [editing, setEditing] = useState(false); // 是否為編輯模式
     const [categories, setCategories] = useState([]);
+    const [selectedCategoryId, setSelectedCategoryId] = useState('');
 
     // 讀取活動資料
     const fetchEvents = async () => {
@@ -98,6 +99,10 @@ function AdminEventsPage() {
             console.error('刪除錯誤', err);
         }
     }
+
+    const filteredEvents = selectedCategoryId
+    ? events.filter(event => event.eventCategory?.id === parseInt(selectedCategoryId))
+    : events;
 
     // 編輯模式
     const handleEdit = (event) => {
@@ -218,6 +223,16 @@ function AdminEventsPage() {
                                     </ul>
                                 </form>
                             </div>
+                            <div className="d-flex align-items-center align-middle mb-3 w-100">
+                                <label htmlFor="categoryFilter" className="form-label m-0">篩選：</label>
+                                <select id="categoryFilter" className="form-select w-auto"
+                                        value={selectedCategoryId} onChange={(e) => setSelectedCategoryId(e.target.value)}>
+                                <option value="">全部分類</option>
+                                {categories.map(category => (
+                                    <option key={category.id} value={category.id}>{category.name}</option>
+                                ))}
+                                </select>
+                            </div>
                             <table className="table align-middle table-hover w-100">
                                 <caption>目前共載入 {events.length} 筆資料</caption>
                                 <thead>
@@ -234,7 +249,7 @@ function AdminEventsPage() {
                                 </thead>
                                 <tbody>
                                     {
-                                        events.map((event) => (
+                                        filteredEvents.map((event) => (
                                             <tr key={event.id}>
                                                 <th scope="row">{event.id}</th>
                                                 <td>{event.eventCategory?.name}</td>
