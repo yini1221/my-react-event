@@ -3,6 +3,7 @@ import { HashRouter as Router, Routes, Route, Link, Outlet, Navigate, useLocatio
 import './App.css';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import { useTheme } from './components/ThemeContext';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import RegistrationForm from './pages/RegistrationForm';
@@ -23,11 +24,27 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 function Home() {
+
+  const { theme } = useTheme();
+  const [logoSrc, setLogoSrc] = useState(`${import.meta.env.BASE_URL}images/homelogo_big.png`);
+  const [fade, setFade] = useState(false);
+
+  useEffect(() => {
+    setFade(true);
+    const timeout = setTimeout(() => {
+      setLogoSrc(
+        `${import.meta.env.BASE_URL}images/${theme === 'dark' ? 'homelogo_white.png' : 'homelogo_big.png'}`
+      );
+      setFade(false);
+    }, 250);
+    return () => clearTimeout(timeout);
+  }, [theme]);
+
   return (
     <>
       <div>
         <Link to="/home">
-          <img src={`${import.meta.env.BASE_URL}images/homelogo1.png`} className="logo" alt="Vite logo" 
+          <img src={logoSrc} className={`logo ${fade ? 'fade-out' : ''}`} alt="Yi起Join logo" 
           onError={(e) => {
           e.target.src = "/participation.png";
           console.error("圖片載入失敗");
@@ -79,6 +96,9 @@ function App() {
   const [userId, setUserId] = useState(null);
   const [username, setUsername] = useState(null);
   const [role, setRole] = useState(null);
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem('theme') || 'light';
+  });
 
   const handleLoginSuccess = (user) => {
     setIsLogin(true);
@@ -136,14 +156,26 @@ function App() {
     checkLogin();
   }, []);
 
+  useEffect(() => {
+    localStorage.setItem('theme', theme);
+    if (theme === 'dark') {
+      document.body.classList.add('dark-theme');
+      document.body.classList.remove('light-theme');
+    } else {
+      document.body.classList.add('light-theme');
+      document.body.classList.remove('dark-theme');
+    }
+  }, [theme]);
+
   return (
     <Router>
       <Routes>
         {/* 沒有 Navbar 和 Footer 的首頁 */}
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home  theme={theme} />} />
 
         {/* 有 Navbar 和 Footer 的其他頁面 */}
         <Route element={<Layout 
+              theme={theme}
               isLogin={isLogin}
               userId={userId}
               username={username}

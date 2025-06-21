@@ -1,21 +1,15 @@
 import { Link, useNavigate } from 'react-router-dom';
+import { useTheme } from '../components/ThemeContext';
 import ToggleTheme from './ToggleTheme';
 import '../css/Navbar.css';
 import { useEffect, useState } from 'react';
-
-const API_URL = 'http://localhost:8084/user'; // 後台 API
 
 function Navbar({ isLogin, userId, username, role, onLogout }) {
 
   const navigate = useNavigate();
   const [searchKeyword, setSearchKeyword] = useState('');
-
-  useEffect(() => {
-    const storedUser = localStorage.getItem('user');
-    if(storedUser) {
-      const userObj = JSON.parse(storedUser);
-    }
-  }, []);
+  const { theme } = useTheme();
+  const logoSrc = `${import.meta.env.BASE_URL}images/${theme === 'dark' ? 'homelogo_white.png' : 'homelogo.png'}`;
 
   const handleLogout = async (e) => {
     try {
@@ -51,7 +45,7 @@ function Navbar({ isLogin, userId, username, role, onLogout }) {
             <img src={`${import.meta.env.BASE_URL}images/hamburger-menu.png`} />
           </button>
           <Link className="navbar-brand position-absolute top-50 start-50 translate-middle" to="/home" style={{ width: '50px' }}>
-            <img src={`${import.meta.env.BASE_URL}images/homelogo.png`} />
+            <img src={logoSrc} />
           </Link>
           <div className='d-flex'>
             <button className="bg-navbar btn btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#searchCollapse" aria-expanded="false" aria-controls="searchCollapse">
@@ -118,7 +112,7 @@ function Navbar({ isLogin, userId, username, role, onLogout }) {
                     </ul>
                   </li>
                 )}
-                <li className="nav-item"><ToggleTheme /></li>
+                <li className="nav-item mt-1"><ToggleTheme /></li>
               </ul>
             </div>
           </div>

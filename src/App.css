@@ -6,10 +6,16 @@
 }
 
 .logo {
-  height: 13em;
-  will-change: filter;
-  transition: filter 300ms;
+  width: 208px;
+  height: auto;
+  transition: opacity 0.5s ease-in-out;
+  opacity: 1;
 }
+
+.logo.fade-out {
+  opacity: 0;
+}
+
 
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
@@ -41,7 +47,7 @@ body.light-theme {
 /* 夜間模式 */
 body.dark-theme {
   background-color: #121212;
-  color: #f0f0f0;
+  color: #ccc;
 }
 
 .navbar.bg-navbar {

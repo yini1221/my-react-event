@@ -1,14 +1,14 @@
 /* 夜間模式 */
 body.dark-theme .bg-navbar {
-  background-color: #a09e9e !important;
+  background-color: #1f1f1f !important;
 }
 
 body.dark-theme .text-color {
   color: #fff !important;
 }
 
-body.dark-theme .navbar-button {
-  background-color: #a09e9e !important;
+body.dark-theme button {
+  background-color: inherit !important;
 }
 
 body.dark-theme .bg-menu {
@@ -16,7 +16,7 @@ body.dark-theme .bg-menu {
 }
 
 body.dark-theme .custom-link {
-  color: #eee !important;
+  color: #ccc !important;
 }
 
 body.dark-theme h5 {
@@ -26,6 +26,18 @@ body.dark-theme h5 {
 body.dark-theme .dropdown-menu {
   background-color: #797272 !important;
   border-color: #dad2c9;
+}
+
+body.dark-theme .btn-close{  
+    filter: invert(1) !important;
+}
+
+body.dark-theme .btn-theme{
+  color: #ccc;
+}
+
+body.dark-theme .btn-theme:hover, body.dark-theme .custom-link:hover {
+  background-color: #55432e !important;
 }
 
 .navbar-logo {
@@ -78,6 +90,7 @@ body.dark-theme .dropdown-menu {
 }
 
 .custom-link:hover {
+  background-color: #ffffff;
   filter: drop-shadow(0 0 2em #997141);
 }
 
@@ -95,6 +108,11 @@ body.dark-theme .dropdown-menu {
 .text-color {
   color: #7A4E2E !important;
 }
+
 .navbar-toggler:focus {
     box-shadow: 0 0 0 0rem !important;
+}
+
+.btn-close{  
+    filter: invert(0) !important;
 }

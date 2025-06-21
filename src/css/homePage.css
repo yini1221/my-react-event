@@ -26,10 +26,6 @@ body.dark-theme .time-text {
   color: #bbb;
 }
 
-body.dark-theme button {
-    background-color: #2c2c2c;
-}
-
 body.dark-theme .category {  
     color: #eee !important;
 }
@@ -41,7 +37,6 @@ body.dark-theme .time-text {
 body.dark-theme .text-dark {  
     color: #eee !important;
 }
-
 
 .category {
     color: #b5bac1 !important;
