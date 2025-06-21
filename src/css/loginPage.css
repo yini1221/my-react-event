@@ -1,6 +1,5 @@
 .form-control {
     border-radius: 0 !important;
-
 }
 
 .form-control:focus {
@@ -10,8 +9,7 @@
 .btn-login {
     display: inline-block;
     padding: .25rem 7rem;
-    border-radius: 10rem;
-    color: #fff;
+    background-color: #7A4E2E !important;
     text-transform: uppercase;
     font-size: 1rem;
     letter-spacing: .15rem;
@@ -28,8 +26,6 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: #0cf;
-    border-radius: 10rem;
     z-index: -2;
 }
 
@@ -40,15 +36,14 @@
     left: 0;
     width: 0%;
     height: 100%;
-    background-color: #0aa3cc; /* 這裡用手動調整色碼代替 darken(#0cf, 15%) */
+    background-color: #5b3a1a;
     transition: all .3s;
-    border-radius: 10rem;
     z-index: -1;
 }
 
 .btn-login:hover {
     color: #fff;
-    border-color: #0cf !important;
+    border-color: #3485ff !important;
 }
 
 .btn-login:hover::before {

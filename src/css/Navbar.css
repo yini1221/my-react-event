@@ -36,8 +36,13 @@ body.dark-theme .btn-theme{
   color: #ccc;
 }
 
-body.dark-theme .btn-theme:hover, body.dark-theme .custom-link:hover {
+body.dark-theme .btn-theme:hover {
   background-color: #55432e !important;
+}
+
+body.dark-theme .custom-link:hover {
+  color: #fff !important;
+  background-color: inherit;
 }
 
 .navbar-logo {
@@ -90,7 +95,7 @@ body.dark-theme .btn-theme:hover, body.dark-theme .custom-link:hover {
 }
 
 .custom-link:hover {
-  background-color: #ffffff;
+  color: #7A4E2E !important;
   filter: drop-shadow(0 0 2em #997141);
 }
 

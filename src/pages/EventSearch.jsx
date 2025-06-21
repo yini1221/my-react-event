@@ -46,8 +46,8 @@ function EventSearch() {
   return (
     <div className='container-fluid overflow-hidden mt-3 mb-3'>
         <div className='mx-auto' style={{'maxWidth': '1080px'}}>
-                <div className=''>
-                    <span className='bg-white fs-4 rounded-5'>搜尋結果 ' {keyword} '</span>
+                <div className='mx-auto my-3 p-1 alert alert-light rounded-5 shadow overflow-hidden'>
+                    <span className='fs-4'>搜尋結果 ' {keyword} '</span>
                 </div>
                 {loading && <p>搜尋中...</p>}
                 {!loading && events.length === 0 ? <p className='p-2'>找不到相關活動</p> :

@@ -28,7 +28,7 @@ function StarDisplay({ rating }) {
   return (
     <span style={{ color: '#ffc107', fontSize: '18px' }}>
       {stars.map((star) => (
-        <span key={star} style={{ color: star <= rating ? '#ffc107' : '#e4e5e9' }}>
+        <span key={star} style={{ fontSize: '20px', color: star <= rating ? '#ffc107' : '#e4e5e9' }}>
           ★
         </span>
       ))}
@@ -101,35 +101,43 @@ function EventReviews({ eventId, user }) {
   };
 
   return (
-    <div className='text-start'>
-      <h3>心得分享</h3>
-      <form onSubmit={handleSubmit}>
-        <textarea
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-          rows={4}
-          placeholder="寫下你的心得..."
-          required
-        />
-        <div>
-            <label>評分：</label>
-            <StarRating rating={rating} setRating={setRating} />
-        </div>
-        <button type="submit" disabled={loading}>{loading ? '發表中...' : '發表心得'}</button>
-      </form>
-
-      <hr />
-
-      <h4>心得列表</h4>
+    <div className='text-start p-4'>
+      <h4 className='mb-3'>活動評價</h4>
       {reviews.length === 0 && <p>尚無心得，快來發表吧！</p>}
-      <ul>
+      <ul className='list-unstyled'>
         {reviews.map((rev) => (
-          <li key={rev.id}>
-            <strong>{rev.username}</strong> ({new Date(rev.createdAt).toLocaleString()}) - 評分：{rev.rating ? <StarDisplay rating={rev.rating} /> : '無'}
-            <p>{rev.content}</p>
+          <li key={rev.id} className='row border-bottom mb-2'>
+            <div className='col-1'>
+              <img src={`${import.meta.env.BASE_URL}images/user.png`} className='ms-4' style={{'width': '40px'}}/>
+            </div>
+            <div className='col-11'>
+              <strong>{rev.username}</strong> ({new Date(rev.createdAt).toLocaleString()}) - 評分：{rev.rating ? <StarDisplay rating={rev.rating} /> : '無'}
+              <p>{rev.content}</p>
+            </div>
           </li>
         ))}
       </ul>
+      <h5>{user.username} ! 分享你的感想</h5>
+      <div className='row '>
+        <div className='col-1'>
+          <img src={`${import.meta.env.BASE_URL}images/user.png`} className='ms-4' style={{'width': '40px'}}/>
+        </div>
+        <form onSubmit={handleSubmit} className='col-10'>
+          <div className='d-flex align-items-center'>
+              <label>評分：</label>
+              <StarRating rating={rating} setRating={setRating} />
+          </div>
+          <textarea
+            className='form-control mb-2'
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            rows={4}
+            placeholder="寫下你的心得..."
+            required
+          />
+          <button type="submit" disabled={loading}>{loading ? '發表中...' : '發表心得'}</button>
+        </form>
+      </div>
     </div>
   );
 }

@@ -1,0 +1,58 @@
+/* 表單輸入間距 */
+form ul li {
+  margin-bottom: 0 !important;
+}
+
+/* 按鈕 hover 色彩 */
+.btn-outline-primary:hover {
+  background-color: #7A4E2E;
+  color: white;
+  border-color: #7A4E2E;
+}
+
+/* 表格標題文字顏色 */
+.table-light th {
+  color: #7A4E2E;
+  font-weight: 600;
+}
+
+/* 表格操作按鈕 hover */
+.btn-link:hover img {
+  filter: brightness(0.7);
+  cursor: pointer;
+}
+
+/* 表格內文字大小調整 */
+.table tbody td {
+  vertical-align: middle;
+  font-size: 0.95rem;
+}
+
+/* 強制縮小特定欄位寬度，避免內容撐開 */
+table th:nth-child(1),
+table td:nth-child(1) {
+  width: 4% !important;
+  max-width: 40px;
+  white-space: nowrap;
+}
+
+table th:nth-child(2),
+table td:nth-child(2) {
+  width: 8% !important;
+  max-width: 80px;
+  white-space: nowrap;
+}
+
+table th:nth-child(5),
+table td:nth-child(5) {
+  width: 6% !important;
+  max-width: 60px;
+  white-space: nowrap;
+}
+
+table th:nth-child(6),
+table td:nth-child(6) {
+  width: 8% !important;
+  max-width: 80px;
+  white-space: nowrap;
+}
