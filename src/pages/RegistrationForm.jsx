@@ -8,6 +8,7 @@ const API_URL = 'http://localhost:8084/auth/register'; // 後台 API
 function RegistrationForm() {
 
     const [form, setForm] = useState({ username: '', email: '', password: '' });
+    const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -31,65 +32,106 @@ function RegistrationForm() {
                 alert(`註冊成功！暱稱：${form.username}，帳號：${form.email}`);
                 setForm({ username: '', email: '', password: '' })
                 navigate("/auth/login");
+                setErrorMessage('');
             } else {
-                alert(result.message || '操作失敗');
-                setForm({ username: '', email: '', password: '' })
-            }
+                setErrorMessage(result.message || '登入失敗');
+                setForm(prev => ({
+                ...prev,
+                email: '',
+                password: ''
+            }));
+          }
         } catch (err) {
             console.error('提交錯誤:', err);
-            alert('註冊時發生錯誤，請稍後再試');
+            setErrorMessage('系統錯誤，請稍後再試');
         }
     };
 
     return (
-    <div className="container-fluid mt-5">
-      <div className="mx-auto" style={{'maxWidth': '270px'}}>
-        <h2>註冊</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="text-start">
-            <input 
-              type="text" 
-              name="username" 
-              value={form.username} 
-              onChange={handleChange} 
-              className="form-control" 
-              required 
-              autoFocus 
+    <div className="d-flex justify-content-center align-items-center vh-100" style={{ backgroundColor: "#f7ede1" }}>
+      <div className="card shadow-sm p-4" style={{ maxWidth: "380px", width: "100%", borderRadius: "12px", backgroundColor: "#e6ddd3" }}>
+        <h2 className="mb-4 text-center" style={{ color: "#7A4E2E", fontWeight: "700" }}>註冊</h2>
+
+        {errorMessage && (
+          <div className="alert alert-danger py-2 px-3" role="alert">
+            {errorMessage}
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit} noValidate>
+          <div className="mb-3 text-start">
+            <input
+              type="text"
+              name="username"
+              value={form.username}
+              onChange={handleChange}
+              className="form-control form-control-lg"
+              required
+              autoFocus
               placeholder="會員暱稱"
+              style={{ borderColor: "#7A4E2E" }}
+              maxLength={8}
             />
-            <span className="ms-3 text-registration">最多不超過8位數</span>
+            <small className="ms-2" style={{ color: "#7A4E2E", fontSize: "0.85rem" }}>
+              最多不超過8位數
+            </small>
           </div>
-          <div className="text-start">
-            <input 
-              type="email" 
-              name="email" 
-              value={form.email} 
-              onChange={handleChange} 
-              className="form-control" 
-              required 
+
+          <div className="mb-3 text-start">
+            <input
+              type="email"
+              name="email"
+              value={form.email}
+              onChange={handleChange}
+              className="form-control form-control-lg"
+              required
               placeholder="電子郵件"
+              style={{ borderColor: "#7A4E2E" }}
             />
-            <span className="ms-3 text-registration">註冊後將發送信箱驗證</span>
+            <small className="ms-2" style={{ color: "#7A4E2E", fontSize: "0.85rem" }}>
+              註冊後將發送信箱驗證
+            </small>
           </div>
-          <div className="mb-2 text-start">
-            <input 
-              type="password" 
-              name="password" 
-              value={form.password} 
-              onChange={handleChange} 
-              className="form-control" 
-              required 
+
+          <div className="mb-4 text-start">
+            <input
+              type="password"
+              name="password"
+              value={form.password}
+              onChange={handleChange}
+              className="form-control form-control-lg"
+              required
               placeholder="會員密碼"
+              style={{ borderColor: "#7A4E2E" }}
+              minLength={8}
             />
-            <span className="ms-3 text-registration">最少輸入8位英數字組合</span>
+            <small className="ms-2" style={{ color: "#7A4E2E", fontSize: "0.85rem" }}>
+              最少輸入8位英數字組合
+            </small>
           </div>
-          <button type="submit" className="btn-login">註冊</button>
+
+          <button
+            type="submit"
+            className="btn btn-login w-100"
+            style={{
+              backgroundColor: "#7A4E2E",
+              color: "#fff",
+              borderRadius: "8px",
+              fontWeight: "600",
+              border: "none",
+            }}
+            onMouseEnter={e => e.currentTarget.style.backgroundColor = "#5b3a1a"}
+            onMouseLeave={e => e.currentTarget.style.backgroundColor = "#7A4E2E"}
+          >
+            註冊
+          </button>
         </form>
-        <p style={{ marginTop: 10 }}>
+
+        <p className="text-center mt-4 mb-0" style={{ fontSize: "0.9rem", color: "#7A4E2E" }}>
           已經有帳號？{" "}
-          <span>
-            <Link to="/auth/login" className="link-info fs-6" aria-current="register">登入</Link>
-          </span>
+          <Link to="/auth/login" style={{ color: "#7A4E2E", textDecoration: "underline", fontWeight: "600" }}>
+            登入
+          </Link>
         </p>
       </div>
     </div>

@@ -108,6 +108,30 @@ function App() {
     localStorage.setItem('user', JSON.stringify(user));
   };
 
+  const fetchUserInfo = async () => {
+    try {
+      const res = await fetch('http://localhost:8084/auth/userinfo', {
+        credentials: 'include',
+      });
+      if (!res.ok) {
+          setIsLogin(false);
+          setUserId(null);
+          setUsername(null);
+          setRole(null);
+          localStorage.removeItem('user');
+          return;
+        }
+      const result = await res.json();
+      if (result.data) {
+        handleLoginSuccess(result.data);
+      } else {
+        console.log('無登入資料');
+      }
+    } catch (err) {
+      console.error('取得資料錯誤:', err);
+    }
+  };
+
   const handleLogout = () => {
     localStorage.removeItem('user');
     setIsLogin(false);
@@ -167,6 +191,9 @@ function App() {
     }
   }, [theme]);
 
+  useEffect(() => {
+     fetchUserInfo();
+  }, [])
   return (
     <Router>
       <Routes>
