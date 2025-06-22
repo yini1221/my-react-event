@@ -64,31 +64,34 @@ function FavoritesPage() {
   return (
         <div className="container-fluid">
             <div className='px-3 mx-auto' style={{'maxWidth': '1080px'}}>
-                <div className="p-4 d-flex flex-column align-items-center bd-registration position-relative w-100">
-                    <div className='d-flex mb-3 gap-1'>
-                        <span>
-                            <img src={`${import.meta.env.BASE_URL}images/admin.png`} style={{ width: '40px' }} />
-                        </span> 
-                        <h2>我的收藏</h2>
+                <div className="p-4 d-flex flex-column align-items-center position-relative w-100">
+                    <div className="d-flex align-items-center mb-4 gap-2 border-bottom border-3 border-warning pb-2">
+                        <img 
+                            src={`${import.meta.env.BASE_URL}images/favorite.png`} 
+                            alt="我的收藏" 
+                            style={{ width: '36px', filter: 'drop-shadow(0 0 3px #7A4E2E88)' }} 
+                        />
+                        <h2 className="m-0 fw-bold" style={{ color: '#7A4E2E', fontSize: '2rem' }}>
+                            我的收藏
+                        </h2>
                     </div>
                     <div className='w-100'>
                         <ul className='list-unstyled w-100'>
                             {
                                 favorites.map((favorite, index) => (
-                                
-                                <li key={favorite.id} className={`row w-100 py-3 position-relative ${index !== favorites.length - 1 ? 'border-bottom' : ''}`}>
-                                    <div className='col-md-5' style={{backgroundColor: '#faf6f3'}}>
+                                <li key={favorite.id} className={`row w-100 rounded-4 shadow p-3 mb-3 bg-favo position-relative ${index !== favorites.length - 1 ? 'border-bottom' : ''}`}>
+                                    <div className='col-md-5'>
                                         <img className='rounded-4' src={`data:image/jpeg;base64,${favorite.imageBase64}`}/>
                                     </div>
-                                    <div className='col-md-7 text-start p-3 h-100' style={{backgroundColor: '#faf6f3'}}>
+                                    <div className='col-md-7 text-start p-3 h-100'>
                                         <div>
                                             <Link to={`/events/${favorite.id}`} className='event-link'>
                                                 <h3>{favorite.title}</h3>
                                             </Link>
-                                            <p className='m-1'>{formatDateTime(favorite.startTime, 'startTime')}</p>
+                                            <p className='m-1 text-secondary'>{formatDateTime(favorite.startTime, 'startTime')}</p>
                                             <div className='mb-3 mb-md-0'>{favorite.location}</div>
                                         </div>
-                                        <div className='position-absolute bottom-0 end-0 translate-middle-y'>
+                                        <div className='position-absolute bottom-0 end-0 translate-middle'>
                                             <RegisterButton className='btn btn-sm btn-blue text-white me-1' eventId={favorite.id} />
                                             <button onClick={() => handleDelete(favorite.id)} className='btn btn-sm btn-red text-white' >取消收藏</button>
                                         </div>

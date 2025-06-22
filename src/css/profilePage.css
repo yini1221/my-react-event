@@ -5,3 +5,30 @@
 .fs-sm {
     font-size: 13px;
 }
+
+
+.btn-profile {
+  background-color: #dcc7b5 !important;
+  display: block;
+  padding: 10px 15px;
+  color: #835d5d !important;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background-color 0.3s, color 0.3s !important;
+}
+
+.btn-profile:hover {
+  background-color: #7A4E2E !important;
+  color: #ffffff !important;
+}
+
+.btn-profile:active {
+  background-color: #7A4E2E !important; /* 主色背景 */
+  color: white !important;
+  font-weight: 600;
+  box-shadow: 0 0 8px #7A4E2Eaa !important;
+}
+
+.border-profile:focus {
+    border-color: #ddbfa9 !important;
+}

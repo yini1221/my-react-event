@@ -88,7 +88,7 @@ function HomePage() {
         <ul style={{'maxWidth': '1080px'}} className="flex-wrap btn-group w-100 list-unstyled my-0 mx-auto" role="group">
           <li 
             key='all' 
-            className={`category-nav w-25 ${selectedCategory ==='all' ? 'active' : ''}`}
+            className={`category-nav w-25 ${selectedCategory ==='all' ? 'category-active' : ''}`}
             onClick={(e) => handleCategoryClick('all', e)}>
             <button type='button' className='h-100 w-100 rounded-0 border-0 d-flex align-items-center justify-content-center position-relative category'>
               <img src={`${import.meta.env.BASE_URL}images/event.png`}/>
@@ -98,7 +98,7 @@ function HomePage() {
           {eventCategories.map((eventCategory) => (
             <li
               key={eventCategory.id}
-              className={`category-nav w-25 ${selectedCategory === eventCategory.id ? 'active' : ''}`}
+              className={`category-nav w-25 ${selectedCategory === eventCategory.id ? 'category-active' : ''}`}
               onClick={(e) => handleCategoryClick(eventCategory.id, e)}>
               <button type='button' className='h-100 w-100 rounded-0 border-0 d-flex align-items-center justify-content-center position-relative category'>
                 <img src={`${import.meta.env.BASE_URL}images/event.png`}/>

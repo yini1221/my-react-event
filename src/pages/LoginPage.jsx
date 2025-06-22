@@ -138,7 +138,10 @@ function LoginPage({ onLoginSuccess  }) {
               title="點擊重新取得驗證碼"
               onClick={loadCaptcha}
               style={{ cursor: "pointer", height: "42px", borderRadius: "6px", border: "1px solid #7A4E2E" }}
-            />
+            />            
+            <Link onClick={loadCaptcha} >
+              <img src={`${import.meta.env.BASE_URL}images/update.png`} style={{ maxWidth: "20px" }}/>
+            </Link>
           </div>
 
           <button

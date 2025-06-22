@@ -89,86 +89,109 @@ function ProfilePage({ onUsernameChange }) {
   if (!profile) return <p>載入中...</p>;
   
   return (
-      <div className="container-fluid">
-        <div className='mx-auto bd-profile bg-gradient rounded-5 m-5 p-4' style={{'maxWidth': '1080px'}}>
-          <div className='w-50 mx-auto'>
-            <h2 className='text-secondary'>個人資訊</h2>
-            <img src={`${import.meta.env.BASE_URL}images/personal-information.png`} style={{ width: '150px' }} alt="profile" />
-            <ul className='d-flex flex-column gap-3 list-unstyled mt-3'>
-              <li className='fs-sm'>會員編號：{profile.id}</li>
-              <li>
-                {
-                  editingUsername ? (
-                    <form className='d-flex'>
-                      <input className='form-control w-50 ms-auto me-2' 
-                      type="text" name="username" 
-                      value={username} 
-                      onChange={(e) => setUsername(e.target.value)}
-                      placeholder="請輸入暱稱" required />
-                      <div>
-                        <button onClick={() => handleSubmit()} type='button' className='me-2 p-2'>確認</button>
-                        <button onClick={() => setEditingUsername(false)} type='button' className='fs-6 p-2'>取消</button>
-                      </div>  
-                    </form>
-                  ) 
-                  :
-                  <div>
-                    暱稱：{profile.username}
-                    <span className='fs-sm'> ({profile.roleName})</span>
-                    <span onClick={() => { setUsername(profile.username); setEditingUsername(true); }} type='button' className='btn fs-6 p-0 px-3'>
-                        <img src={`${import.meta.env.BASE_URL}images/pencil.png`} style={{ width: '25px' }} />
-                    </span>
-                  </div>
-                }
-              </li>
-              <li>信箱：{profile.email}</li>
-              <li>加入時間：{profile.createdAt}</li>
-              {/* 更改密碼按鈕 */}
-              <li className='d-flex justify-content-center gap-2'>
-                {editingPassword ? (
-                  <form className='d-flex flex-column align-items-center gap-2' onSubmit={e => { e.preventDefault(); handlePasswordSubmit(); }}>
-                    <input
-                      type="password"
-                      name="oldPassword"
-                      value={passwords.oldPassword}
-                      onChange={handlePasswordChange}
-                      placeholder="舊密碼"
-                      required
-                      className="form-control w-75"
-                    />
-                    <input
-                      type="password"
-                      name="newPassword"
-                      value={passwords.newPassword}
-                      onChange={handlePasswordChange}
-                      placeholder="新密碼"
-                      required
-                      className="form-control w-75"
-                    />
-                    <input
-                      type="password"
-                      name="confirmPassword"
-                      value={passwords.confirmPassword}
-                      onChange={handlePasswordChange}
-                      placeholder="確認新密碼"
-                      required
-                      className="form-control w-75"
-                    />
-                    <div>
-                      <button type="submit" className="btn btn-primary me-2">確認</button>
-                      <button type="button" className="btn btn-secondary" onClick={() => setEditingPassword(false)}>取消</button>
-                    </div>
-                  </form>
-                ) : (
-                  <button className="btn btn-outline-secondary" onClick={() => setEditingPassword(true)}>更改密碼</button>
-                )}
-              </li>
-              <li><Link className="btn btn-outline-secondary" to={`/user/${userId}/registrations`}>查看報名紀錄</Link></li>
-            </ul>
-          </div>
+    <div className="container my-5">
+      <div className="card shadow rounded-4 p-4 mx-auto" style={{ maxWidth: '600px', background: 'linear-gradient(135deg, #f7ede1, #e6ddd3)' }}>
+        <div className="text-center mb-4">
+          <h2 className="text-secondary fw-bold">個人資訊</h2>
+          <img
+            src={`${import.meta.env.BASE_URL}images/personal-information2.png`}
+            alt="profile"
+            style={{ width: '150px', height: '150px', objectFit: 'cover' }}
+          />
         </div>
-      </div>      
+
+        <ul className="list-unstyled d-flex flex-column gap-4 px-3">
+          <li className="fs-6 text-muted">會員編號：<span className="fs-6 fw-semibold text-dark">{profile.id}</span></li>
+
+          <li>
+            {editingUsername ? (
+              <form
+                className="d-flex justify-content-center align-items-center gap-3"
+                onSubmit={e => { e.preventDefault(); handleSubmit(); }}
+              >
+                <input
+                  className="form-control w-50 border-profile"
+                  type="text"
+                  name="username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  placeholder="請輸入暱稱"
+                  required
+                />
+                <button type="submit" className="btn btn-profile px-3">確認</button>
+                <button type="button" className="btn btn-profile px-3" onClick={() => setEditingUsername(false)}>取消</button>
+              </form>
+            ) : (
+              <div className="d-flex align-items-center justify-content-center gap-3 fs-5">
+                <span className='fs-6'>暱稱：<strong>{profile.username}</strong> <small className="text-muted">({profile.roleName})</small></span>
+                <button
+                  type="button"
+                  className="btn btn-link p-0"
+                  onClick={() => { setUsername(profile.username); setEditingUsername(true); }}
+                  aria-label="編輯暱稱"
+                  title="編輯暱稱"
+                >
+                  <img src={`${import.meta.env.BASE_URL}images/pencil.png`} alt="edit" style={{ width: '25px' }} />
+                </button>
+              </div>
+            )}
+          </li>
+
+          <li className="fs-6 text-muted">信箱：<span className="fs-6 fw-semibold text-dark">{profile.email}</span></li>
+          <li className="fs-6 text-muted">加入時間：<span className="fs-6 fw-semibold text-dark">{new Date(profile.createdAt).toLocaleDateString()}</span></li>
+
+          <li className="d-flex flex-column align-items-center gap-3">
+            {editingPassword ? (
+              <form
+                className="d-flex flex-column align-items-center gap-3 w-100"
+                onSubmit={e => { e.preventDefault(); handlePasswordSubmit(); }}
+              >
+                <input
+                  type="password"
+                  name="oldPassword"
+                  value={passwords.oldPassword}
+                  onChange={handlePasswordChange}
+                  placeholder="舊密碼"
+                  required
+                  className="form-control w-75 border-profile"
+                />
+                <input
+                  type="password"
+                  name="newPassword"
+                  value={passwords.newPassword}
+                  onChange={handlePasswordChange}
+                  placeholder="新密碼"
+                  required
+                  className="form-control w-75 border-profile"
+                />
+                <input
+                  type="password"
+                  name="confirmPassword"
+                  value={passwords.confirmPassword}
+                  onChange={handlePasswordChange}
+                  placeholder="確認新密碼"
+                  required
+                  className="form-control w-75 border-profile"
+                />
+                <div className="d-flex gap-3">
+                  <button type="submit" className="btn btn-profile px-4">確認</button>
+                  <button type="button" className="btn btn-profile px-4" onClick={() => setEditingPassword(false)}>取消</button>
+                </div>
+              </form>
+            ) : (
+              <button className="btn btn-profile px-4" onClick={() => setEditingPassword(true)}>更改密碼</button>
+            )}
+          </li>
+
+          <li className="text-center">
+            <Link to={`/user/${userId}/registrations`} className="btn btn-profile px-4">
+              查看報名紀錄
+            </Link>
+          </li>
+        </ul>
+      </div>
+    </div>
   );
 }
 
-export default ProfilePage
+export default ProfilePage;

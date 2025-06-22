@@ -63,6 +63,15 @@ body.dark-theme .text-dark {
   left: 0;
 }
 
+.category-active:checked + .category-active,
+.category-active.active,
+.category-active.show,
+.category-active:first-child:active,
+:not(.category-active) + .category-active:active {
+  background-color: #e3e3e366 !important;
+  border-color: transparent !important;
+}
+
 .swiper {
     height: 340px !important;
 }

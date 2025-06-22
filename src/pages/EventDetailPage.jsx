@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import dayjs from 'dayjs';
 import RegisterButton from '../components/RegisterButton';
 import { Link, useParams } from 'react-router-dom';
 import EventReviews from '../pages/EventReviews';
@@ -121,6 +122,14 @@ useEffect(() => {
   checkFavorite();
 }, [eventId, userId]);
 
+  const formatDateTime = (datetime, type) => {
+  if (!datetime) return 'N/A';
+  if (type === 'startTime' || type === 'endTime') {
+      return dayjs(datetime).format('YYYY-MM-DD HH:mm');
+      }
+  return dayjs(datetime).format('YYYY-MM-DD HH:mm:ss');
+  };
+
   if (!event) return <p>載入中...</p>;
   
   const eventStarted = new Date(event.startTime) <= new Date();
@@ -135,14 +144,16 @@ useEffect(() => {
             <div className='row p-4'>
               <div className='col-lg-8'>
                 <div className='text-start mb-2'>
-                  <Link className='btn btn-sm btn-blue text-white'>{event.eventCategory?.name}</Link>
+                  <span className="p-2 btn-blue badge text-white" style={{ userSelect: 'none', cursor: 'default' }}>
+                    {event.eventCategory?.name}
+                  </span>
                   </div>
                 <h2 className="mb-3 mt-3 mt-md-0 text-start"><strong>{event.title}</strong></h2>
                 <div className='border rounded-4 shadow-sm p-4'>
                   <div className="mb-3 text-secondary text-start">
                     <div className='mb-2'>
                       <img className='me-3' src={`${import.meta.env.BASE_URL}images/clock.png`} style={{width: '25px'}}/>
-                      {event.startTime} - {event.endTime}
+                      {formatDateTime(event.startTime, 'startTime')} - {formatDateTime(event.endTime, 'endTime')}
                     </div>
                     <div className='mb-2'>
                       <img className='me-3' src={`${import.meta.env.BASE_URL}images/placeholder.png`} style={{width: '25px'}}/>
@@ -155,15 +166,18 @@ useEffect(() => {
                 </div>
               </div>
               <div className='col-lg-4'>
-                <div className='rounded-3 shadow-sm p-5'>
+                <div className='rounded-3 shadow-sm py-5 px-4'>
                   <div className='d-flex flex-column flex-md-row justify-content-between align-items-center'>
                     <p className="">目前報名人數 {registrationCount}/{event.maxParticipants}</p>
                   </div>
                   <div className="d-flex flex-column flex-md-row gap-1 ms-md-auto">
                     <RegisterButton eventId={event.id} />
-                    <button className={`btn ${isFavorited ? 'btn-danger' : 'btn-outline-secondary'}`}
+                    <button className={`btn btn-heart ${isFavorited ? 'bg-heart' : ''}`}
                     onClick={() => toggleFavorite()}>
-                    {isFavorited ? '已收藏 ❤' : '收藏 ♡'}
+                      <img src={`${import.meta.env.BASE_URL}images/heart.png`} className='me-2' style={{width: '25px'}}/>
+                    {isFavorited ? 
+                      <span className='fs-6 align-middle'>已收藏</span>
+                    : <span className='fs-6 align-middle'>加入收藏</span>}
                   </button>
                   </div>
                 </div>

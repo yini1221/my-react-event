@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
+import dayjs from 'dayjs';
 import AdminNavbar from '../components/AdminNavbar';
+import '../css/adminMembersPage.css'
 
 const API_URL = 'http://localhost:8084/admin/members'; // 後台 API
 
@@ -63,111 +65,132 @@ function AdminMembersPage() {
         setEditing(true);
     }
 
+    const formatDateTime = (datetime, type) => {
+    if (!datetime) return 'N/A';
+    if (type === 'startTime' || type === 'endTime') {
+        return dayjs(datetime).format('YYYY-MM-DD HH:mm');
+        }
+    return dayjs(datetime).format('YYYY-MM-DD HH:mm:ss');
+    };
+
     return (
-        <div className="container-fluid">
-            <div className="row">
-                <div className="col-2">
-                    <AdminNavbar/> 
-                </div>
-                <div className="col">
-                    <div className="card card-body mt-3">
-                        <div className="p-4 d-flex flex-column align-items-center position-relative">
-                            <h2 className='mt-3'>會員管理</h2>
-                            <div className="mb-3 d-flex align-items-center gap-2 position-absolute top-0 start-0">
-                                <input
-                                    type="text"
-                                    placeholder="會員名稱"
-                                    className="form-control w-auto"
-                                    value={searchName}
-                                    onChange={(e) => setSearchName(e.target.value)}
-                                />
-                                <button className="btn btn-secondary" onClick={() => setSearchName('')}>
-                                    清除
-                                </button>
-                            </div>
-                            <table className="table align-middle table-hover w-100">
-                                <caption>目前共載入 {users.length} 筆資料</caption>
-                                <thead>
-                                <tr>
-                                    <th>會員編號</th>
-                                    <th>名稱</th>
-                                    <th>信箱</th>
-                                    <th>加入時間</th>
-                                    <th>驗證狀態</th>
-                                    <th>權限</th>
-                                    <th></th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                    {
-                                        filteredUsers.map((use) => (
-                                        <tr key={use.id}>
-                                            <td>{use.id}</td>
-                                            <td>{use.username}</td>
-                                            <td>{use.email}</td>
-                                            <td>{use.createdAt}</td>
-                                            <td>
-                                                {use.completed ?
-                                                <img src={`${import.meta.env.BASE_URL}images/circle.png`} style={{ width: '30px' }} />
-                                                :
-                                                <img src={`${import.meta.env.BASE_URL}images/multiply.png`} style={{ width: '30px' }} />
-                                            }
-                                            </td>
-                                            <td>
-                                                {
-                                                    editing && form.id === use.id ? 
-                                                    (
-                                                        <form>
-                                                            <select className="form-select" required
-                                                            name='role' value={form.role} onChange={(e) => setForm({...form, role: e.target.value})}>
-                                                                <option value="">請選擇權限</option>
-                                                                <option value="ADMIN">系統管理員</option>
-                                                                <option value="MEMBER">一般會員</option>
-                                                            </select>
-                                                        </form>
-                                                    ) 
-                                                    : (use.roleName)
-                                                }
-                                            </td>
-                                            <td>
-                                                {
-                                                    editing && form.id === use.id ? (
-                                                        <div>
-                                                            <button onClick={handleSubmit} type='button' className='me-2 fs-6'>確認</button>
-                                                            <button onClick={() => setEditing(false)} type='button' className='fs-6'>取消</button>
-                                                        </div>
-                                                    ) 
-                                                    : (
-                                                        <div>
-                                                            <span onClick={() => handleEdit(use)} type='button' className="btn p-0">
-                                                                <img src={`${import.meta.env.BASE_URL}images/settings.png`} style={{ width: '30px' }} />
-                                                            </span>
-                                                            {/* <span className="btn p-0">
-                                                                <img src={`${import.meta.env.BASE_URL}images/garbage.png`} style={{ width: '30px' }} />
-                                                            </span> */}
-                                                        </div>
-                                                    ) 
-                                                }
-                                            </td>                                    
-                                        </tr>
-                                    ))}
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <td colSpan={7}>
-                                            <div>
-                                                <button>匯出會員列表</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tfoot>
-                            </table>                            
-                        </div>
-                    </div>
-                </div>
+    <div className="container-fluid">
+        <div className="row">
+        <div className="col-2">
+            <AdminNavbar />
+        </div>
+        <div className="col">
+            <div className="card card-body mt-3 p-4 position-relative">
+            <div className="d-flex flex-wrap align-items-center gap-3 mb-4">
+                <input
+                type="text"
+                placeholder="會員名稱"
+                className="form-control"
+                value={searchName}
+                onChange={(e) => setSearchName(e.target.value)}
+                style={{ maxWidth: '250px' }}
+                />
+                <button className="btn btn-sm" onClick={() => setSearchName('')}>
+                清除
+                </button>
             </div>
-         </div>
-    )
+            <table className="table table-hover align-middle w-100">
+                <caption className="text-muted">目前共載入 {users.length} 筆資料</caption>
+                <thead className="table-light">
+                <tr>
+                    <th style={{ width: '5%' }}>編號</th>
+                    <th style={{ width: '10%' }}>名稱</th>
+                    <th style={{ width: '20%' }}>信箱</th>
+                    <th style={{ width: '25%' }}>加入時間</th>
+                    <th style={{ width: '10%' }}>驗證</th>
+                    <th style={{ width: '15%' }}>權限</th>
+                    <th style={{ width: '20%' }}></th>
+                </tr>
+                </thead>
+                <tbody>
+                {filteredUsers.map((use) => (
+                    <tr key={use.id}>
+                    <td>{use.id}</td>
+                    <td>{use.username}</td>
+                    <td>{use.email}</td>
+                    <td>{formatDateTime(use.createdAt, 'createdAt')}{}</td>
+                    <td>
+                        {use.completed ? (
+                        <img
+                            src={`${import.meta.env.BASE_URL}images/circle.png`}
+                            alt="已驗證"
+                            style={{ width: '30px' }}
+                        />
+                        ) : (
+                        <img
+                            src={`${import.meta.env.BASE_URL}images/multiply.png`}
+                            alt="未驗證"
+                            style={{ width: '30px' }}
+                        />
+                        )}
+                    </td>
+                    <td>
+                        {editing && form.id === use.id ? (
+                        <form>
+                            <select
+                            className="form-select"
+                            required
+                            name="role"
+                            value={form.role}
+                            onChange={(e) => setForm({ ...form, role: e.target.value })}
+                            >
+                            <option value="">請選擇權限</option>
+                            <option value="ADMIN">系統管理員</option>
+                            <option value="MEMBER">一般會員</option>
+                            </select>
+                        </form>
+                        ) : (
+                        use.roleName
+                        )}
+                    </td>
+                    <td>
+                        {editing && form.id === use.id ? (
+                        <div className="d-flex gap-2">
+                            <button onClick={handleSubmit} type="button" className="btn btn-member btn-sm">
+                            確認
+                            </button>
+                            <button onClick={() => setEditing(false)} type="button" className="btn btn-member btn-sm">
+                            取消
+                            </button>
+                        </div>
+                        ) : (
+                        <button
+                            onClick={() => handleEdit(use)}
+                            type="button"
+                            className="btn btn-link p-0"
+                            aria-label="編輯"
+                        >
+                            <img
+                            src={`${import.meta.env.BASE_URL}images/settings.png`}
+                            alt="edit"
+                            style={{ width: '30px', verticalAlign: 'middle' }}
+                            />
+                        </button>
+                        )}
+                    </td>
+                    </tr>
+                ))}
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colSpan={7}>
+                    <div className="d-flex justify-content-center">
+                        <button className="btn btn-member">匯出會員列表</button>
+                    </div>
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+            </div>
+        </div>
+        </div>
+    </div>
+    );
 }
 
 export default AdminMembersPage

@@ -4,4 +4,10 @@
 
 .btn-blue:hover {
     opacity: .8;
+    background-color: #00aaf5 !important;
+}
+
+.bg-heart {
+    color: #fff !important;
+    background-color: #eb2540 !important;
 }

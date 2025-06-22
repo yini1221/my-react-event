@@ -1,4 +1,5 @@
 import { Link, useParams, useNavigate } from 'react-router-dom';
+import dayjs from 'dayjs';
 import '../css/registerPage.css';
 import { useEffect, useState } from 'react';
 
@@ -67,6 +68,14 @@ function RegisterPage() {
         }
 
     }, [userId, eventId]);
+
+    const formatDateTime = (datetime, type) => {
+    if (!datetime) return 'N/A';
+    if (type === 'startTime' || type === 'endTime') {
+        return dayjs(datetime).format('YYYY-MM-DD HH:mm');
+        }
+    return dayjs(datetime).format('YYYY-MM-DD HH:mm:ss');
+    };
    
     const handleSubmit = async() => {
         if (!window.confirm('確定要報名嗎？')) return;
@@ -123,7 +132,7 @@ function RegisterPage() {
     if (!event) return <p>載入中...</p>;
 
     return(
-      <div className="container-fluid d-flex justify-content-center flex-column p-4 mx-auto w-100 bg-light shadow rounded">
+      <div className="container-fluid d-flex justify-content-center flex-column p-4 mx-auto w-100 bg-light rounded">
         <div className="mx-auto bg-white rounded-4 row py-3" style={{'maxWidth': '1080px'}}>
             <div className="col-md-3">
                 <img className='rounded-3 w-100 mb-3' src={`data:image/jpeg;base64,${event.imageBase64}`} />
@@ -134,7 +143,7 @@ function RegisterPage() {
                     <div>
                         <img src={`${import.meta.env.BASE_URL}images/clock.png`} style={{width: '30px', height: '30px'}}/>
                     </div>
-                    <span className='fs-14 text-gray'>{event.startTime} 開始<br />{event.endTime} 結束</span>
+                    <span className='fs-14 text-gray'>{formatDateTime(event.startTime, 'startTime')} 開始<br />{formatDateTime(event.endTime, 'endTime')} 結束</span>
                 </div>
                 <div className='mb-2 text-start'>
                     <img src={`${import.meta.env.BASE_URL}images/placeholder.png`} style={{width: '30px'}}/>

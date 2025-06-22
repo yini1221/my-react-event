@@ -59,7 +59,7 @@ function Navbar({ isLogin, userId, username, role, onLogout }) {
                   <span>
                     <Link to={`/user/profile/${userId}`} className='text-color'>
                       {username}{role === 'ADMIN' && (<span>(管理員)</span>)}
-                    </Link> 你好!
+                    </Link> <span className='text-color'> 你好!</span>
                   </span>
                   <button type="button" className="btn text-color navbar-button" onClick={() => handleLogout()}>登出</button>
                 </>) 
@@ -87,7 +87,7 @@ function Navbar({ isLogin, userId, username, role, onLogout }) {
             </div>
           <div className="offcanvas offcanvas-start bg-menu" tabIndex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
             <div className="offcanvas-header">
-              <h5 className="offcanvas-title" id="offcanvasNavbarLabel">探索身邊有趣的活動！</h5>
+              <h5 className="offcanvas-title text-gray" id="offcanvasNavbarLabel">探索身邊有趣的活動！</h5>
               <button type="button" className="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div className='w-100'>

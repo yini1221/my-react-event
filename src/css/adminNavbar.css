@@ -1,0 +1,24 @@
+ul {
+  padding-left: 0;
+}
+
+.nav-link {
+  display: block;
+  padding: 10px 15px;
+  color: #7A4E2E !important;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background-color 0.3s, color 0.3s !important;
+}
+
+.nav-link:hover {
+  background-color: #e6ddd3 !important;
+  color: #5b3a1a !important;
+}
+
+.active {
+  background-color: #7A4E2E !important; /* 主色背景 */
+  color: white !important;
+  font-weight: 600;
+  box-shadow: 0 0 8px #7A4E2Eaa;
+}

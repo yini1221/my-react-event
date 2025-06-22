@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import AdminNavbar from '../components/AdminNavbar';
+import '../css/adminEventCategoriesPage.css';
 
 const API_URL = 'http://localhost:8084/admin/event-categories'; // 後台 API
 
@@ -86,93 +87,137 @@ function AdminEventCategoriesPage() {
     }
 
     return (
-        <div className="container-fluid">
-            <div className="row">
-                <div className="col-2">
-                    <AdminNavbar/> 
-                </div>
-                <div className="col">
-                    <div className="card card-body mt-3">
-                        <div className="p-4 d-flex flex-column align-items-center">
-                            <h2 className='mt-3'>活動分類管理</h2>
-                            <table className="table align-middle table-hover">
-                                <caption>目前共載入 {eventCategories.length} 筆資料</caption>
-                                    <thead>
-                                    <tr>
-                                        <th>分類編號</th>
-                                        <th>活動分類</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                    <tbody>
-                                        {
-                                            eventCategories.map((eventCategory) => (
-                                                <tr key={eventCategory.id}>
-                                                    <td>{eventCategory.id}</td>
-                                                    <td>
-                                                        {
-                                                            editing && form.id === eventCategory.id ? 
-                                                            (<form ><input className='form-control w-100 text-center' type="text" name="name" value={form.name} onChange={(e) => setForm({...form, name: e.target.value})} placeholder="請輸入分類名稱" required /></form>)
-                                                            : (eventCategory.name)
-                                                        }
-                                                    </td>
-                                                    <td>
-                                                        {
-                                                            editing && form.id === eventCategory.id ? 
-                                                            <div>
-                                                                <button onClick={() => handleSubmit()} type='button' className='me-2 fs-6'>確認</button>
-                                                                <button onClick={() => setEditing(false)} type='button' className='fs-6'>取消</button>
-                                                            </div>                                                    
-                                                            :
-                                                            <div>                                                            
-                                                                <span onClick={() => handleEdit(eventCategory)} type='button' className='btn fs-6'>
-                                                                    <img src={`${import.meta.env.BASE_URL}images/settings.png`} style={{ width: '30px' }} />
-                                                                </span>
-                                                                <span onClick={() => handleDelete(eventCategory.id)} type='button' className='btn fs-6'>
-                                                                    <img src={`${import.meta.env.BASE_URL}images/garbage.png`} style={{ width: '30px' }} />
-                                                                </span>
-                                                            </div>
-                                                        }
-                                                    </td>
-                                                </tr>
-                                            ))
-                                        }
-                                        {
-                                            adding ? 
-                                            <tr>
-                                                <td colSpan={3}>
-                                                    <form onSubmit={handleSubmit} className="d-flex gap-2">
-                                                        <input className='form-control w-50' type="text" name="name" value={form.name} onChange={(e) => setForm({...form, name: e.target.value})} placeholder="請輸入分類名稱" required />
-                                                        <div className='d-flex justify-content-center w-50'>
-                                                            <button type="submit" className='me-2'>加入分類</button>
-                                                            <button type="button" onClick={() => {
-                                                                setAdding(false);
-                                                            }}>取消
-                                                            </button>
-                                                        </div>
-                                                    </form>
-                                                </td>
-                                            </tr> 
-                                            : ''
-                                        }
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <td colSpan={4}>
-                                            <div className='d-flex justify-content-center gap-2'>
-                                                <button onClick={() => handleAdd()}>新增分類</button>
-                                                <button>匯出分類列表</button>
-                                            </div>
-                                         </td>
-                                    </tr>
-                                </tfoot>
-                            </table>                            
+  <div className="container-fluid">
+    <div className="row">
+      <div className="col-2">
+        <AdminNavbar />
+      </div>
+      <div className="col">
+        <div className="card card-body mt-3 p-4">
+          <div className="d-flex flex-column align-items-center">
+            <table className="table table-hover align-middle w-100">
+              <caption className="text-muted">目前共載入 {eventCategories.length} 筆資料</caption>
+              <thead className="table-light">
+                <tr>
+                  <th style={{ width: '20%' }}>分類編號</th>
+                  <th style={{ width: '60%' }}>活動分類</th>
+                  <th style={{ width: '20%' }}></th>
+                </tr>
+              </thead>
+              <tbody>
+                {eventCategories.map((eventCategory) => (
+                  <tr key={eventCategory.id}>
+                    <td>{eventCategory.id}</td>
+                    <td>
+                      {editing && form.id === eventCategory.id ? (
+                        <form>
+                          <input
+                            className="form-control text-center"
+                            type="text"
+                            name="name"
+                            value={form.name}
+                            onChange={(e) => setForm({ ...form, name: e.target.value })}
+                            placeholder="請輸入分類名稱"
+                            required
+                          />
+                        </form>
+                      ) : (
+                        eventCategory.name
+                      )}
+                    </td>
+                    <td>
+                      {editing && form.id === eventCategory.id ? (
+                        <div className="d-flex gap-2 justify-content-center">
+                          <button onClick={() => handleSubmit()} type="button" className="btn btn-primary btn-sm">
+                            確認
+                          </button>
+                          <button onClick={() => setEditing(false)} type="button" className="btn btn-secondary btn-sm">
+                            取消
+                          </button>
                         </div>
+                      ) : (
+                        <div className="d-flex gap-3 justify-content-center">
+                          <button
+                            onClick={() => handleEdit(eventCategory)}
+                            type="button"
+                            className="btn btn-link p-0 me-2"
+                            aria-label="編輯分類"
+                          >
+                            <img
+                              src={`${import.meta.env.BASE_URL}images/settings.png`}
+                              alt="edit"
+                              style={{ width: '28px' }}
+                            />
+                          </button>
+                          <button
+                            onClick={() => handleDelete(eventCategory.id)}
+                            type="button"
+                            className="btn btn-link p-0"
+                            aria-label="刪除分類"
+                          >
+                            <img
+                              src={`${import.meta.env.BASE_URL}images/garbage.png`}
+                              alt="delete"
+                              style={{ width: '28px' }}
+                            />
+                          </button>
+                        </div>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+
+                {adding && (
+                  <tr>
+                    <td colSpan={3}>
+                      <form onSubmit={handleSubmit} className="d-flex gap-3 justify-content-center align-items-center">
+                        <input
+                          className="form-control w-25"
+                          type="text"
+                          name="name"
+                          value={form.name}
+                          onChange={(e) => setForm({ ...form, name: e.target.value })}
+                          placeholder="請輸入分類名稱"
+                          required
+                        />
+                        <div className="d-flex gap-2">
+                          <button type="submit" className="btn btn-cate btn-sm px-3">
+                            加入分類
+                          </button>
+                          <button
+                            type="button"
+                            className="btn btn-cate btn-sm px-3"
+                            onClick={() => setAdding(false)}
+                          >
+                            取消
+                          </button>
+                        </div>
+                      </form>
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colSpan={3}>
+                    <div className="d-flex justify-content-center gap-3">
+                      <button onClick={() => handleAdd()} className="btn btn-cate">
+                        新增分類
+                      </button>
+                      <button className="btn btn-cate px-4">
+                        匯出分類列表
+                      </button>
                     </div>
-                </div>
-            </div>
-         </div>
-    )
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+);
 
 }
 

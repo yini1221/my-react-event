@@ -1,0 +1,47 @@
+.table-hover tbody tr:hover {
+  background-color: #f7ede1 !important;
+}
+
+.table-light th {
+  color: #7A4E2E;
+  font-weight: 600;
+}
+
+.btn-sm {
+  font-size: 0.85rem;
+  padding: 0.25rem 0.75rem;
+}
+
+.btn-outline-primary:hover {
+  background-color: #7A4E2E;
+  color: white;
+  border-color: #7A4E2E;
+}
+
+.btn-outline-danger:hover {
+  background-color: #d9534f;
+  color: white;
+  border-color: #d43f3a;
+}
+
+.btn-cate {
+  background-color: #eeebe7 !important;
+  display: block;
+  padding: 10px 15px;
+  color: #7A4E2E !important;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background-color 0.3s, color 0.3s !important;
+}
+
+.btn-cate:hover {
+  background-color: #e6ddd3 !important;
+  color: #5b3a1a !important;
+}
+
+.btn-cate:active {
+  background-color: #7A4E2E !important; /* 主色背景 */
+  color: white !important;
+  font-weight: 600;
+  box-shadow: 0 0 8px #7A4E2Eaa !important;
+}
