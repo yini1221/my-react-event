@@ -10,6 +10,10 @@ function AdminEventsPage() {
 
   const [events, setEvents] = useState([]);
   const [form, setForm] = useState({ id: null, title: '', description: '', location: '', startTime: '', endTime: '', createdAt: '', updatedAt: '', maxParticipants: '', imageBase64: '', eventCategory: null });
+  const [page, setPage] = useState(0);
+  const [size, setSize] = useState(7);
+  const [totalPages, setTotalPages] = useState(0);  
+  const [totalElements, setTotalElements] = useState(0);  
   const [editing, setEditing] = useState(false); // 是否為編輯模式
   const [categories, setCategories] = useState([]);
   const [selectedCategoryId, setSelectedCategoryId] = useState('');
@@ -17,16 +21,23 @@ function AdminEventsPage() {
   // 讀取活動資料
   const fetchEvents = async () => {
       try {
-          const res = await fetch(`${API_URL}/events`, {
+          let url = `${API_URL}/events?page=${page}&size=${size}`
+          if(selectedCategoryId) {
+            url += `&categoryId=${selectedCategoryId}`;
+          }
+          const res = await fetch( url, {
               credentials: "include"
           });
           if (!res.ok) {
               throw new Error(`HTTP error! status: ${res.status}`);
           }
           const result = await res.json();
-          setEvents(result.data || []);
-      } catch (error) {
-          console.error('讀取錯誤:', error);
+          setEvents(result.data.content || []);
+          setTotalPages(result.data.totalPages);
+          setTotalElements(result.data.totalElements);
+          console.log('Data: ', result);
+      } catch (err) {
+          console.error('讀取錯誤:', err);
       }
   };
 
@@ -38,15 +49,15 @@ function AdminEventsPage() {
       });
       const result = await res.json();
       setCategories(result.data || []);
-      } catch (error) {
-      console.error('讀取錯誤:', error);
+      } catch (err) {
+      console.error('讀取錯誤:', err);
       }
   }
 
   useEffect(() => {
       fetchEvents();
       fetchCategory();
-  }, []);
+  }, [page, selectedCategoryId]);
 
   // 表單變更
   const handleChange = (e) => {
@@ -130,25 +141,8 @@ function AdminEventsPage() {
         <div className="col">
           <div className="card card-body mt-3 p-4">
             <div className="d-flex justify-content-between align-items-center mb-4 position-relative">
-              <div className="d-flex align-items-center gap-2">
-                <img src={`${import.meta.env.BASE_URL}images/admin.png`} alt="admin" style={{ width: '40px' }} />
-                <h2 className="mb-0" style={{ color: '#7A4E2E' }}>活動管理系統</h2>
-              </div>
-              {
-                editing ? (
-                  <h4 className="m-0 text-muted">編輯模式</h4>
-                ) : (
-                  <button
-                    className="btn btn-outline-primary"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#addEventList"
-                    aria-expanded="false"
-                    aria-controls="addEventList"
-                  >
-                    新增活動
-                  </button>
-                )
-              }
+              
+              {editing && <h4 className="text-muted">編輯模式</h4>}
             </div>
 
             <div className={editing ? "show" : "collapse"} id="addEventList">
@@ -281,12 +275,12 @@ function AdminEventsPage() {
                     />
                   </li>
                   <li className="d-flex justify-content-center gap-3">
-                    <button type="submit" className="btn btn-primary px-4">
+                    <button type="submit" className="btn btn-events px-4">
                       {editing ? '修改' : '送出'}
                     </button>
                     <button
                       type="button"
-                      className="btn btn-secondary px-4"
+                      className="btn btn-events px-4"
                       data-bs-toggle="collapse"
                       data-bs-target="#addEventList"
                       onClick={() => {
@@ -327,17 +321,17 @@ function AdminEventsPage() {
             </div>
 
             <table className="table table-hover align-middle w-100">
-              <caption className="text-muted">目前共載入 {events.length} 筆資料</caption>
+              <caption className="text-muted">目前共載入 {events.length} 筆資料，共 {totalElements} 筆資料</caption>
               <thead className="table-light">
                 <tr>
-                  <th scope="col" style={{ width: '4%' }}>編號</th>
-                  <th scope="col" style={{ width: '4%' }}>分類</th>
-                  <th scope="col" style={{ width: '25%', textAlign: 'left' }}>活動名稱</th>
+                  <th scope="col" style={{ width: '5%' }}>編號</th>
+                  <th scope="col" style={{ width: '5%' }}>分類</th>
+                  <th scope="col" style={{ width: '23%' }}>活動名稱</th>
                   <th scope="col" style={{ width: '18%' }}>活動時間</th>
-                  <th scope="col" style={{ width: '4%' }}>人數上限</th>
-                  <th scope="col" style={{ width: '8%' }}>建立者</th>
-                  <th scope="col" style={{ width: '15%' }}>創建日期</th>
-                  <th scope="col" style={{ width: '13%' }}></th>
+                  <th scope="col" style={{ width: '5%' }}>上限</th>
+                  <th scope="col" style={{ width: '7%' }}>建立者</th>
+                  <th scope="col" style={{ width: '18%' }}>創建日期</th>
+                  <th scope="col" style={{ width: '10%' }}></th>
                 </tr>
               </thead>
               <tbody>
@@ -377,11 +371,46 @@ function AdminEventsPage() {
               </tbody>
               <tfoot>
                 <tr>
-                  <td colSpan={8} className="d-flex justify-content-between align-items-center">
-                    <button className="btn btn-outline-primary">匯出活動列表</button>
-                    <div>
-                      <button className="btn btn-sm btn-outline-secondary me-2">上一頁</button>
-                      <button className="btn btn-sm btn-outline-secondary">下一頁</button>
+                  <td colSpan={8}>
+                    <div className="d-flex justify-content-between align-items-center">
+                      <div>
+                        <button className="btn btn-events me-2">匯出活動列表</button>
+                        {!editing && (
+                          <button
+                            className="btn btn-events"
+                            style={{ top: '20px', right: '20px', zIndex: 10 }}
+                            data-bs-toggle="collapse"
+                            data-bs-target="#addEventList"
+                            aria-expanded="false"
+                            aria-controls="addEventList"
+                          >
+                            新增活動
+                          </button>
+                        )}
+                      </div>
+                      <div className="d-flex align-items-center gap-3">
+                        <button
+                          onClick={() => setPage(prev => Math.max(prev - 1, 0))}
+                          disabled={page === 0}
+                          className="btn btn-sm btn-outline-secondary"
+                          style={{ minWidth: '80px' }}
+                        >
+                          上一頁
+                        </button>
+
+                        <span style={{ minWidth: '100px', textAlign: 'center', color: '#7A4E2E' }}>
+                          第 {page + 1} 頁 / 共 {totalPages} 頁
+                        </span>
+
+                        <button
+                          onClick={() => setPage(prev => Math.min(prev + 1, totalPages - 1))}
+                          disabled={page + 1 >= totalPages}
+                          className="btn btn-sm btn-outline-secondary"
+                          style={{ minWidth: '80px' }}
+                        >
+                          下一頁
+                        </button>
+                      </div>
                     </div>
                   </td>
                 </tr>
