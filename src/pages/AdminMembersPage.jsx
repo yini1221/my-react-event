@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import AdminNavbar from '../components/AdminNavbar';
+import exportToExcel from '../components/exportToExcel';
 import '../css/adminMembersPage.css'
 
 const API_URL = 'http://localhost:8084/admin/members'; // 後台 API
@@ -15,6 +16,15 @@ function AdminMembersPage() {
     const [totalPages, setTotalPages] = useState(0);
     const [totalElements, setTotalElements] = useState(0);  
     const [editing, setEditing] = useState(false);
+
+    const columns = [
+        { label: '編號', key: 'id' },
+        { label: '名稱', key: 'username' },
+        { label: '信箱', key: 'email' },
+        { label: '加入時間', key: 'eventTime' },
+        { label: '驗證', key: 'completed' },
+        { label: '權限', key: 'roleName' }
+    ];
 
     const fetchMembers = async () => {
         let url = `${API_URL}?page=${page}&size=${size}`;
@@ -72,12 +82,21 @@ function AdminMembersPage() {
     }
 
     const formatDateTime = (datetime, type) => {
-    if (!datetime) return 'N/A';
-    if (type === 'startTime' || type === 'endTime') {
-        return dayjs(datetime).format('YYYY-MM-DD HH:mm');
-        }
-    return dayjs(datetime).format('YYYY-MM-DD HH:mm:ss');
+        if (!datetime) return 'N/A';
+        if (type === 'startTime' || type === 'endTime') {
+            return dayjs(datetime).format('YYYY-MM-DD HH:mm');
+            }
+        return dayjs(datetime).format('YYYY-MM-DD HH:mm:ss');
     };
+
+    const processedMemvers = users.map(use => ({
+        id: use.id,
+        username: use.username || '',
+        email: use.email,
+        eventTime: `${formatDateTime(use.createdAt, 'createdAt')}`,
+        completed: use.completed,
+        roleName: use.roleName
+    }));
 
     return (
     <div className="container-fluid">
@@ -110,7 +129,7 @@ function AdminMembersPage() {
                                 <th style={{ width: '25%' }}>加入時間</th>
                                 <th style={{ width: '10%' }}>驗證</th>
                                 <th style={{ width: '15%' }}>權限</th>
-                                <th style={{ width: '20%' }}></th>
+                                <th style={{ width: '20%' }} className='no-export'></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -119,7 +138,7 @@ function AdminMembersPage() {
                                     <td>{use.id}</td>
                                     <td>{use.username}</td>
                                     <td>{use.email}</td>
-                                    <td>{formatDateTime(use.createdAt, 'createdAt')}{}</td>
+                                    <td>{formatDateTime(use.createdAt, 'createdAt')}</td>
                                     <td>
                                         {use.completed ? (
                                         <img
@@ -154,7 +173,7 @@ function AdminMembersPage() {
                                         use.roleName
                                         )}
                                     </td>
-                                    <td>
+                                    <td className='no-export'>
                                         {editing && form.id === use.id ? (
                                         <div className="d-flex gap-2">
                                             <button onClick={handleSubmit} type="button" className="btn btn-member btn-sm">
@@ -183,11 +202,12 @@ function AdminMembersPage() {
                             ))}
                         </tbody>
                         <tfoot>
-                            <tr>
+                            <tr className='no-export'>
                                 <td colSpan={7}>
                                     <div className="d-flex justify-content-between align-items-center">
                                         <div className="d-flex justify-content-center">
-                                            <button className="btn btn-member">匯出會員列表</button>
+                                            <button onClick={() => exportToExcel(processedMemvers, columns, '會員列表.xlsx', '會員資料')} 
+                                                    className="btn btn-member">匯出會員列表</button>
                                         </div>
                                         <div className="d-flex align-items-center gap-3">
                                             <button

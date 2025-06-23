@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import AdminNavbar from '../components/AdminNavbar';
 import { useEffect, useState } from 'react';
+import exportToExcel from '../components/exportToExcel';
 import '../css/adminRegistrationsPage.css';
 
 const API_URL = 'http://localhost:8084/admin/registrations'; // 後台 API
@@ -18,6 +19,15 @@ function AdminRegistrationsPage() {
     const [totalPages, setTotalPages] = useState(0);
     const [totalElements, setTotalElements] = useState(0);  
     const [editing, setEditing] = useState(false);
+
+    const columns = [
+        { label: '編號', key: 'id' },
+        { label: '會員編號', key: 'userId' },
+        { label: '會員名稱', key: 'username' },
+        { label: '活動編號', key: 'eventId' },
+        { label: '報名時間', key: 'registeredAt' },
+        { label: '狀態', key: 'status' }
+    ];
 
     const fetchRegistrations = async () => {
             let url = `${API_URL}?page=${page}&size=${size}`;
@@ -91,6 +101,15 @@ function AdminRegistrationsPage() {
     return dayjs(datetime).format('YYYY-MM-DD HH:mm:ss');
     };
 
+    const processedRegistrations = registrations.map(registration => ({
+        id: registration.id,
+        userId: `${registration.userId}`,
+        username: `${registration.userUsername}`,
+        eventId: registration.eventId,
+        registeredAt: `${formatDateTime(registration.registeredAt, 'registeredAt')}`,
+        status: `${registration.status === 'pending' ? '待審核' : '報名完成'}`
+    }));
+
     return (
     <div className="container-fluid">
         <div className="row">
@@ -145,7 +164,7 @@ function AdminRegistrationsPage() {
                                 <th style={{ width: '15%' }}>活動編號</th>
                                 <th style={{ width: '20%' }}>報名時間</th>
                                 <th style={{ width: '20%' }}>狀態</th>
-                                <th style={{ width: '10%' }}></th>
+                                <th style={{ width: '10%' }} className='no-export'></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -183,7 +202,7 @@ function AdminRegistrationsPage() {
                                     </span>
                                     )}
                                 </td>
-                                <td>
+                                <td className='no-export'>
                                     {editing && form.id === registration.id ? (
                                     <div className="d-flex gap-2">
                                         <button
@@ -220,10 +239,11 @@ function AdminRegistrationsPage() {
                         ))}
                         </tbody>
                         <tfoot>
-                            <tr>
+                            <tr className='no-export'>
                                 <td colSpan={6}>
                                     <div className="d-flex justify-content-between align-items-center">
-                                        <div className="d-flex justify-content-center">
+                                        <div onClick={() => exportToExcel(processedRegistrations, columns, '報名列表.xlsx', '報名資料')} 
+                                             className="d-flex justify-content-center">
                                             <button className="btn btn-reg">匯出報名列表</button>
                                         </div>
                                         <div className="d-flex align-items-center gap-3">

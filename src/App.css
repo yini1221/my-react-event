@@ -134,3 +134,8 @@ span {
   background-color: #e3f2fd;
 }
 
+@media print {
+  .no-export {
+    display: none;
+  }
+}

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import AdminNavbar from '../components/AdminNavbar';
+import exportToExcel from '../components/exportToExcel';
 import '../css/adminEventsPage.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 
@@ -17,6 +18,18 @@ function AdminEventsPage() {
   const [editing, setEditing] = useState(false); // 是否為編輯模式
   const [categories, setCategories] = useState([]);
   const [selectedCategoryId, setSelectedCategoryId] = useState('');
+
+  const columns = [
+    { label: '編號', key: 'id' },
+    { label: '分類', key: 'eventCategoryName' },
+    { label: '活動名稱', key: 'title' },
+    { label: '開始時間', key: 'startTime' },
+    { label: '結束時間', key: 'endTime' },
+    { label: '上限', key: 'maxParticipants' },
+    { label: '建立者', key: 'creator' },
+    { label: '創立日期', key: 'created' },
+    { label: '更新日期', key: 'UpdatedAt' }
+  ];
 
   // 讀取活動資料
   const fetchEvents = async () => {
@@ -113,10 +126,6 @@ function AdminEventsPage() {
       }
   }
 
-  const filteredEvents = selectedCategoryId
-  ? events.filter(event => event.eventCategory?.id === parseInt(selectedCategoryId))
-  : events;
-
   // 編輯模式
   const handleEdit = (event) => {
       setForm(event);
@@ -130,6 +139,18 @@ function AdminEventsPage() {
           }
       return dayjs(datetime).format('YYYY-MM-DD HH:mm:ss');
   };
+
+  const processedEvents = events.map(event => ({
+    id: event.id,
+    eventCategoryName: event.eventCategory?.name || '',
+    title: event.title,
+    startTime: `${formatDateTime(event.startTime, 'startTime')}`,
+    endTime: `${formatDateTime(event.endTime, 'endTime')}`,
+    maxParticipants: event.maxParticipants,
+    creator: 'Yini',
+    created: `${formatDateTime(event.createdAt, 'createdAt')} 建立`,
+    UpdatedAt: `${formatDateTime(event.updatedAt, 'updatedAt')} 更新`
+  }));
 
   return (
     <div className="container-fluid">
@@ -330,11 +351,11 @@ function AdminEventsPage() {
                   <th scope="col" style={{ width: '5%' }}>上限</th>
                   <th scope="col" style={{ width: '7%' }}>建立者</th>
                   <th scope="col" style={{ width: '18%' }}>創建日期</th>
-                  <th scope="col" style={{ width: '10%' }}></th>
+                  <th scope="col" style={{ width: '10%' }} className='no-export'></th>
                 </tr>
               </thead>
               <tbody>
-                {filteredEvents.map((event) => (
+                {events.map((event) => (
                   <tr key={event.id}>
                     <th scope="row">{event.id}</th>
                     <td>{event.eventCategory?.name}</td>
@@ -349,7 +370,7 @@ function AdminEventsPage() {
                       {formatDateTime(event.createdAt, 'createdAt')} 建立<br />
                       {formatDateTime(event.updatedAt, 'updatedAt')} 更新
                     </td>
-                    <td className="align-middle text-center">
+                    <td className="align-middle text-center no-export">
                       <button className="btn btn-link p-0 me-2" onClick={() => handleEdit(event)} aria-label="編輯">
                         <img
                           src={`${import.meta.env.BASE_URL}images/settings.png`}
@@ -369,11 +390,12 @@ function AdminEventsPage() {
                 ))}
               </tbody>
               <tfoot>
-                <tr>
+                <tr className='no-export'>
                   <td colSpan={8}>
                     <div className="d-flex justify-content-between align-items-center">
                       <div>
-                        <button className="btn btn-events me-2">匯出活動列表</button>
+                        <button onClick={() => exportToExcel(processedEvents, columns, '活動列表.xlsx', '活動資料')} 
+                                className="btn btn-events me-2">匯出活動列表</button>
                         {!editing && (
                           <button
                             className="btn btn-events"
