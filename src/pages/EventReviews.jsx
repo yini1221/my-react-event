@@ -3,7 +3,9 @@ import { useState, useEffect } from 'react';
 const API_URL = 'http://localhost:8084/events'; // 後台 API
 
 function StarRating({ rating, setRating }) {
+
   const stars = [1, 2, 3, 4, 5];
+  
   return (
     <div style={{ display: 'flex', gap: '4px', cursor: 'pointer' }}>
       {stars.map((star) => (
@@ -41,6 +43,7 @@ function EventReviews({ eventId, user }) {
   const [content, setContent] = useState('');
   const [rating, setRating] = useState(5);
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   // 讀取心得列表
   const fetchReviews = async () => {
@@ -65,7 +68,6 @@ function EventReviews({ eventId, user }) {
       return;
     }
     if (!user) {
-      alert('請先登入');
       return;
     }
 
@@ -83,8 +85,8 @@ function EventReviews({ eventId, user }) {
         credentials: 'include',
       });
       const result = await res.json();
-      if(res.status === '403') {
-        alert('尚未報名此活動，無法發表心得')
+      if(res.status === '400') {
+        setErrorMessage(result.message);
         return;
       }
       if (res.ok) {
@@ -92,7 +94,7 @@ function EventReviews({ eventId, user }) {
         setRating(5);
         fetchReviews();
       } else {
-        alert(result.message || '發表失敗');
+        setErrorMessage(result.message || '發表失敗');
       }
     } catch (err) {
       console.error('提交心得錯誤', err);
@@ -117,6 +119,11 @@ function EventReviews({ eventId, user }) {
           </li>
         ))}
       </ul>
+      {errorMessage && (
+          <div className="alert alert-danger py-2 px-3" role="alert">
+            {errorMessage}
+          </div>
+        )}
       <h5>{user.username} ! 分享你的感想</h5>
       <div className='row '>
         <div className='col-1'>
