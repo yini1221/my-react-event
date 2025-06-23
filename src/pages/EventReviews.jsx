@@ -68,9 +68,9 @@ function EventReviews({ eventId, user }) {
       return;
     }
     if (!user) {
+      setErrorMessage('報名該活動才可使用留言功能');
       return;
     }
-
     setLoading(true);
     try {
       const res = await fetch(`${API_URL}/${eventId}/reviews`, {
@@ -124,7 +124,7 @@ function EventReviews({ eventId, user }) {
             {errorMessage}
           </div>
         )}
-      <h5>{user.username} ! 分享你的感想</h5>
+      <h5>{ user && `{user.username} !`}  分享你的感想</h5>
       <div className='row '>
         <div className='col-1'>
           <img src={`${import.meta.env.BASE_URL}images/user.png`} className='ms-4' style={{'width': '40px'}}/>
