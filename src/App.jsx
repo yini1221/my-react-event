@@ -160,7 +160,7 @@ function App() {
         const result = await res.json();
         if (!res.ok) {
           if (!hasCheckedLogin) {
-            setErrorMessage(result.message || '未登入');
+            console.error(result.message || '未登入');
           }
           setIsLogin(false);
           setUserId(null);
@@ -185,8 +185,7 @@ function App() {
         }
       } catch (err) {
         if (!hasCheckedLogin) {
-          console.error('登入時發生錯誤:', error);
-          setErrorMessage('無法連線至伺服器');
+          console.error('登入時發生錯誤:', err);
         }
       } finally {
         setHasCheckedLogin(true);
