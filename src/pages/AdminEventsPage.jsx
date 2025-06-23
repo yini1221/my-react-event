@@ -147,9 +147,9 @@ function AdminEventsPage() {
     startTime: `${formatDateTime(event.startTime, 'startTime')}`,
     endTime: `${formatDateTime(event.endTime, 'endTime')}`,
     maxParticipants: event.maxParticipants,
-    creator: 'Yini',
-    created: `${formatDateTime(event.createdAt, 'createdAt')} 建立`,
-    UpdatedAt: `${formatDateTime(event.updatedAt, 'updatedAt')} 更新`
+    creator: event.createdBy.username,
+    created: `${formatDateTime(event.createdAt, 'createdAt')}`,
+    UpdatedAt: `${formatDateTime(event.updatedAt, 'updatedAt')}`
   }));
 
   return (
@@ -365,7 +365,7 @@ function AdminEventsPage() {
                       {formatDateTime(event.endTime, 'endTime')}
                     </td>
                     <td>{event.maxParticipants}</td>
-                    <td>Yini</td>
+                    <td>{event.createdBy.username}</td>
                     <td className="text-secondary" style={{ fontSize: '0.85rem' }}>
                       {formatDateTime(event.createdAt, 'createdAt')} 建立<br />
                       {formatDateTime(event.updatedAt, 'updatedAt')} 更新
