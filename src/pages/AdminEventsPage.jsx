@@ -11,7 +11,7 @@ function AdminEventsPage() {
   const [events, setEvents] = useState([]);
   const [form, setForm] = useState({ id: null, title: '', description: '', location: '', startTime: '', endTime: '', createdAt: '', updatedAt: '', maxParticipants: '', imageBase64: '', eventCategory: null });
   const [page, setPage] = useState(0);
-  const [size, setSize] = useState(7);
+  const [size, setSize] = useState(10);
   const [totalPages, setTotalPages] = useState(0);  
   const [totalElements, setTotalElements] = useState(0);  
   const [editing, setEditing] = useState(false); // 是否為編輯模式
@@ -35,7 +35,6 @@ function AdminEventsPage() {
           setEvents(result.data.content || []);
           setTotalPages(result.data.totalPages);
           setTotalElements(result.data.totalElements);
-          console.log('Data: ', result);
       } catch (err) {
           console.error('讀取錯誤:', err);
       }
@@ -57,7 +56,7 @@ function AdminEventsPage() {
   useEffect(() => {
       fetchEvents();
       fetchCategory();
-  }, [page, selectedCategoryId]);
+  }, [page, size, selectedCategoryId]);
 
   // 表單變更
   const handleChange = (e) => {
