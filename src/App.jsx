@@ -96,6 +96,7 @@ function App() {
   const [userId, setUserId] = useState(null);
   const [username, setUsername] = useState(null);
   const [role, setRole] = useState(null);
+  const [hasCheckedLogin, setHasCheckedLogin] = useState(false);
   const [theme, setTheme] = useState(() => {
     return localStorage.getItem('theme') || 'light';
   });
@@ -157,7 +158,16 @@ function App() {
           credentials: 'include',
         });
         const result = await res.json();
-        if (res.ok && result.data === true) {
+        if (!res.ok) {
+          if (!hasCheckedLogin) {
+            setErrorMessage(result.message || '未登入');
+          }
+          setIsLogin(false);
+          setUserId(null);
+          setUsername(null);
+          setRole(null);
+          localStorage.removeItem('user');
+        } else if (result.data === true) {         
           const storedUser = localStorage.getItem('user');
           if (storedUser) {
             const userObj = JSON.parse(storedUser);
@@ -173,12 +183,19 @@ function App() {
           setRole(null);
           localStorage.removeItem('user');
         }
-      } catch (error) {
-        console.error('登入時發生錯誤:', error);
+      } catch (err) {
+        if (!hasCheckedLogin) {
+          console.error('登入時發生錯誤:', error);
+          setErrorMessage('無法連線至伺服器');
+        }
+      } finally {
+        setHasCheckedLogin(true);
       }
-  };
-    checkLogin();
-  }, []);
+    };
+    if (!hasCheckedLogin) {
+      checkLogin();
+    }
+  }, [hasCheckedLogin]);
 
   useEffect(() => {
     localStorage.setItem('theme', theme);
@@ -191,10 +208,11 @@ function App() {
     }
   }, [theme]);
 
-  useEffect(() => {
+    useEffect(() => {
      fetchUserInfo();
   }, [])
-  return (
+
+  return (<>
     <Router>
       <Routes>
         {/* 沒有 Navbar 和 Footer 的首頁 */}
@@ -239,7 +257,7 @@ function App() {
         </Route>
       </Routes>
     </Router>
-  );
+  </>);
 }
 
 export default App;
