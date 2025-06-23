@@ -107,20 +107,20 @@ function EventDetailPage() {
     }
   };
 
-useEffect(() => {
-  fetchEvent();
-  fetchRegistrationCount();
-},[eventId])
+  useEffect(() => {
+    fetchEvent();
+    fetchRegistrationCount();
+  },[eventId])
 
-useEffect(() => {
-  if (event && event.eventCategory && event.eventCategory?.id) {
-    fetchRandomEvents(event.eventCategory.id);
-  }
-}, [event]);
+  useEffect(() => {
+    if (event && event.eventCategory && event.eventCategory?.id) {
+      fetchRandomEvents(event.eventCategory.id);
+    }
+  }, [event]);
 
-useEffect(() => {
-  checkFavorite();
-}, [eventId, userId]);
+  useEffect(() => {
+    checkFavorite();
+  }, [eventId, userId]);
 
   const formatDateTime = (datetime, type) => {
   if (!datetime) return 'N/A';
@@ -187,7 +187,7 @@ useEffect(() => {
             {eventStarted ? (
               <EventReviews eventId={eventId} user={user} />
             ) : (
-              <p>活動尚未開始，暫時無法發表心得分享。</p>
+                <p className='p-3'>活動尚未開始，暫時無法發表心得分享。</p>
             )}
           <div>
             <h2>你可能會喜歡這些活動</h2>
