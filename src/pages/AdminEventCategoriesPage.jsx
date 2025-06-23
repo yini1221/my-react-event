@@ -24,7 +24,6 @@ function AdminEventCategoriesPage() {
                 credentials: "include"
             });
             const result = await res.json();
-            console.log('API 回傳內容：', result);
             setEventCategories(result.data || []);
         } catch (err) {
             console.error('讀取錯誤:', err);
