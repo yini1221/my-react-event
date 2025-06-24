@@ -1,17 +1,19 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useTheme } from '../components/ThemeContext';
 import ToggleTheme from './ToggleTheme';
-import '../css/Navbar.css';
+import '../css/navbar.css';
 import { useEffect, useState } from 'react';
 
 function Navbar({ isLogin, userId, username, role, onLogout }) {
 
   const navigate = useNavigate();
   const [searchKeyword, setSearchKeyword] = useState('');
+  const [showSuccess, setShowSuccess] = useState(false);
   const { theme } = useTheme();
   const logoSrc = `${import.meta.env.BASE_URL}images/${theme === 'dark' ? 'homelogo_white.png' : 'homelogo.png'}`;
 
   const handleLogout = async (e) => {
+    setShowSuccess(true);
     try {
       const res = await fetch('http://localhost:8084/logout', {
         method: 'POST',
@@ -19,16 +21,20 @@ function Navbar({ isLogin, userId, username, role, onLogout }) {
       })
       const result = await res.json();
       if (res.ok) {
-        alert('登出成功! ');
         localStorage.removeItem('user');
         onLogout();
-        navigate('/auth/login');
+        setTimeout(() => {
+          setShowSuccess(false);
+          navigate("/auth/login");
+        }, 2000);
       } else {
         alert('登出失敗: ' + result.message);
-        }
+        setShowSuccess(false);
+      }
     } catch (err) {
-        console.error('登出失敗！' + err);   
-      }   
+      console.error('登出失敗！' + err);   
+      setShowSuccess(false);
+    }
   };
 
   const handleSearchSubmit = (e) => {
@@ -47,23 +53,26 @@ function Navbar({ isLogin, userId, username, role, onLogout }) {
           <Link className="navbar-brand position-absolute top-50 start-50 translate-middle" to="/home" style={{ width: '50px' }}>
             <img src={logoSrc} />
           </Link>
+          {showSuccess && (
+            <div className="alert alert-success py-2 px-3 text-center position-fixed top-0 start-50 translate-middle-x mt-3" style={{ zIndex: 1050, width: '300px' }} role="alert">
+              登出成功！即將跳轉到登入頁...
+            </div>
+          )}
           <div className='d-flex'>
             <button className="bg-navbar btn btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#searchCollapse" aria-expanded="false" aria-controls="searchCollapse">
               <img src={`${import.meta.env.BASE_URL}images/search-o.png`} style={{ width: '30px' }} />
             </button>
-            <div className='d-none d-lg-block'>
+            <div className='d-none d-lg-flex align-items-center'>
               <span className='text-white'>｜</span>
               {
-                isLogin && userId ? 
-                (<>
+                isLogin && userId ? <>
                   <span>
                     <Link to={`/user/profile/${userId}`} className='text-color'>
                       {username}{role === 'ADMIN' && (<span>(管理員)</span>)}
                     </Link> <span className='text-color'> 你好!</span>
                   </span>
                   <button type="button" className="btn text-color navbar-button" onClick={() => handleLogout()}>登出</button>
-                </>) 
-                : (<>
+                </> : (<>
                   <button type="button" className="btn text-color" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     <Link to="/auth/login" className="nav-link custom-link navbar-button" aria-current="login">登入</Link>
                   </button>

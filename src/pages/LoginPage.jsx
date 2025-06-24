@@ -7,6 +7,8 @@ const API_URL = 'http://localhost:8084/auth'; // 後台 API
 function LoginPage({ onLoginSuccess  }) {
   const [form, setForm] = useState({ email: '', password: '', authCode: '' });
   const [captchaImg, setCaptchaImg] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const location = useLocation();
   const navigate = useNavigate();
@@ -42,6 +44,7 @@ function LoginPage({ onLoginSuccess  }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const res = await fetch(`${API_URL}/login`, {
         method: 'POST', 
@@ -51,12 +54,15 @@ function LoginPage({ onLoginSuccess  }) {
       })
       const result = await res.json(); 
       if (res.ok) {
+        setShowSuccess(true);
         const { userdto } = result.data;
         console.log('登入回應結果:', result);
-        alert('登入成功！');
         localStorage.setItem('user', JSON.stringify({ id: userdto.id, username: userdto.username, role: userdto.role }));
         onLoginSuccess(userdto);
-        navigate(from, { replace: true });
+        setTimeout(() => {
+          setShowSuccess(false);
+          navigate(from, { replace: true });
+        }, 2500);
         setErrorMessage('');
       } else {
         setErrorMessage(result.message || '登入失敗');
@@ -65,6 +71,7 @@ function LoginPage({ onLoginSuccess  }) {
                 password: '',
                 authCode: ''
         }));
+        setLoading(false);
         loadCaptcha();
       }   
     } catch (err) {
@@ -75,7 +82,9 @@ function LoginPage({ onLoginSuccess  }) {
   };
 
   const handleOAuthLogin = (provider) => {
+    setLoading(true);
     window.location.href = `http://localhost:8084/oauth2/authorization/${provider}`;
+    setLoading(false);
   };
 
   return (
@@ -90,6 +99,11 @@ function LoginPage({ onLoginSuccess  }) {
         {errorMessage && (
           <div className="alert alert-danger py-2 px-3" role="alert">
             {errorMessage}
+          </div>
+        )}
+        {showSuccess && (
+          <div className="alert alert-success py-2 px-3 text-center" role="alert">
+            登入成功！即將跳轉到首頁...
           </div>
         )}
         <form onSubmit={handleSubmit} noValidate>
@@ -157,7 +171,7 @@ function LoginPage({ onLoginSuccess  }) {
             onMouseEnter={e => e.currentTarget.style.backgroundColor = "#5b3a1a"}
             onMouseLeave={e => e.currentTarget.style.backgroundColor = "#7A4E2E"}
           >
-            登入
+            {loading ? '登入中...' : '登入'}
           </button>
         </form>
         <button

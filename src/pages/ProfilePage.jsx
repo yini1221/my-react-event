@@ -9,6 +9,8 @@ function ProfilePage({ onUsernameChange }) {
   const [profile, setProfile] = useState(null);
   const [username, setUsername] = useState('');
   const [passwords, setPasswords] = useState({ oldPassword: '', newPassword: '', confirmPassword: ''});
+  const [errorMessage, setErrorMessage] = useState('');
+  const [showSuccess, setShowSuccess] = useState(false);
   const [editingUsername, setEditingUsername] = useState(false); // 編輯暱稱模式
   const [editingPassword, setEditingPassword] = useState(false); // 編輯密碼模式
 
@@ -73,13 +75,15 @@ function ProfilePage({ onUsernameChange }) {
           });
           const result = await res.json();
           if (res.ok) {
-              await fetchUser(); // 重新查詢所有分類
-              console.log('API 回傳內容：', result);
+              setShowSuccess(true);
               setPasswords({ oldPassword: '', newPassword: '', confirmPassword: ''});
-              alert(result.message);
-              setEditingPassword(false);
+              setTimeout(() => {
+                setShowSuccess(false);
+                setEditingPassword(false);
+              }, 2500);
+              await fetchUser();
           } else {
-              alert(result.message || '修改密碼失敗');
+            setErrorMessage(result.message || '修改密碼失敗');
           }
       } catch (err) {
           console.error('提交錯誤:', err);
@@ -90,9 +94,9 @@ function ProfilePage({ onUsernameChange }) {
   
   return (
     <div className="container my-5">
-      <div className="card shadow rounded-4 p-4 mx-auto" style={{ maxWidth: '600px', background: 'linear-gradient(135deg, #f7ede1, #e6ddd3)' }}>
+      <div className="card shadow rounded-4 p-4 mx-auto bg-profile" style={{ maxWidth: '600px'}}>
         <div className="text-center mb-4">
-          <h2 className="text-secondary fw-bold">個人資訊</h2>
+          <h2 className="text-muted fw-bold">個人資訊</h2>
           <img
             src={`${import.meta.env.BASE_URL}images/personal-information2.png`}
             alt="profile"
@@ -101,8 +105,7 @@ function ProfilePage({ onUsernameChange }) {
         </div>
 
         <ul className="list-unstyled d-flex flex-column gap-4 px-3">
-          <li className="fs-6 text-muted">會員編號：<span className="fs-6 fw-semibold text-dark">{profile.id}</span></li>
-
+          <li className="fs-6 text-muted">會員編號：<span className="fs-6 fw-semibold">{profile.id}</span></li>
           <li>
             {editingUsername ? (
               <form
@@ -123,7 +126,9 @@ function ProfilePage({ onUsernameChange }) {
               </form>
             ) : (
               <div className="d-flex align-items-center justify-content-center gap-3 fs-5">
-                <span className='fs-6'>暱稱：<strong>{profile.username}</strong> <small className="text-muted">({profile.roleName})</small></span>
+                <span className='fs-6 text-muted'>暱稱：<strong>{profile.username}</strong> 
+                  <small className="text-muted"> ({profile.roleName})</small>
+                </span>
                 <button
                   type="button"
                   className="btn btn-link p-0"
@@ -136,53 +141,67 @@ function ProfilePage({ onUsernameChange }) {
               </div>
             )}
           </li>
-
-          <li className="fs-6 text-muted">信箱：<span className="fs-6 fw-semibold text-dark">{profile.email}</span></li>
-          <li className="fs-6 text-muted">加入時間：<span className="fs-6 fw-semibold text-dark">{new Date(profile.createdAt).toLocaleDateString()}</span></li>
-
+          <li className="fs-6 text-muted">信箱：<span className="fs-6 fw-semibold">{profile.email}</span></li>
+          <li className="fs-6 text-muted">加入時間：<span className="fs-6 fw-semibold">{new Date(profile.createdAt).toLocaleDateString()}</span></li>
           <li className="d-flex flex-column align-items-center gap-3">
-            {editingPassword ? (
-              <form
-                className="d-flex flex-column align-items-center gap-3 w-100"
-                onSubmit={e => { e.preventDefault(); handlePasswordSubmit(); }}
-              >
-                <input
-                  type="password"
-                  name="oldPassword"
-                  value={passwords.oldPassword}
-                  onChange={handlePasswordChange}
-                  placeholder="舊密碼"
-                  required
-                  className="form-control w-75 border-profile"
-                />
-                <input
-                  type="password"
-                  name="newPassword"
-                  value={passwords.newPassword}
-                  onChange={handlePasswordChange}
-                  placeholder="新密碼"
-                  required
-                  className="form-control w-75 border-profile"
-                />
-                <input
-                  type="password"
-                  name="confirmPassword"
-                  value={passwords.confirmPassword}
-                  onChange={handlePasswordChange}
-                  placeholder="確認新密碼"
-                  required
-                  className="form-control w-75 border-profile"
-                />
-                <div className="d-flex gap-3">
-                  <button type="submit" className="btn btn-profile px-4">確認</button>
-                  <button type="button" className="btn btn-profile px-4" onClick={() => setEditingPassword(false)}>取消</button>
-                </div>
-              </form>
-            ) : (
-              <button className="btn btn-profile px-4" onClick={() => setEditingPassword(true)}>更改密碼</button>
-            )}
+            {
+              profile.authProvider === 'github' ?               
+                <p className="m-0 text-muted alert alert-danger">您是第三方登入用戶，無法修改密碼。<br/>如需更改密碼，請至第三方平台操作。</p>
+                :
+                editingPassword ? (
+                  <>
+                  {errorMessage && (
+                    <div className="alert alert-danger py-2 px-3 m-0" role="alert">
+                      {errorMessage}
+                    </div>
+                  )}
+                  {( showSuccess &&
+                    <div className="alert alert-success py-2 px-3 m-0" role="alert">
+                      修改成功！請稍後...
+                    </div>
+                  )}
+                  <form
+                    className="d-flex flex-column align-items-center gap-3 w-100"
+                    onSubmit={e => { e.preventDefault(); handlePasswordSubmit(); }}
+                  >
+                    <input
+                      type="password"
+                      name="oldPassword"
+                      value={passwords.oldPassword}
+                      onChange={handlePasswordChange}
+                      placeholder="舊密碼"
+                      required
+                      className="form-control w-75 border-profile text-secondary"
+                    />
+                    <input
+                      type="password"
+                      name="newPassword"
+                      value={passwords.newPassword}
+                      onChange={handlePasswordChange}
+                      placeholder="新密碼"
+                      required
+                      className="form-control w-75 border-profile"
+                    />
+                    <input
+                      type="password"
+                      name="confirmPassword"
+                      value={passwords.confirmPassword}
+                      onChange={handlePasswordChange}
+                      placeholder="確認新密碼"
+                      required
+                      className="form-control w-75 border-profile"
+                    />
+                    <div className="d-flex gap-3">
+                      <button type="submit" className="btn btn-profile px-4">確認</button>
+                      <button type="button" className="btn btn-profile px-4" onClick={() => setEditingPassword(false)}>取消</button>
+                    </div>
+                  </form>
+                  </>
+                ) : (
+                  <button className="btn btn-profile px-4" onClick={() => setEditingPassword(true)}>更改密碼</button>
+                )
+            }
           </li>
-
           <li className="text-center">
             <Link to={`/user/${userId}/registrations`} className="btn btn-profile px-4">
               查看報名紀錄

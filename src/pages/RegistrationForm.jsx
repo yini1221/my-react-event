@@ -8,6 +8,8 @@ const API_URL = 'http://localhost:8084/auth/register'; // 後台 API
 function RegistrationForm() {
 
     const [form, setForm] = useState({ username: '', email: '', password: '' });
+    const [loading, setLoading] = useState(false);
+    const [showSuccess, setShowSuccess] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
 
@@ -21,6 +23,7 @@ function RegistrationForm() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
         try {
             const res = await fetch(API_URL, {
               method: 'POST', 
@@ -29,21 +32,26 @@ function RegistrationForm() {
             });
             const result = await res.json();            
             if (res.ok) {
-                alert(`註冊成功！暱稱：${form.username}，帳號：${form.email}`);
-                setForm({ username: '', email: '', password: '' })
+              setShowSuccess(true);
+              setForm({ username: '', email: '', password: '' });
+              setErrorMessage('');
+              setTimeout(() => {
+                setShowSuccess(false);
                 navigate("/auth/login");
-                setErrorMessage('');
+              }, 2500);
             } else {
-                setErrorMessage(result.message || '登入失敗');
-                setForm(prev => ({
-                ...prev,
-                email: '',
-                password: ''
+              setErrorMessage(result.message || '註冊失敗');
+              setForm(prev => ({
+              ...prev,
+              email: '',
+              password: ''
             }));
           }
         } catch (err) {
             console.error('提交錯誤:', err);
             setErrorMessage('系統錯誤，請稍後再試');
+        } finally {
+          setLoading(false);
         }
     };
 
@@ -51,13 +59,16 @@ function RegistrationForm() {
     <div className="d-flex justify-content-center align-items-center vh-100" style={{ backgroundColor: "#f7ede1" }}>
       <div className="card shadow-sm p-4" style={{ maxWidth: "380px", width: "100%", borderRadius: "12px", backgroundColor: "#e6ddd3" }}>
         <h2 className="mb-4 text-center" style={{ color: "#7A4E2E", fontWeight: "700" }}>註冊</h2>
-
         {errorMessage && (
           <div className="alert alert-danger py-2 px-3" role="alert">
             {errorMessage}
           </div>
         )}
-
+        {showSuccess && (
+          <div className="alert alert-success py-2 px-3 text-center" role="alert">
+            註冊成功！即將跳轉到登入頁...
+          </div>
+        )}
         <form onSubmit={handleSubmit} noValidate>
           <div className="mb-3 text-start">
             <input
@@ -122,8 +133,9 @@ function RegistrationForm() {
             }}
             onMouseEnter={e => e.currentTarget.style.backgroundColor = "#5b3a1a"}
             onMouseLeave={e => e.currentTarget.style.backgroundColor = "#7A4E2E"}
+            disabled={loading}
           >
-            註冊
+            {loading ? '處理中...' : '註冊'}            
           </button>
         </form>
 
