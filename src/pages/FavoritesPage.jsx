@@ -1,7 +1,7 @@
 import { Link, useParams, useLocation } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { useState, useEffect } from 'react';
-import RegisterButton from '../components/RegisterButton';
+import RegisterButton from '../components/registerButton';
 import '../css/favoritesPage.css';
 
 const API_URL = 'http://localhost:8084/user/favorites'; // 後台 API
