@@ -132,7 +132,7 @@ function RegisterPage() {
     if (!event) return <p>載入中...</p>;
 
     return(
-      <div className="container-fluid d-flex justify-content-center flex-column p-4 mx-auto w-100 bg-light rounded">
+      <div className="container-fluid d-flex justify-content-center flex-column p-4 mx-auto w-100 rounded">
         <div className="mx-auto bg-white rounded-4 row py-3" style={{'maxWidth': '1080px'}}>
             <div className="col-md-3">
                 <img className='rounded-3 w-100 mb-3' src={`data:image/jpeg;base64,${event.imageBase64}`} />
@@ -143,11 +143,11 @@ function RegisterPage() {
                     <div>
                         <img src={`${import.meta.env.BASE_URL}images/clock.png`} style={{width: '30px', height: '30px'}}/>
                     </div>
-                    <span className='fs-14 text-gray'>{formatDateTime(event.startTime, 'startTime')} 開始<br />{formatDateTime(event.endTime, 'endTime')} 結束</span>
+                    <span className='fs-14 text-secondary'>{formatDateTime(event.startTime, 'startTime')} 開始<br />{formatDateTime(event.endTime, 'endTime')} 結束</span>
                 </div>
                 <div className='mb-2 text-start'>
                     <img src={`${import.meta.env.BASE_URL}images/placeholder.png`} style={{width: '30px'}}/>
-                    <span className='fs-14 text-gray'>{event.location}</span>
+                    <span className='fs-14 text-secondary'>{event.location}</span>
                 </div>
             </div>
             <div className="col-md-9 d-flex flex-column flex-grow-1">
@@ -155,7 +155,7 @@ function RegisterPage() {
                     <ul className="list-unstyled">
                         <li>
                             <div className="border bg-secondary bg-gradient d-inline-block rounded-3 w-25 mb-1" style={{'--bs-bg-opacity': '.4'}}>聲明與切結</div>
-                            <div className="border border-1 rounded-3 bg-white p-2 mb-2 fs-14 text-start text-gray">
+                            <div className="border border-1 rounded-3 bg-white p-2 mb-2 fs-14 text-start text-secondary">
                                 Yi起Join 活動報名系統由一起動力行銷有限公司（以下簡稱「本公司」）設立，提供運動賽事及相關活動報名、商品購買及收取報名費用之服務。<br />
 一、資訊提供與責任聲明<br />
 本系統所刊登之所有活動相關資訊（包括價格、圖樣、規格、期間限定及其他約定事項）、服務及商品，均由活動主辦單位或相關廠商提供。本公司不負審查義務，對於內容是否涉及違法或侵害他人權益，恕不承擔任何責任。消費者於報名或購買前，應自行謹慎評估並承擔風險。<br />

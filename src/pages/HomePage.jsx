@@ -109,7 +109,7 @@ function HomePage() {
         </ul>
     </div>
     <div className="container-fluid container-lg px-3">
-      <div className="bg-light mt-0 mx-auto" style={{'maxWidth': '1080px'}}>
+      <div className="mt-0 mx-auto" style={{'maxWidth': '1080px'}}>
         { selectedCategory === 'all' ? (
           <div>
               { bannerImage && bannerImage.imageBase64 ? (

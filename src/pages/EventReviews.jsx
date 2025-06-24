@@ -124,7 +124,7 @@ function EventReviews({ eventId, user }) {
             {errorMessage}
           </div>
         )}
-      <h5>{ user && `{user.username} !`}  分享你的感想</h5>
+      <h5>{ user && `${user.username} !`}  分享你的感想</h5>
       <div className='row '>
         <div className='col-1'>
           <img src={`${import.meta.env.BASE_URL}images/user.png`} className='ms-4' style={{'width': '40px'}}/>
@@ -135,14 +135,14 @@ function EventReviews({ eventId, user }) {
               <StarRating rating={rating} setRating={setRating} />
           </div>
           <textarea
-            className='form-control mb-2'
+            className='text-secondary bg-white form-control mb-2'
             value={content}
             onChange={(e) => setContent(e.target.value)}
             rows={4}
             placeholder="寫下你的心得..."
             required
           />
-          <button type="submit" disabled={loading}>{loading ? '發表中...' : '發表心得'}</button>
+          <button type="submit" className='btn-blue text-white' disabled={loading}>{loading ? '發表中...' : '發表心得'}</button>
         </form>
       </div>
     </div>

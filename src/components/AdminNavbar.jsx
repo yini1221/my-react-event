@@ -3,7 +3,7 @@ import '../css/adminNavbar.css';
 
 function AdminNavbar () {
   return (
-    <ul className="list-unstyled bg-light vh-100 d-flex flex-column gap-4 border border-top-0 p-3">
+    <ul className="list-unstyled vh-100 d-flex flex-column gap-4 border border-top-0 p-3">
       <li className='mt-5'>
         <NavLink to="/admin/registrations" className={({ isActive }) =>
                   (isActive ? 'active ' : '') + 'nav-link p-1' }>

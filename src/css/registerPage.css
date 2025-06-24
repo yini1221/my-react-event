@@ -21,3 +21,7 @@
 .btn-blue:hover {
     opacity: .8;
 }
+
+body.dark-theme .event-link {
+  color: #ccc !important;
+}

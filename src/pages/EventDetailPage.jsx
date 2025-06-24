@@ -135,7 +135,7 @@ function EventDetailPage() {
   const eventStarted = new Date(event.startTime) <= new Date();
 
   return (
-      <div className="container-fluid d-flex justify-content-center flex-column p-4 mx-auto bg-light">
+      <div className="container-fluid d-flex justify-content-center flex-column p-4 mx-auto">
         <div className='mx-auto bg-white rounded-4' style={{'maxWidth': '1080px'}}>
           <div className='shadow mb-4'>
             <div>
@@ -144,7 +144,7 @@ function EventDetailPage() {
             <div className='row p-4'>
               <div className='col-lg-8'>
                 <div className='text-start mb-2'>
-                  <span className="p-2 btn-blue badge text-white" style={{ userSelect: 'none', cursor: 'default' }}>
+                  <span className="p-2 btn-blue badge" style={{ userSelect: 'none', cursor: 'default' }}>
                     {event.eventCategory?.name}
                   </span>
                   </div>
@@ -160,7 +160,7 @@ function EventDetailPage() {
                       {event.location}
                     </div>
                   </div>
-                  <div className="p-3 events-color border rounded-5 ">
+                  <div className="p-3 text-secondary border rounded-5 ">
                       {event.description}
                   </div>
                 </div>
