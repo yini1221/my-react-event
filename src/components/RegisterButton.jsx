@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 
-function RegisterButton({ eventId, className = "btn btn-blue px-4 text-white", label = '我要報名'}) {
+function registerButton({ eventId, className = "btn btn-blue px-4 text-white", label = '我要報名'}) {
 
     const navigate = useNavigate();
 
@@ -15,4 +15,4 @@ function RegisterButton({ eventId, className = "btn btn-blue px-4 text-white", l
     )
 }
 
-export default RegisterButton
+export default registerButton
