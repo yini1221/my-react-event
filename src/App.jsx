@@ -7,6 +7,7 @@ import { useTheme } from './components/ThemeContext';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import RegistrationForm from './pages/RegistrationForm';
+import VerifyPage from './pages/VerifyPage';
 import FavoritesPage from './pages/FavoritesPage';
 import ProfilePage from './pages/ProfilePage';
 import RegistrationsPage from './pages/RegistrationsPage';
@@ -73,7 +74,7 @@ function Layout({ isLogin, userId, username, role, onLogout }) {
         username={username}
         role={role}
         onLogout={onLogout}/>
-      <main className="flex-grow-1 bg-light mt-5">
+      <main className="flex-grow-1" style={{ paddingTop: '50px', minHeight: 'calc(100vh - 50px)', overflow: 'auto' }}>
         <Outlet />
       </main>
       <Footer />
@@ -230,6 +231,7 @@ function App() {
           <Route path="/home/search" element={<EventSearch />} />
           <Route path="/auth/login" element={<LoginPage onLoginSuccess={handleLoginSuccess} />} />
           <Route path="/auth/register" element={<RegistrationForm />} />
+          <Route path="/auth/verify/:email" element={<VerifyPage />} />
           <Route path="/user/favorites/:userId" element={
             <PrivateRoute>
             <FavoritesPage />
