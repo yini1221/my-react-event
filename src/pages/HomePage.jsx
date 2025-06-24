@@ -24,7 +24,6 @@ function HomePage() {
             credentials: "include"
         });
         const result = await res.json();
-        console.log('API 回傳內容：', result);
         setEventCategories(result.data || []);
     } catch (err) {
         console.error('讀取錯誤:', err);
@@ -38,7 +37,6 @@ function HomePage() {
         credentials: "include"
       });
       const result = await res.json();
-      console.log('API 回傳內容：', result);
       setEvents(result.data || []);
     } catch (err) {
         console.error('讀取錯誤:', err);
@@ -51,7 +49,6 @@ function HomePage() {
         credentials: 'include'
       });
       const result = await res.json();
-      console.log('API 回傳內容:', result);
       setBannerImage(result.data || null);
     } catch (err) {
         console.error('讀取錯誤:', err);

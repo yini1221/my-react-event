@@ -39,7 +39,6 @@ function AdminMembersPage() {
                 throw new Error(`Http error! status: ${res.status}`);
             }
             const result = await res.json();
-            console.log('API 回傳內容：', result);
             setUsers(result.data.content || []);
             setTotalPages(result.data.totalPages);
             setTotalElements(result.data.totalElements);

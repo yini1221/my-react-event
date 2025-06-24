@@ -160,9 +160,6 @@ function App() {
         });
         const result = await res.json();
         if (!res.ok) {
-          if (!hasCheckedLogin) {
-            console.error(result.message || '未登入');
-          }
           setIsLogin(false);
           setUserId(null);
           setUsername(null);

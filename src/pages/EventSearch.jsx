@@ -20,7 +20,6 @@ function EventSearch() {
       const result = await res.json();
       setEvents(result.data || []);
     } catch (err) {
-      console.error('搜尋錯誤:', err);
       setEvents([]);
     } finally {
       setLoading(false);

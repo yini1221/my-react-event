@@ -25,7 +25,6 @@ function RegisterPage() {
             throw new Error(`HTTP error! status: ${res.status}`);
         }
         const result = await res.json();
-        console.log('API 回傳內容：', result);
         setEvent(result.data);
         } catch (err) {
         console.error('讀取錯誤:', err);
@@ -44,7 +43,6 @@ function RegisterPage() {
             throw new Error(`HTTP error! status: ${res.status}`);
         }
         const result = await res.json();
-        console.log('API 回傳內容：', result);
         if (result.data && result.data.status) {
             setStatus(result.data.status);
             setMessage(result.data.status === 'pending' ? '已申請，請靜待審核' :
@@ -108,7 +106,6 @@ function RegisterPage() {
 
     const handleCancel = async() => {
         if (!window.confirm('確定要取消報名嗎？')) return;
-        console.log('registrationId: ', registrationId)
         try {
             const res = await fetch(`${API_URL}/cancel/${registrationId}`,{
                 method : 'PUT',

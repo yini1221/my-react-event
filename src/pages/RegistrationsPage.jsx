@@ -21,7 +21,6 @@ function RegistrationsPage() {
                 throw new Error(`HTTP error! status: ${res.status}`);
             }
             const result = await res.json();
-            console.log('API 回傳內容：', result);
             setEvents(result.data || []);
         } catch (error) {
             console.error('讀取錯誤:', error);

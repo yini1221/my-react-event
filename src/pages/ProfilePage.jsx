@@ -23,7 +23,6 @@ function ProfilePage({ onUsernameChange }) {
         credentials: 'include',
       })
       const result = await res.json();
-      console.log('API 回傳內容：', result);
       setProfile(result.data);
     } catch (err) {
       console.error('讀取錯誤:', err);

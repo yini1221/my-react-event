@@ -25,7 +25,6 @@ function EventDetailPage() {
         credentials: 'include',
       })
       const result = await res.json();
-      console.log('API 回傳內容：', result);
       setEvent(result.data);
     } catch (err) {
       console.error('讀取錯誤:', err);
@@ -39,7 +38,6 @@ function EventDetailPage() {
         credentials: "include"
       });
       const result = await res.json();
-      console.log('API 回傳內容：', result);
       setEvents(result.data || []);
     } catch (err) {
         console.error('讀取錯誤:', err);
@@ -97,7 +95,6 @@ function EventDetailPage() {
       })
       const result = await res.json();
       if(res.ok) {
-        console.log('API 回傳內容：', result);
         setRegistrationCount(result.data)
       } else {
         console.error('取得報名人數錯誤：', result.message);

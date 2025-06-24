@@ -51,7 +51,6 @@ function AdminRegistrationsPage() {
                 setRegistrations(result.data.content || []);
                 setTotalPages(result.data.totalPages);
                 setTotalElements(result.data.totalElements);
-                console.log('API 回傳內容：', result);
             } catch (error) {
                 console.error('讀取錯誤:', error);
             }
