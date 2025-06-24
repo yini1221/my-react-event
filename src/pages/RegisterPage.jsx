@@ -10,6 +10,7 @@ function RegisterPage() {
     const [registrationId, setRegistrationId] = useState(null);
     const [event, setEvent] = useState(null);
     const [message, setMessage] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
     const [status, setStatus] = useState('');
     const navigate = useNavigate();
 
@@ -39,19 +40,22 @@ function RegisterPage() {
               credentials: 'include',
               body: JSON.stringify({ userId, eventId })
             });
-        if (!res.ok) {
-            throw new Error(`HTTP error! status: ${res.status}`);
-        }
-        const result = await res.json();
-        if (result.data && result.data.status) {
-            setStatus(result.data.status);
-            setMessage(result.data.status === 'pending' ? '已申請，請靜待審核' :
-                       '報名成功，請準時前往 !'
-                      );
-            setRegistrationId(result.data.id);
-        } else {
-            setStatus('');
-        }
+            if (!res.ok) {
+                throw new Error(`HTTP error! status: ${res.status}`);
+            }
+            const result = await res.json();
+            if (result.data && result.data.status) {
+                setStatus(result.data.status);
+                setMessage(result.data.status === 'pending' ? '已申請，請靜待審核' :
+                        '報名成功，請準時前往 !'
+                        );  
+                setErrorMessage(''); 
+                setRegistrationId(result.data.id);
+            } else {
+                setStatus('');
+                setMessage('');
+                setErrorMessage('');
+            }
         } catch (err) {
             console.error('讀取錯誤:', err);
         }
@@ -84,22 +88,20 @@ function RegisterPage() {
               credentials: 'include',
               body: JSON.stringify({ userId, eventId })
             });
-            const result = await res.json();
-            if (!res.ok) {
-                console.error('後端錯誤回應:', result.message);
-                setMessage(result.message || '報名失敗');
-            }         
+            const result = await res.json();      
             if (res.ok) {
+                setStatus(result.data.status || '');
                 setMessage(result.message || '已申請，請靜待審核');
-                if (result.data && result.data.status) {
-                setStatus(result.data.status);
-                setRegistrationId(result.data.id)
-                }
+                setErrorMessage('');
+                setRegistrationId(result.data.id || null);
             } else {
-                setMessage(result.message || '報名失敗');
+                setErrorMessage(result.message || '報名失敗');
+                setMessage('');
+  console.log('errorMessage:', result.message);
             }
         } catch (err) {
-            setMessage('發生錯誤：' + err.message);
+            setErrorMessage('發生錯誤：' + err.message);
+            setMessage('');
             console.error('提交錯誤:', err);
         }
     }
@@ -116,13 +118,16 @@ function RegisterPage() {
             const result = await res.json();
             if (res.ok) {
                 setStatus('');
-                alert('取消成功');
+                setMessage('取消成功');
+                setErrorMessage('');
             } else {
-                alert(result.message || '取消失敗');
+                setErrorMessage(result.message || '取消失敗');
+                setMessage('');
             }
         } catch (err) {
+            setErrorMessage('取消失敗，請稍後再試');
+            setMessage('');
             console.error('刪除錯誤', err);
-            alert('取消失敗，請稍後再試');
         }
     }
 
@@ -193,15 +198,26 @@ function RegisterPage() {
                             {
                                 status === '' ? 
                                 <button type="submit" className="btn btn-blue text-white">立即報名</button>
-                                :   
-                                <div>
-                                    <button type="button" className="btn btn-blue text-white me-3" disabled>已報名</button>
-                                    <button onClick={() => handleCancel()} type="button" className="btn btn-blue text-white">取消報名</button>
-                                    {message && <p className='fs-6 align-middle' style={{ color: message.includes('成功') ? 'green' : 'red' }}>{message}</p>}
+                                : 
+                                <div>  
+                                    <div>
+                                        <button type="button" className="btn btn-blue text-white me-3" disabled>已報名</button>
+                                        <button onClick={() => handleCancel()} type="button" className="btn btn-blue text-white">取消報名</button>
+                                    </div>
                                 </div>
                             }
                         </li>
                     </ul>
+                    {errorMessage && (
+                    <div className="alert alert-danger py-2 px-3 mt-1 mx-auto" role="alert" style={{ maxWidth: '300px'}}>
+                        {errorMessage}
+                    </div>
+                    )}
+                    {message && !errorMessage && (
+                    <div className="alert alert-success py-2 px-3 mt-1 mx-auto" role="alert" style={{ maxWidth: '300px'}}>
+                        {message}
+                    </div>
+                    )}
                 </form>
             </div>
         </div>

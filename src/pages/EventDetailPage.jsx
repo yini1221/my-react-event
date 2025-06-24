@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
-import RegisterButton from '../components/RegisterButton';
+import RegisterButton from '../components/registerButton';
 import { Link, useParams } from 'react-router-dom';
 import EventReviews from '../pages/EventReviews';
 import '../css/eventDetailPage.css';
@@ -13,6 +13,7 @@ function EventDetailPage() {
   const { eventId } = useParams();
   const [event, setEvent] = useState(null);
   const [events, setEvents] = useState([]);
+  const [errorMessage, setErrorMessage] = useState('');
   const [isFavorited, setIsFavorited] = useState(false);
   const [registrationCount, setRegistrationCount] = useState(0);
   
@@ -59,7 +60,10 @@ function EventDetailPage() {
 
   const toggleFavorite = async () => {
     if (!userId) {
-      alert('請先登入');
+      setErrorMessage('登入後即可收藏');
+      setTimeout(() =>{
+        setErrorMessage('');
+      }, 3000)
       return;
     }
     try {
@@ -163,7 +167,7 @@ function EventDetailPage() {
                 </div>
               </div>
               <div className='col-lg-4'>
-                <div className='rounded-3 shadow-sm py-5 px-4'>
+                <div className='rounded-3 shadow-sm py-5 px-4'>                  
                   <div className='d-flex flex-column flex-md-row justify-content-between align-items-center'>
                     <p className="">目前報名人數 {registrationCount}/{event.maxParticipants}</p>
                   </div>
@@ -175,8 +179,13 @@ function EventDetailPage() {
                     {isFavorited ? 
                       <span className='fs-6 align-middle'>已收藏</span>
                     : <span className='fs-6 align-middle'>加入收藏</span>}
-                  </button>
+                    </button>
                   </div>
+                  {errorMessage && (
+                    <div className="alert alert-danger mt-2 py-2 px-3" role="alert">
+                      {errorMessage}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
