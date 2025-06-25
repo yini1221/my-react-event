@@ -117,7 +117,6 @@ function Navbar({ isLogin, userId, username, role, onLogout }) {
                       <li><Link to="/admin/events" className='dropdown-item custom-link'>活動管理</Link></li>
                       <li><Link to="/admin/event-categories" className='dropdown-item custom-link'>活動分類管理</Link></li>
                       <li><Link to="/admin/members" className='dropdown-item custom-link'>會員管理</Link></li>
-                      <li><Link to="/admin/dashboard" className='dropdown-item custom-link'>後台儀表板</Link></li>
                     </ul>
                   </li>
                 )}
