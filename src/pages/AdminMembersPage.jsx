@@ -60,7 +60,6 @@ function AdminMembersPage() {
                 headers: { 'Content-Type': `application/json`},
                 body: JSON.stringify(form)
             })
-            console.log('form.id', `${form.id}`);
             const result = await res.json();
             if(res.ok) {
                 await fetchMembers();
@@ -75,8 +74,8 @@ function AdminMembersPage() {
         };
     }
 
-    const handleEdit = (use) => {
-        setForm(use);
+    const handleEdit = (user) => {
+        setForm(user);
         setEditing(true);
     }
 
@@ -88,13 +87,13 @@ function AdminMembersPage() {
         return dayjs(datetime).format('YYYY-MM-DD HH:mm:ss');
     };
 
-    const processedMemvers = users.map(use => ({
-        id: use.id,
-        username: use.username || '',
-        email: use.email,
-        eventTime: `${formatDateTime(use.createdAt, 'createdAt')}`,
-        completed: use.completed,
-        roleName: use.roleName
+    const processedMemvers = users.map(user => ({
+        id: user.id,
+        username: user.username || '',
+        email: user.email,
+        eventTime: `${formatDateTime(user.createdAt, 'createdAt')}`,
+        completed: user.completed,
+        roleName: user.roleName
     }));
 
     return (
@@ -132,14 +131,14 @@ function AdminMembersPage() {
                             </tr>
                         </thead>
                         <tbody>
-                            {users.map((use) => (
-                                <tr key={use.id}>
-                                    <td>{use.id}</td>
-                                    <td>{use.username}</td>
-                                    <td>{use.email}</td>
-                                    <td>{formatDateTime(use.createdAt, 'createdAt')}</td>
+                            {users.map((user) => (
+                                <tr key={user.id}>
+                                    <td>{user.id}</td>
+                                    <td>{user.username}</td>
+                                    <td>{user.email}</td>
+                                    <td>{formatDateTime(user.createdAt, 'createdAt')}</td>
                                     <td>
-                                        {use.completed ? (
+                                        {user.completed ? (
                                         <img
                                             src={`${import.meta.env.BASE_URL}images/circle.png`}
                                             alt="已驗證"
@@ -154,7 +153,7 @@ function AdminMembersPage() {
                                         )}
                                     </td>
                                     <td>
-                                        {editing && form.id === use.id ? (
+                                        {editing && form.id === user.id ? (
                                         <form>
                                             <select
                                             className="form-select"
@@ -169,11 +168,12 @@ function AdminMembersPage() {
                                             </select>
                                         </form>
                                         ) : (
-                                        use.roleName
+                                            user.role === 'ADMIN' ? '系統管理員' 
+                                            : user.role === 'MEMBER' ? '一般會員' : user.role
                                         )}
                                     </td>
                                     <td className='no-export'>
-                                        {editing && form.id === use.id ? (
+                                        {editing && form.id === user.id ? (
                                         <div className="d-flex gap-2">
                                             <button onClick={handleSubmit} type="button" className="btn btn-member btn-sm">
                                             確認
@@ -184,7 +184,7 @@ function AdminMembersPage() {
                                         </div>
                                         ) : (
                                         <button
-                                            onClick={() => handleEdit(use)}
+                                            onClick={() => handleEdit(user)}
                                             type="button"
                                             className="btn btn-link p-0"
                                             aria-label="編輯"
