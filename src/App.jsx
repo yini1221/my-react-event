@@ -244,7 +244,7 @@ function App() {
             } />
           <Route path="/admin" element={<Navigate to="/admin/registrations" replace />} />
           <Route path="/admin/registrations" element={<AdminRegistrationsPage />} />
-          <Route path="/admin/events" element={<AdminEventsPage />} />
+          <Route path="/admin/events" element={<AdminEventsPage userId={userId} />} />
           <Route path="/admin/event-categories" element={<AdminEventCategoriesPage />} />
           <Route path="/admin/members" element={<AdminMembersPage />} />
           <Route path="/admin/dashboard" element={<ExportExample />} />

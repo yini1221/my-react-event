@@ -7,7 +7,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 const API_URL = 'http://localhost:8084/admin'; // 後台 API
 
-function AdminEventsPage() {
+function AdminEventsPage({ userId }) {
 
   const [events, setEvents] = useState([]);
   const [form, setForm] = useState({ id: null, title: '', description: '', location: '', startTime: '', endTime: '', createdAt: '', updatedAt: '', maxParticipants: '', imageBase64: '', eventCategory: null });
@@ -83,6 +83,12 @@ function AdminEventsPage() {
   // 新增/編輯 資料
   const handleSubmit = async (e) => {
       e.preventDefault();
+      const payload = {
+        ...form,
+        createdBy: { id: userId },
+        eventCategory: { id: form.eventCategory?.id || null },
+      };      
+      console.log('userId: ', userId);
       try {
           const method = editing ? 'PUT' : 'POST';
           const url = editing ? `${API_URL}/events/${form.id}` : `${API_URL}/events`;
@@ -90,7 +96,7 @@ function AdminEventsPage() {
               method, 
               credentials: "include",
               headers: { 'Content-Type': `application/json`},
-              body: JSON.stringify(form)
+              body: JSON.stringify(payload)
           });
           const result = await res.json();
           if (res.ok) {
