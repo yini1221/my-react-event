@@ -97,7 +97,6 @@ function RegisterPage() {
             } else {
                 setErrorMessage(result.message || '報名失敗');
                 setMessage('');
-  console.log('errorMessage:', result.message);
             }
         } catch (err) {
             setErrorMessage('發生錯誤：' + err.message);
