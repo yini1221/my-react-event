@@ -7,10 +7,12 @@ const API_URL = 'http://localhost:8084/auth/register'; // 後台 API
 
 function RegistrationForm() {
 
-    const [form, setForm] = useState({ username: '', email: '', password: '' });
+    const [form, setForm] = useState({ username: '', email: '', password: '', confirmPassword: '' });
     const [loading, setLoading] = useState(false);
-    const [showSuccess, setShowSuccess] = useState(false);
+    const [message, setMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);  
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -24,6 +26,18 @@ function RegistrationForm() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
+        
+        if (form.confirmPassword !== form.password) {
+          setErrorMessage('輸入密碼不一致');
+          setForm(prev => ({
+              ...prev,
+              password: '',
+              confirmPassword: ''
+            }));
+          setLoading(false);
+          return;
+        }
+
         try {
             const res = await fetch(API_URL, {
               method: 'POST', 
@@ -32,19 +46,15 @@ function RegistrationForm() {
             });
             const result = await res.json();            
             if (res.ok) {
-              setShowSuccess(true);
-              setForm({ username: '', email: '', password: '' });
+              setForm({ username: '', email: '', password: '', confirmPassword: '' });
+              setMessage(result.message || '註冊成功! ');
               setErrorMessage('');
-              setTimeout(() => {
-                setShowSuccess(false);
-                navigate("/auth/login");
-              }, 2500);
             } else {
-              setErrorMessage(result.message || '註冊失敗');
+              setErrorMessage(result.data || result.message || '註冊失敗');
               setForm(prev => ({
               ...prev,
-              email: '',
-              password: ''
+              password: '',
+              confirmPassword: ''
             }));
           }
         } catch (err) {
@@ -55,18 +65,34 @@ function RegistrationForm() {
         }
     };
 
+    const toggleShowPassword = () => {
+      setShowPassword(prev => !prev);
+    };
+
+    const toggleShowConfirmPassword = () => {
+      setShowConfirmPassword(prev => !prev);
+    };
+
     return (
     <div className="d-flex justify-content-center align-items-center vh-100 bg-logout">
       <div className="card shadow-sm p-4 bg-logout-table" style={{ maxWidth: "380px", width: "100%", borderRadius: "12px" }}>
         <h2 className="mb-4 text-center main-color" style={{ fontWeight: "700" }}>註冊</h2>
-        {errorMessage && (
+        {errorMessage && Array.isArray(errorMessage) ? (
+          <div className="alert alert-danger py-2 px-3" role="alert">
+            <ul className="mb-0 list-unstyled">
+              {errorMessage.map((msg, idx) => (
+                <li key={idx}>{msg}</li>
+              ))}
+            </ul>
+          </div>
+        ) : errorMessage ? (
           <div className="alert alert-danger py-2 px-3" role="alert">
             {errorMessage}
           </div>
-        )}
-        {showSuccess && (
+        ) : null}
+        {message && (
           <div className="alert alert-success py-2 px-3 text-center" role="alert">
-            註冊成功！即將跳轉到登入頁...
+            {message}
           </div>
         )}
         <form onSubmit={handleSubmit} noValidate>
@@ -81,10 +107,9 @@ function RegistrationForm() {
               autoFocus
               placeholder="會員暱稱"
               style={{ borderColor: "#7A4E2E" }}
-              maxLength={8}
             />
             <small className="ms-2 main-color" style={{ fontSize: "0.85rem" }}>
-              最多不超過8位數
+              暱稱不可超過8個字元
             </small>
           </div>
 
@@ -105,19 +130,73 @@ function RegistrationForm() {
           </div>
 
           <div className="mb-4 text-start">
-            <input
-              type="password"
-              name="password"
-              value={form.password}
-              onChange={handleChange}
-              className="form-control form-control-lg bg-form"
-              required
-              placeholder="會員密碼"
-              style={{ borderColor: "#7A4E2E" }}
-              minLength={8}
-            />
+            <div className="position-relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                value={form.password}
+                onChange={handleChange}
+                className="form-control form-control-lg bg-form"
+                required
+                placeholder="會員密碼"
+                style={{ borderColor: "#7A4E2E" }}
+                minLength={8}
+              />
+              <button
+                type="button"
+                onClick={toggleShowPassword}
+                className="position-absolute top-50 end-0 translate-middle-y"
+                style={{
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                  color: "#7A4E2E"
+                }}
+                aria-label={showPassword ? "隱藏密碼" : "顯示密碼"}>
+              <img
+                src={showPassword ? `${import.meta.env.BASE_URL}images/hide.png` : `${import.meta.env.BASE_URL}images/eye.png`}
+                alt={showPassword ? "隱藏密碼" : "顯示密碼"}
+                style={{ height: '30px', width: '30px' }}/>
+            </button>
+          </div>
+          <small className="ms-2 main-color" style={{ fontSize: "0.85rem" }}>
+            最少輸入8位英數字組合
+          </small>
+        </div>
+
+          <div className="mb-4 text-start">
+            <div className="position-relative">
+              <input
+                type={showConfirmPassword ? "text" : "password"}
+                name="confirmPassword"
+                value={form.confirmPassword}
+                onChange={handleChange}
+                className="form-control form-control-lg bg-form"
+                required
+                placeholder="再次輸入密碼"
+                style={{ borderColor: "#7A4E2E" }}
+                minLength={8}
+              />
+              <button
+              type="button"
+              onClick={toggleShowConfirmPassword}
+              className="position-absolute top-50 end-0 translate-middle-y"
+              style={{
+                background: "none",
+                border: "none",
+                cursor: "pointer",
+                color: "#7A4E2E"
+              }}
+              aria-label={showConfirmPassword ? "隱藏密碼" : "顯示密碼"}
+              >
+                <img
+                src={showConfirmPassword ? `${import.meta.env.BASE_URL}images/hide.png` : `${import.meta.env.BASE_URL}images/eye.png`}
+                alt={showConfirmPassword ? "隱藏密碼" : "顯示密碼"}
+                style={{ height: '30px', width: '30px' }}/>
+              </button>
+          </div>
             <small className="ms-2 main-color" style={{ fontSize: "0.85rem" }}>
-              最少輸入8位英數字組合
+              密碼須一致
             </small>
           </div>
 

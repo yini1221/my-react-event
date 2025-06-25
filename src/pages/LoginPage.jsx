@@ -8,6 +8,7 @@ function LoginPage({ onLoginSuccess  }) {
   const [form, setForm] = useState({ email: '', password: '', authCode: '' });
   const [captchaImg, setCaptchaImg] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const location = useLocation();
@@ -65,10 +66,10 @@ function LoginPage({ onLoginSuccess  }) {
         }, 2500);
         setErrorMessage('');
       } else {
-        setErrorMessage(result.message || '登入失敗');
+        setErrorMessage(result.data || result.message || '登入失敗');
+        console.log('result: ', result)
         setForm(prev => ({
                 ...prev,
-                password: '',
                 authCode: ''
         }));
         setLoading(false);
@@ -81,9 +82,17 @@ function LoginPage({ onLoginSuccess  }) {
     }
   };
 
+  const toggleShowPassword = () => {
+    setShowPassword(prev => !prev);
+  };
+
   const handleOAuthLogin = (provider) => {
     setLoading(true);
-    window.location.href = `http://localhost:8084/oauth2/authorization/${provider}`;
+    try {      
+      window.location.href = `http://localhost:8084/oauth2/authorization/${provider}`;
+    } catch (err) {
+      console.log('登入失敗: ', err)
+    }
     setLoading(false);
   };
 
@@ -96,11 +105,19 @@ function LoginPage({ onLoginSuccess  }) {
           </svg>
           <h3 className="mt-2 fw-bold main-color">會員登入</h3>
         </div>
-        {errorMessage && (
+        {errorMessage && Array.isArray(errorMessage) ? (
+          <div className="alert alert-danger py-2 px-3" role="alert">
+            <ul className="mb-0 list-unstyled">
+              {errorMessage.map((msg, idx) => (
+                <li key={idx}>{msg}</li>
+              ))}
+            </ul>
+          </div>
+        ) : errorMessage ? (
           <div className="alert alert-danger py-2 px-3" role="alert">
             {errorMessage}
           </div>
-        )}
+        ) : null}
         {showSuccess && (
           <div className="alert alert-success py-2 px-3 text-center" role="alert">
             登入成功！即將跳轉到首頁...
@@ -122,16 +139,34 @@ function LoginPage({ onLoginSuccess  }) {
           </div>
 
           <div className="mb-3">
-            <input
-              type="password"
-              name="password"
-              value={form.password}
-              onChange={handleChange}
-              className="form-control form-control-lg bg-form"
-              required
-              placeholder="密碼"
-              style={{ borderColor: "#7A4E2E" }}
-            />
+            <div className="position-relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                value={form.password}
+                onChange={handleChange}
+                className="form-control form-control-lg bg-form"
+                required
+                placeholder="密碼"
+                style={{ borderColor: "#7A4E2E" }}
+              />
+              <button
+                type="button"
+                onClick={toggleShowPassword}
+                className="position-absolute top-50 end-0 translate-middle-y"
+                style={{
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                  color: "#7A4E2E"
+                }}
+              aria-label={showPassword ? "隱藏密碼" : "顯示密碼"}>
+                <img
+                  src={showPassword ? `${import.meta.env.BASE_URL}images/hide.png` : `${import.meta.env.BASE_URL}images/eye.png`}
+                  alt={showPassword ? "隱藏密碼" : "顯示密碼"}
+                  style={{ height: '30px', width: '30px' }}/>
+              </button>
+            </div>
           </div>
 
           <div className="d-flex align-items-center mb-3 gap-2">
