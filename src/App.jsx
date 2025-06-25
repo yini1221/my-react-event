@@ -102,34 +102,34 @@ function App() {
     return localStorage.getItem('theme') || 'light';
   });
 
-  const handleLoginSuccess = (user) => {
+  const handleLoginSuccess = async (user) => {
     setIsLogin(true);
     setUserId(user.id);
     setUsername(user.username);
     setRole(user.role);
     localStorage.setItem('user', JSON.stringify(user));
+    await fetchUserInfo();
   };
 
   const fetchUserInfo = async () => {
     try {
-      if (!isLogin) {
-        return;
-      }
       const res = await fetch('http://localhost:8084/auth/userinfo', {
         credentials: 'include',
       });
       if (!res.ok) {
+        console.log('無登入資料');
           setIsLogin(false);
           setUserId(null);
           setUsername(null);
           setRole(null);
           localStorage.removeItem('user');
           return;
-        }
+      }
       const result = await res.json();
       if (result.data) {
         handleLoginSuccess(result.data);
       } else {
+        setIsLogin(false);
         console.log('無登入資料');
       }
     } catch (err) {
@@ -168,26 +168,18 @@ function App() {
           setUsername(null);
           setRole(null);
           localStorage.removeItem('user');
-        } else if (result.data === true) {         
-          const storedUser = localStorage.getItem('user');
-          if (storedUser) {
-            const userObj = JSON.parse(storedUser);
-            setUserId(userObj.id);
-            setUsername(userObj.username);
-            setRole(userObj.role);
-            setIsLogin(true);
-          }
+        } else if (res.ok && result.data === true) {  
+          setIsLogin(true);
         } else {
           setIsLogin(false);
           setUserId(null);
           setUsername(null);
           setRole(null);
-          localStorage.removeItem('user');
+          localStorage.removeItem('user');          
+          console.log('尚未登入')
         }
       } catch (err) {
-        if (!hasCheckedLogin) {
           console.error('登入時發生錯誤:', err);
-        }
       } finally {
         setHasCheckedLogin(true);
       }
@@ -209,8 +201,10 @@ function App() {
   }, [theme]);
 
   useEffect(() => {
-     fetchUserInfo();
-  }, [])
+    if (isLogin) {
+      fetchUserInfo();
+    }
+  }, [isLogin]);
 
   return (<>
     <Router>
@@ -231,7 +225,7 @@ function App() {
           <Route path="/home/search" element={<EventSearch />} />
           <Route path="/auth/login" element={<LoginPage onLoginSuccess={handleLoginSuccess} />} />
           <Route path="/auth/register" element={<RegistrationForm />} />
-          <Route path="/auth/verify/:email" element={<VerifyPage />} />
+          <Route path="/auth/verify/:token" element={<VerifyPage />} />
           <Route path="/user/favorites/:userId" element={
             <PrivateRoute>
             <FavoritesPage />
