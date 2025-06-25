@@ -5,7 +5,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 const API_URL = 'http://localhost:8084/auth/verify';
 
 function VerifyPage() {
-  const { email } = useParams();
+  const { token } = useParams();
   const navigate = useNavigate();
   const [message, setMessage] = useState('驗證中...');
   const [error, setError] = useState(null);
@@ -13,7 +13,7 @@ function VerifyPage() {
   useEffect(() => {
     async function verify() {
       try {
-        const res = await fetch(`${API_URL}/${encodeURIComponent(email)}`, {
+        const res = await fetch(`${API_URL}/${encodeURIComponent(token)}`, {
           method: 'GET',
           credentials: 'include',
         });
@@ -31,7 +31,7 @@ function VerifyPage() {
       }
     }
     verify();
-  }, [email, navigate]);
+  }, [token, navigate]);
 
   return (
     <div className="d-flex justify-content-center align-items-center vh-100" style={{ backgroundColor: "#f7ede1" }}>
