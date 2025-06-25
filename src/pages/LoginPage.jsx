@@ -88,13 +88,13 @@ function LoginPage({ onLoginSuccess  }) {
   };
 
   return (
-    <div className="d-flex justify-content-center align-items-center vh-100" style={{ backgroundColor: "#f7ede1" }}>
-      <div className="card shadow-sm p-4" style={{ maxWidth: "380px", width: "100%", borderRadius: "12px", backgroundColor: "#e6ddd3" }}>
+    <div className="d-flex justify-content-center align-items-center vh-100 bg-login">
+      <div className="card shadow-sm p-4 bg-login-table" style={{ maxWidth: "380px", width: "100%", borderRadius: "12px" }}>
         <div className="text-center mb-4">
           <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="#7A4E2E" className="bi bi-lock-fill" viewBox="0 0 16 16">
             <path d="M2.5 9a2.5 2.5 0 0 1 5 0v1h-5v-1zM8 1a3 3 0 0 0-3 3v3h6V4a3 3 0 0 0-3-3zM1 8v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8H1z"/>
           </svg>
-          <h3 className="mt-2 fw-bold" style={{ color: "#7A4E2E" }}>會員登入</h3>
+          <h3 className="mt-2 fw-bold main-color">會員登入</h3>
         </div>
         {errorMessage && (
           <div className="alert alert-danger py-2 px-3" role="alert">
@@ -113,7 +113,7 @@ function LoginPage({ onLoginSuccess  }) {
               name="email"
               value={form.email}
               onChange={handleChange}
-              className="form-control form-control-lg"
+              className="form-control form-control-lg bg-form"
               required
               autoFocus
               placeholder="電子郵件"
@@ -127,7 +127,7 @@ function LoginPage({ onLoginSuccess  }) {
               name="password"
               value={form.password}
               onChange={handleChange}
-              className="form-control form-control-lg"
+              className="form-control form-control-lg bg-form"
               required
               placeholder="密碼"
               style={{ borderColor: "#7A4E2E" }}
@@ -141,7 +141,7 @@ function LoginPage({ onLoginSuccess  }) {
               type="text"
               value={form.authCode}
               onChange={handleChange}
-              className="form-control form-control-lg flex-grow-1"
+              className="form-control form-control-lg flex-grow-1 bg-form"
               placeholder="驗證碼"
               required
               style={{ maxWidth: "130px", borderColor: "#7A4E2E" }}
@@ -151,7 +151,7 @@ function LoginPage({ onLoginSuccess  }) {
               alt="驗證碼"
               title="點擊重新取得驗證碼"
               onClick={loadCaptcha}
-              style={{ cursor: "pointer", height: "42px", borderRadius: "6px", border: "1px solid #7A4E2E" }}
+              style={{ cursor: "pointer", height: "42px", borderRadius: "6px", border: "1px solid #7A4E2E", opacity: .7 }}
             />            
             <Link onClick={loadCaptcha} >
               <img src={`${import.meta.env.BASE_URL}images/update.png`} style={{ maxWidth: "20px" }}/>
@@ -192,9 +192,9 @@ function LoginPage({ onLoginSuccess  }) {
           />
           <span>使用 GitHub 登入</span>
         </button>
-        <p className="text-center mt-4 mb-0" style={{ fontSize: "0.9rem", color: "#7A4E2E" }}>
+        <p className="text-center main-color mt-4 mb-0" style={{ fontSize: "0.9rem" }}>
           還沒有帳號？{" "}
-          <Link to="/auth/register" className="fw-semibold" style={{ color: "#7A4E2E", textDecoration: "underline" }}>
+          <Link to="/auth/register" className="main-color fw-semibold">
             註冊
           </Link>
         </p>

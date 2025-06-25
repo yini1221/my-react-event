@@ -42,27 +42,27 @@ function Home() {
   }, [theme]);
 
   return (
-    <>
-      <div>
-        <Link to="/home">
-          <img src={logoSrc} className={`logo ${fade ? 'fade-out' : ''}`} alt="Yi起Join logo" 
-          onError={(e) => {
-          e.target.src = "/participation.png";
-          console.error("圖片載入失敗");
-          }} />
-        </Link>
-      </div>
-      <h1>活動報名平台</h1>
-      <div className="my-4">
-        <Link to="/home" className="custom-link">
-          點我進入
-        </Link>
-      </div>
-      <p className="read-the-docs">
-        提供線上報名、報名活動與查詢報名狀態的地方。
-      </p>
-      <ToggleTheme />
-    </>
+  <>
+    <div>
+      <Link to="/home">
+        <img src={logoSrc} className={`logo ${fade ? 'fade-out' : ''}`} alt="Yi起Join logo"
+        onError={(e) => {
+        e.target.src = "/participation.png";
+        console.error("圖片載入失敗");
+        }} />
+      </Link>
+    </div>
+    <h1>活動報名平台</h1>
+    <p className="text-muted fs-6 lh-lg">
+      提供線上報名、報名活動與查詢報名狀態的地方。<br/>輕鬆掌握活動資訊，快速完成報名流程。
+    </p>
+    <div className="my-4">
+      <Link to="/home" className="custom-link rounded-circle border border-1 shadow-sm p-3">
+        點我進入
+      </Link>
+    </div>
+    <ToggleTheme />
+  </>
   );
 }
 
@@ -112,6 +112,9 @@ function App() {
 
   const fetchUserInfo = async () => {
     try {
+      if (!isLogin) {
+        return;
+      }
       const res = await fetch('http://localhost:8084/auth/userinfo', {
         credentials: 'include',
       });
@@ -205,7 +208,7 @@ function App() {
     }
   }, [theme]);
 
-    useEffect(() => {
+  useEffect(() => {
      fetchUserInfo();
   }, [])
 

@@ -12,7 +12,7 @@ body.dark-theme button {
 }
 
 body.dark-theme .bg-menu {
-  background-color: #797272 !important;
+  background-color: #2f2f2f !important;
 }
 
 body.dark-theme .custom-link {
@@ -43,6 +43,10 @@ body.dark-theme .btn-theme:hover {
 body.dark-theme .custom-link:hover {
   color: #fff !important;
   background-color: inherit;
+}
+
+body.dark-theme .bg-search {
+  background-color: #ccc !important;
 }
 
 .navbar-logo {

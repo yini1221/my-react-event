@@ -1,3 +1,19 @@
+body.dark-theme .bg-logout {
+  background-color: #121212;
+}
+
+body.dark-theme .bg-logout-table {
+    background: linear-gradient(135deg, #3a3a3a, #1a1a1a);
+}
+
+.bg-logout {
+  background-color: #f7ede1;
+}
+
+.bg-logout-table {
+    background-color: #e6ddd3 !important;
+}
+
 .text-registration {
     color: #b6b7b9;
 }

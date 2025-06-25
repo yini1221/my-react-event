@@ -86,7 +86,7 @@ function Navbar({ isLogin, userId, username, role, onLogout }) {
           <div className="collapse w-100 position-absolute end-0 bg-navbar" id="searchCollapse">
               <form className="d-flex align-items-center w-100 px-2 gap-1">
                 <div className='position-relative w-100'>
-                  <input value={searchKeyword} onChange={(e) => setSearchKeyword(e.target.value)} className="form-control rounded-5" type="text" placeholder="尋找活動" aria-label="Search" />
+                  <input value={searchKeyword} onChange={(e) => setSearchKeyword(e.target.value)} className="form-control rounded-5 bg-search" type="text" placeholder="輸入關鍵字，以分類、標題、內容尋找相關活動" aria-label="Search" />
                   <span onClick={() => handleSearchSubmit()} type='button' className='search-icon'>
                     <img src={`${import.meta.env.BASE_URL}images/search-o.png`} style={{ width: '30px' }} />
                   </span>

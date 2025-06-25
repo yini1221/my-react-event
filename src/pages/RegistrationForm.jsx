@@ -56,9 +56,9 @@ function RegistrationForm() {
     };
 
     return (
-    <div className="d-flex justify-content-center align-items-center vh-100" style={{ backgroundColor: "#f7ede1" }}>
-      <div className="card shadow-sm p-4" style={{ maxWidth: "380px", width: "100%", borderRadius: "12px", backgroundColor: "#e6ddd3" }}>
-        <h2 className="mb-4 text-center" style={{ color: "#7A4E2E", fontWeight: "700" }}>註冊</h2>
+    <div className="d-flex justify-content-center align-items-center vh-100 bg-logout">
+      <div className="card shadow-sm p-4 bg-logout-table" style={{ maxWidth: "380px", width: "100%", borderRadius: "12px" }}>
+        <h2 className="mb-4 text-center main-color" style={{ fontWeight: "700" }}>註冊</h2>
         {errorMessage && (
           <div className="alert alert-danger py-2 px-3" role="alert">
             {errorMessage}
@@ -76,14 +76,14 @@ function RegistrationForm() {
               name="username"
               value={form.username}
               onChange={handleChange}
-              className="form-control form-control-lg"
+              className="form-control form-control-lg bg-form"
               required
               autoFocus
               placeholder="會員暱稱"
               style={{ borderColor: "#7A4E2E" }}
               maxLength={8}
             />
-            <small className="ms-2" style={{ color: "#7A4E2E", fontSize: "0.85rem" }}>
+            <small className="ms-2 main-color" style={{ fontSize: "0.85rem" }}>
               最多不超過8位數
             </small>
           </div>
@@ -94,12 +94,12 @@ function RegistrationForm() {
               name="email"
               value={form.email}
               onChange={handleChange}
-              className="form-control form-control-lg"
+              className="form-control form-control-lg bg-form"
               required
               placeholder="電子郵件"
               style={{ borderColor: "#7A4E2E" }}
             />
-            <small className="ms-2" style={{ color: "#7A4E2E", fontSize: "0.85rem" }}>
+            <small className="ms-2 main-color" style={{ fontSize: "0.85rem" }}>
               註冊後將發送信箱驗證
             </small>
           </div>
@@ -110,13 +110,13 @@ function RegistrationForm() {
               name="password"
               value={form.password}
               onChange={handleChange}
-              className="form-control form-control-lg"
+              className="form-control form-control-lg bg-form"
               required
               placeholder="會員密碼"
               style={{ borderColor: "#7A4E2E" }}
               minLength={8}
             />
-            <small className="ms-2" style={{ color: "#7A4E2E", fontSize: "0.85rem" }}>
+            <small className="ms-2 main-color" style={{ fontSize: "0.85rem" }}>
               最少輸入8位英數字組合
             </small>
           </div>
@@ -139,9 +139,9 @@ function RegistrationForm() {
           </button>
         </form>
 
-        <p className="text-center mt-4 mb-0" style={{ fontSize: "0.9rem", color: "#7A4E2E" }}>
+        <p className="text-center main-color mt-4 mb-0" style={{ fontSize: "0.9rem" }}>
           已經有帳號？{" "}
-          <Link to="/auth/login" style={{ color: "#7A4E2E", textDecoration: "underline", fontWeight: "600" }}>
+          <Link to="/auth/login" className="main-color fw-semibold">
             登入
           </Link>
         </p>
