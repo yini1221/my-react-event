@@ -74,7 +74,7 @@ function LoginPage({ onLoginSuccess  }) {
         }));
         setLoading(false);
         loadCaptcha();
-      }   
+      }
     } catch (err) {
       console.error('登入時發生錯誤:', err);
       setErrorMessage('系統錯誤，請稍後再試');
@@ -92,8 +92,8 @@ function LoginPage({ onLoginSuccess  }) {
       window.location.href = `http://localhost:8084/oauth2/authorization/${provider}`;
     } catch (err) {
       console.log('登入失敗: ', err)
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (
@@ -225,7 +225,7 @@ function LoginPage({ onLoginSuccess  }) {
             alt="GitHub"
             style={{ width: "24px", height: "24px" }}
           />
-          <span>使用 GitHub 登入</span>
+          <span>{loading ? '登入中...' : '使用 GitHub 登入'}</span>
         </button>
         <p className="text-center main-color mt-4 mb-0" style={{ fontSize: "0.9rem" }}>
           還沒有帳號？{" "}
