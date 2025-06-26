@@ -214,7 +214,7 @@ function AdminRegistrationsPage() {
                                         <button
                                         onClick={() => setEditing(false)}
                                         type="button"
-                                        className="btn btn-reg btn-sm px-3"
+                                        className="btn btn-reg btn-sm"
                                         >
                                         取消
                                         </button>

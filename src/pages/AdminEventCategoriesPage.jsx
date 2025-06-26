@@ -133,10 +133,10 @@ function AdminEventCategoriesPage() {
                         <td className='no-export'>
                           {editing && form.id === eventCategory.id ? (
                             <div className="d-flex gap-2 justify-content-center">
-                              <button onClick={() => handleSubmit()} type="button" className="btn btn-primary btn-sm">
+                              <button onClick={() => handleSubmit()} type="button" className="btn btn-cate btn-sm">
                                 確認
                               </button>
-                              <button onClick={() => setEditing(false)} type="button" className="btn btn-secondary btn-sm">
+                              <button onClick={() => setEditing(false)} type="button" className="btn btn-cate btn-sm">
                                 取消
                               </button>
                             </div>

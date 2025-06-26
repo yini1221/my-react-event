@@ -275,7 +275,7 @@ function ProfilePage({ onUsernameChange }) {
                   </div>
                     <div className="d-flex gap-3">
                       <button type="submit" className="btn btn-profile px-4">確認</button>
-                      <button type="button" className="btn btn-profile px-4" onClick={() => { setEditingPassword(false); setErrorMessage('') }}>取消</button>
+                      <button type="button" className="btn btn-profile px-4" onClick={() => { setEditingPassword(false); setPasswords({ oldPassword: '', newPassword: '', confirmPassword: ''}); setErrorMessage('') }}>取消</button>
                     </div>
                   </form>
                   </>
