@@ -42,7 +42,7 @@ body.dark-theme .btn-theme:hover {
 
 body.dark-theme .custom-link:hover {
   color: #fff !important;
-  background-color: inherit;
+  background-color: inherit !important;
 }
 
 body.dark-theme .bg-search {
@@ -118,10 +118,36 @@ body.dark-theme .bg-search {
   color: #7A4E2E !important;
 }
 
+.text-color:hover {
+  opacity: 0.9 !important;
+}
+
 .navbar-toggler:focus {
     box-shadow: 0 0 0 0rem !important;
 }
 
 .btn-close{  
     filter: invert(0) !important;
+}
+
+.offcanvas-body {
+  position: relative;
+}
+
+.offcanvas-footer {
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  width: 100%;
+  padding: 0 16px;
+  background: transparent;
+}
+
+.btn-theme {
+  color: #7A4E2E !important;
+}
+
+.btn-theme:hover {
+  color: #fff !important;
+  background-color: #d9c1a0 !important;
 }

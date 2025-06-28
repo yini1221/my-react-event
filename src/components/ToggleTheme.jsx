@@ -6,7 +6,7 @@ function ToggleTheme() {
   return (
     <button 
       onClick={toggleTheme} 
-      className="btn btn-outline-secondary btn-theme rounded-5"
+      className="btn btn-theme rounded-5"
       aria-label="切換主題"
     >
       {theme === 'light' ? '🌞 日間模式' : '🌙 夜間模式'}

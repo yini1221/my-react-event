@@ -220,7 +220,7 @@ function RegistrationForm() {
 
         <p className="text-center main-color mt-4 mb-0" style={{ fontSize: "0.9rem" }}>
           已經有帳號？{" "}
-          <Link to="/auth/login" className="main-color fw-semibold">
+          <Link to="/auth/login" className="fw-semibold">
             登入
           </Link>
         </p>

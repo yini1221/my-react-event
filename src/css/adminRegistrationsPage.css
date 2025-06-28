@@ -1,7 +1,16 @@
-table tbody td {
-  vertical-align: middle !important;
-  font-size: 0.95rem !important;
+body.dark-theme .main-color-clear {
+  color: #ccc;
 }
+
+body.dark-theme .main-color-clear:hover {
+  color: #ffffff;
+  opacity: 1;
+}
+
+body.dark-theme .color-page {
+  color: #ccc !important;
+}
+
 
 .btn-sm {
   padding: 0.25rem 0.75rem !important;
@@ -13,8 +22,12 @@ table tbody td {
 }
 
 .table-light th {
-  color: #7A4E2E;
+  color: #7A4E2E !important;
   font-weight: 600;
+}
+
+.color-page {
+  color: #7A4E2E !important;
 }
 
 .btn-reg {

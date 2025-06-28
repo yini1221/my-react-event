@@ -425,7 +425,7 @@ function AdminEventsPage({ userId }) {
                           上一頁
                         </button>
 
-                        <span style={{ minWidth: '100px', textAlign: 'center', color: '#7A4E2E' }}>
+                        <span className='color-page' style={{ minWidth: '100px', textAlign: 'center' }}>
                           第 {page + 1} 頁 / 共 {totalPages} 頁
                         </span>
 

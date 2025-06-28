@@ -69,9 +69,9 @@ function Navbar({ isLogin, userId, username, role, onLogout }) {
                   <span>
                     <Link to={`/user/profile/${userId}`} className='text-color'>
                       {username}{role === 'ADMIN' && (<span>(管理員)</span>)}
-                    </Link> <span className='text-color'> 你好!</span>
+                    </Link> <span className='main-color'> 你好!</span>
                   </span>
-                  <button type="button" className="btn text-color navbar-button" onClick={() => handleLogout()}>登出</button>
+                  <button type="button" className="btn text-color custom-link navbar-button" onClick={() => handleLogout()}>登出</button>
                 </> : (<>
                   <button type="button" className="btn text-color" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     <Link to="/auth/login" className="nav-link custom-link navbar-button" aria-current="login">登入</Link>
@@ -102,7 +102,7 @@ function Navbar({ isLogin, userId, username, role, onLogout }) {
             <div className='w-100'>
               <img src={`${import.meta.env.BASE_URL}images/menu.jpeg`} />
             </div>
-            <div className="offcanvas-body">
+            <div className="offcanvas-body position-relative">
               <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
                 <li className="nav-item"><Link to="home" className="nav-link custom-link" aria-current="page">首頁</Link></li>
                 <li className="nav-item"><Link to={`/user/favorites/${userId}`} className="nav-link custom-link">收藏</Link></li>
@@ -120,8 +120,23 @@ function Navbar({ isLogin, userId, username, role, onLogout }) {
                     </ul>
                   </li>
                 )}
-                <li className="nav-item mt-1"><ToggleTheme /></li>
+                <li className="nav-item mt-1"></li>
               </ul>
+              <div className="offcanvas-footer mt-auto">
+              <ToggleTheme />
+              {
+                isLogin && userId ? <>
+                  <button type="button" className="btn text-color custom-link navbar-button" onClick={() => handleLogout()}>登出</button>
+                </> : (<>
+                  <button type="button" className="btn text-color" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <Link to="/auth/login" className="nav-link custom-link navbar-button" aria-current="login">登入</Link>
+                  </button>
+                  <button type="button" className="btn text-color" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <Link to="/auth/register" className="nav-link custom-link navbar-button" aria-current="register">註冊</Link>
+                  </button>
+                </>)
+              }
+              </div>
             </div>
           </div>
         </div>

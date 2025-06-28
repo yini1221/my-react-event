@@ -57,7 +57,6 @@ function LoginPage({ onLoginSuccess  }) {
       if (res.ok) {
         setShowSuccess(true);
         const { userdto } = result.data;
-        console.log('登入回應結果:', result);
         localStorage.setItem('user', JSON.stringify({ id: userdto.id, username: userdto.username, role: userdto.role }));
         onLoginSuccess(userdto);
         setTimeout(() => {
@@ -67,7 +66,6 @@ function LoginPage({ onLoginSuccess  }) {
         setErrorMessage('');
       } else {
         setErrorMessage(result.data || result.message || '登入失敗');
-        console.log('result: ', result)
         setForm(prev => ({
                 ...prev,
                 authCode: ''
@@ -229,7 +227,7 @@ function LoginPage({ onLoginSuccess  }) {
         </button>
         <p className="text-center main-color mt-4 mb-0" style={{ fontSize: "0.9rem" }}>
           還沒有帳號？{" "}
-          <Link to="/auth/register" className="main-color fw-semibold">
+          <Link to="/auth/register" className="fw-semibold">
             註冊
           </Link>
         </p>
