@@ -10,6 +10,7 @@ function ProfilePage({ onUsernameChange }) {
   const [username, setUsername] = useState('');
   const [passwords, setPasswords] = useState({ oldPassword: '', newPassword: '', confirmPassword: ''});
   const [errorMessage, setErrorMessage] = useState('');
+  const [usernameshowSuccess, setUsernameShowSuccess] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
@@ -51,13 +52,17 @@ function ProfilePage({ onUsernameChange }) {
           });
           const result = await res.json();
           if (res.ok) {
-              await fetchUser();
-              alert(result.message);
-              setUsername('');
+            setErrorMessage('');
+            setUsernameShowSuccess(true);
+            setUsername('');
+            setTimeout(() => {
+              setUsernameShowSuccess(false);
               setEditingUsername(false);
-              if(onUsernameChange) {
-                onUsernameChange(username);
-              }
+            }, 2500);
+            if(onUsernameChange) {
+              onUsernameChange(username);
+            }
+            await fetchUser();
           } else {
               setErrorMessage(result.data || result.message || '修改失敗');
           }
@@ -77,6 +82,7 @@ function ProfilePage({ onUsernameChange }) {
           });
           const result = await res.json();
           if (res.ok) {
+              setErrorMessage('');
               setShowSuccess(true);
               setPasswords({ oldPassword: '', newPassword: '', confirmPassword: ''});
               setTimeout(() => {
@@ -120,28 +126,37 @@ function ProfilePage({ onUsernameChange }) {
 
         <ul className="list-unstyled d-flex flex-column gap-4 px-3">
           <li className="fs-6 text-muted">會員編號：<span className="fs-6 fw-semibold">{profile.id}</span></li>
-          <li>
+          <li className='d-flex flex-column align-items-center gap-3'>
             {editingUsername ? (<>
               {errorMessage && (
-                    <div className="alert alert-danger py-2 px-3 w-50 mx-auto" role="alert">
-                      {errorMessage}
-                    </div>
-                  )}
+                <div className="alert alert-danger py-2 px-3 w-50 mx-auto" role="alert">
+                  {errorMessage}
+                </div>
+              )}
+              {( usernameshowSuccess &&
+                <div className="alert alert-success py-2 px-3 m-0" role="alert">
+                  修改成功！請稍後...
+                </div>
+              )}
               <form
-                className="d-flex justify-content-center align-items-center gap-3"
+                className="d-flex justify-content-center w-100"
                 onSubmit={e => { e.preventDefault(); handleSubmit(); }}
               >
-                <input
-                  className="form-control w-50 border-profile"
-                  type="text"
-                  name="username"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  placeholder="請輸入暱稱"
-                  required
-                />
-                <button type="submit" className="btn btn-profile px-3">確認</button>
-                <button type="button" className="btn btn-profile px-3" onClick={() => { setEditingUsername(false); setErrorMessage('')}}>取消</button>
+                <div className='d-flex flex-column align-items-center gap-3'>
+                  <input
+                    className="form-control border-profile"
+                    type="text"
+                    name="username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    placeholder="請輸入暱稱"
+                    required
+                  />
+                  <div className="d-flex gap-3">
+                    <button type="submit" className="btn btn-profile px-3">確認</button>
+                    <button type="button" className="btn btn-profile px-3" onClick={() => { setEditingUsername(false); setErrorMessage('')}}>取消</button>
+                  </div>
+                </div>
               </form>
               </>
             ) : (
@@ -190,89 +205,89 @@ function ProfilePage({ onUsernameChange }) {
                     className="d-flex flex-column align-items-center gap-3 w-100"
                     onSubmit={e => { e.preventDefault(); handlePasswordSubmit(); }}
                   >
+                      <div className="position-relative">
+                        <input
+                          type={showOldPassword ? "text" : "password"}
+                          name="oldPassword"
+                          value={passwords.oldPassword}
+                          onChange={handlePasswordChange}
+                          placeholder="舊密碼"
+                          required
+                          className="form-control border-profile text-secondary"
+                        />
+                        <button
+                          type="button"
+                          onClick={toggleShowOldPassword}
+                          className="position-absolute top-50 end-0 translate-middle-y"
+                          style={{
+                            background: "none",
+                            border: "none",
+                            cursor: "pointer",
+                            color: "#7A4E2E"
+                          }}
+                          aria-label={showOldPassword ? "隱藏密碼" : "顯示密碼"}>
+                        <img
+                          src={showOldPassword ? `${import.meta.env.BASE_URL}images/hide.png` : `${import.meta.env.BASE_URL}images/eye.png`}
+                          alt={showOldPassword ? "隱藏密碼" : "顯示密碼"}
+                          style={{ height: '30px', width: '30px' }}/>
+                      </button>
+                    </div>
+
                     <div className="position-relative">
                       <input
-                        type={showOldPassword ? "text" : "password"}
-                        name="oldPassword"
-                        value={passwords.oldPassword}
+                        type={showNewPassword ? "text" : "password"}
+                        name="newPassword"
+                        value={passwords.newPassword}
                         onChange={handlePasswordChange}
-                        placeholder="舊密碼"
+                        placeholder="新密碼"
                         required
-                        className="form-control  border-profile text-secondary"
+                        className="form-control border-profile"
                       />
                       <button
-                        type="button"
-                        onClick={toggleShowOldPassword}
-                        className="position-absolute top-50 end-0 translate-middle-y"
-                        style={{
-                          background: "none",
-                          border: "none",
-                          cursor: "pointer",
-                          color: "#7A4E2E"
-                        }}
-                        aria-label={showOldPassword ? "隱藏密碼" : "顯示密碼"}>
-                      <img
-                        src={showOldPassword ? `${import.meta.env.BASE_URL}images/hide.png` : `${import.meta.env.BASE_URL}images/eye.png`}
-                        alt={showOldPassword ? "隱藏密碼" : "顯示密碼"}
-                        style={{ height: '30px', width: '30px' }}/>
-                    </button>
-                  </div>
+                          type="button"
+                          onClick={toggleShowNewPassword}
+                          className="position-absolute top-50 end-0 translate-middle-y"
+                          style={{
+                            background: "none",
+                            border: "none",
+                            cursor: "pointer",
+                            color: "#7A4E2E"
+                          }}
+                          aria-label={showNewPassword ? "隱藏密碼" : "顯示密碼"}>
+                        <img
+                          src={showNewPassword ? `${import.meta.env.BASE_URL}images/hide.png` : `${import.meta.env.BASE_URL}images/eye.png`}
+                          alt={showNewPassword ? "隱藏密碼" : "顯示密碼"}
+                          style={{ height: '30px', width: '30px' }}/>
+                      </button>
+                    </div>
 
-                  <div className="position-relative">
-                    <input
-                      type={showNewPassword ? "text" : "password"}
-                      name="newPassword"
-                      value={passwords.newPassword}
-                      onChange={handlePasswordChange}
-                      placeholder="新密碼"
-                      required
-                      className="form-control border-profile"
-                    />
-                    <button
-                        type="button"
-                        onClick={toggleShowNewPassword}
-                        className="position-absolute top-50 end-0 translate-middle-y"
-                        style={{
-                          background: "none",
-                          border: "none",
-                          cursor: "pointer",
-                          color: "#7A4E2E"
-                        }}
-                        aria-label={showNewPassword ? "隱藏密碼" : "顯示密碼"}>
-                      <img
-                        src={showNewPassword ? `${import.meta.env.BASE_URL}images/hide.png` : `${import.meta.env.BASE_URL}images/eye.png`}
-                        alt={showNewPassword ? "隱藏密碼" : "顯示密碼"}
-                        style={{ height: '30px', width: '30px' }}/>
-                    </button>
-                  </div>
-
-                  <div className="position-relative">
-                    <input
-                      type={showConfirmPassword ? "text" : "password"}
-                      name="confirmPassword"
-                      value={passwords.confirmPassword}
-                      onChange={handlePasswordChange}
-                      placeholder="確認新密碼"
-                      required
-                      className="form-control border-profile"
-                    />
-                    <button
-                        type="button"
-                        onClick={toggleShowConfirmPassword}
-                        className="position-absolute top-50 end-0 translate-middle-y"
-                        style={{
-                          background: "none",
-                          border: "none",
-                          cursor: "pointer",
-                          color: "#7A4E2E"
-                        }}
-                        aria-label={showConfirmPassword ? "隱藏密碼" : "顯示密碼"}>
-                      <img
-                        src={showConfirmPassword ? `${import.meta.env.BASE_URL}images/hide.png` : `${import.meta.env.BASE_URL}images/eye.png`}
-                        alt={showConfirmPassword ? "隱藏密碼" : "顯示密碼"}
-                        style={{ height: '30px', width: '30px' }}/>
-                    </button>
-                  </div>
+                    <div className="position-relative">
+                      <input
+                        type={showConfirmPassword ? "text" : "password"}
+                        name="confirmPassword"
+                        value={passwords.confirmPassword}
+                        onChange={handlePasswordChange}
+                        placeholder="確認新密碼"
+                        required
+                        className="form-control border-profile"
+                      />
+                      <button
+                          type="button"
+                          onClick={toggleShowConfirmPassword}
+                          className="position-absolute top-50 end-0 translate-middle-y"
+                          style={{
+                            background: "none",
+                            border: "none",
+                            cursor: "pointer",
+                            color: "#7A4E2E"
+                          }}
+                          aria-label={showConfirmPassword ? "隱藏密碼" : "顯示密碼"}>
+                        <img
+                          src={showConfirmPassword ? `${import.meta.env.BASE_URL}images/hide.png` : `${import.meta.env.BASE_URL}images/eye.png`}
+                          alt={showConfirmPassword ? "隱藏密碼" : "顯示密碼"}
+                          style={{ height: '30px', width: '30px' }}/>
+                      </button>
+                    </div>
                     <div className="d-flex gap-3">
                       <button type="submit" className="btn btn-profile px-4">確認</button>
                       <button type="button" className="btn btn-profile px-4" onClick={() => { setEditingPassword(false); setPasswords({ oldPassword: '', newPassword: '', confirmPassword: ''}); setErrorMessage('') }}>取消</button>
