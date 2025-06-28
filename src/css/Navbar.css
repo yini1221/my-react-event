@@ -33,7 +33,7 @@ body.dark-theme .btn-close{
 }
 
 body.dark-theme .btn-theme{
-  color: #ccc;
+  color: #ccc !important;
 }
 
 body.dark-theme .btn-theme:hover {
