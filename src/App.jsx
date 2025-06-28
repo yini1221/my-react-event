@@ -102,36 +102,24 @@ function App() {
     return localStorage.getItem('theme') || 'light';
   });
 
-  const handleLoginSuccess = async (user) => {
-    setIsLogin(true);
-    setUserId(user.id);
-    setUsername(user.username);
-    setRole(user.role);
-    localStorage.setItem('user', JSON.stringify(user));
-    await fetchUserInfo();
-  };
-
   const fetchUserInfo = async () => {
     try {
       const res = await fetch('http://localhost:8084/auth/userinfo', {
         credentials: 'include',
       });
+
       if (!res.ok) {
         console.log('無登入資料');
-          setIsLogin(false);
-          setUserId(null);
-          setUsername(null);
-          setRole(null);
-          localStorage.removeItem('user');
-          return;
+        return;
       }
+
       const result = await res.json();
-      if (result.data) {
-        handleLoginSuccess(result.data);
-      } else {
-        setIsLogin(false);
-        console.log('無登入資料');
-      }
+      const user = result.data;
+      setIsLogin(true);
+      setUserId(user.id);
+      setUsername(user.username);
+      setRole(user.role);
+      localStorage.setItem('user', JSON.stringify(user));
     } catch (err) {
       console.error('取得資料錯誤:', err);
     }
@@ -200,7 +188,7 @@ function App() {
     }
   }, [theme]);
 
-  useEffect(() => {
+  useEffect(() => {    
     if (isLogin) {
       fetchUserInfo();
     }
@@ -223,7 +211,7 @@ function App() {
             />}>
           <Route path="/home" element={<HomePage />} />
           <Route path="/home/search" element={<EventSearch />} />
-          <Route path="/auth/login" element={<LoginPage onLoginSuccess={handleLoginSuccess} />} />
+          <Route path="/auth/login" element={<LoginPage onLoginSuccess={fetchUserInfo} />} />
           <Route path="/auth/register" element={<RegistrationForm />} />
           <Route path="/auth/verify/:token" element={<VerifyPage />} />
           <Route path="/user/favorites/:userId" element={
