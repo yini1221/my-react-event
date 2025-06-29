@@ -48,6 +48,10 @@ body.dark-theme .main-color a:hover {
     color: #7A4E2E;
 }
 
+.main-color a{
+    color: #7A4E2E;
+}
+
 .main-color a:hover {
     color: #7A4E2E;
     opacity: .5;
