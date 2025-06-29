@@ -93,7 +93,7 @@ function AdminMembersPage() {
         email: user.email,
         eventTime: `${formatDateTime(user.createdAt, 'createdAt')}`,
         completed: user.completed,
-        roleName: user.roleName
+        roleName: user.role
     }));
 
     return (
