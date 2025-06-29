@@ -1,0 +1,7 @@
+body.light-theme .bg-footer {
+  background-color: #e6ddd3 !important;
+}
+
+body.dark-theme .bg-footer {
+  background-color: #1f1f1f !important;
+}

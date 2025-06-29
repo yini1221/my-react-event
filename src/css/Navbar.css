@@ -1,3 +1,54 @@
+/* 夜間模式 */
+body.dark-theme .bg-navbar {
+  background-color: #1f1f1f !important;
+}
+
+body.dark-theme .text-color {
+  color: #eee !important;
+}
+
+body.dark-theme button {
+  background-color: inherit !important;
+}
+
+body.dark-theme .bg-menu {
+  background-color: #2f2f2f !important;
+}
+
+body.dark-theme .custom-link {
+  color: #ccc !important;
+}
+
+body.dark-theme h5 {
+  color: #eee !important;
+}
+
+body.dark-theme .dropdown-menu {
+  background-color: #797272 !important;
+  border-color: #dad2c9;
+}
+
+body.dark-theme .btn-close{  
+    filter: invert(1) !important;
+}
+
+body.dark-theme .btn-theme{
+  color: #ccc !important;
+}
+
+body.dark-theme .btn-theme:hover {
+  background-color: #55432e !important;
+}
+
+body.dark-theme .custom-link:hover {
+  color: #fff !important;
+  background-color: inherit !important;
+}
+
+body.dark-theme .bg-search {
+  background-color: #ccc !important;
+}
+
 .navbar-logo {
   width: 100%;
   height: 100%;
@@ -48,6 +99,7 @@
 }
 
 .custom-link:hover {
+  color: #7A4E2E !important;
   filter: drop-shadow(0 0 2em #997141);
 }
 
@@ -64,4 +116,38 @@
 
 .text-color {
   color: #7A4E2E !important;
+}
+
+.text-color:hover {
+  opacity: 0.9 !important;
+}
+
+.navbar-toggler:focus {
+    box-shadow: 0 0 0 0rem !important;
+}
+
+.btn-close{  
+    filter: invert(0) !important;
+}
+
+.offcanvas-body {
+  position: relative;
+}
+
+.offcanvas-footer {
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  width: 100%;
+  padding: 0 16px;
+  background: transparent;
+}
+
+.btn-theme {
+  color: #7A4E2E !important;
+}
+
+.btn-theme:hover {
+  color: #fff !important;
+  background-color: #d9c1a0 !important;
 }

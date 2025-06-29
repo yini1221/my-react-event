@@ -1,0 +1,53 @@
+body.dark-theme .main-color-clear {
+  color: #ccc;
+}
+
+body.dark-theme .main-color-clear:hover {
+  color: #ffffff;
+  opacity: 1;
+}
+
+body.dark-theme .color-page {
+  color: #ccc !important;
+}
+
+
+.btn-sm {
+  padding: 0.25rem 0.75rem !important;
+  font-size: 0.85rem !important;
+}
+
+.d-flex > input.form-control {
+  margin-bottom: 0 !important;
+}
+
+.table-light th {
+  color: #7A4E2E !important;
+  font-weight: 600;
+}
+
+.color-page {
+  color: #7A4E2E !important;
+}
+
+.btn-reg {
+  background-color: #eeebe7 !important;
+  display: block;
+  padding: 10px 15px;
+  color: #7A4E2E !important;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background-color 0.3s, color 0.3s !important;
+}
+
+.btn-reg:hover {
+  background-color: #e6ddd3 !important;
+  color: #5b3a1a !important;
+}
+
+.btn-reg:active {
+  background-color: #7A4E2E !important; /* 主色背景 */
+  color: white !important;
+  font-weight: 600;
+  box-shadow: 0 0 8px #7A4E2Eaa !important;
+}

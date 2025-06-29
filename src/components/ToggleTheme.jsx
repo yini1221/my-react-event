@@ -1,23 +1,17 @@
-import React, { useState } from 'react';
-import { Button } from 'react-bootstrap';
+import { useTheme } from '../components/ThemeContext';
 
 function ToggleTheme() {
+  const { theme, toggleTheme } = useTheme();
 
-  const [isDarkMode, setIsDarkMode] = useState(false);
-  const toggleTheme = () => setIsDarkMode(!isDarkMode);
-
-  const themeStyles = {
-    backgroundColor: isDarkMode ? '#1e1e2d' : '#f9f9f9',
-    color: isDarkMode ? '#f9f9f9' : '#1e1e2d',
-  };
-
-    return (
-        <div>
-          <Button variant="link" onClick={toggleTheme} className="text-decoration-none toggle-theme-color custom-link">
-            {isDarkMode ? '🌞 日間模式' : '🌙 夜間模式'}
-          </Button>
-        </div>
-    );
+  return (
+    <button 
+      onClick={toggleTheme} 
+      className="btn btn-theme rounded-5"
+      aria-label="切換主題"
+    >
+      {theme === 'light' ? '🌞 日間模式' : '🌙 夜間模式'}
+    </button>
+  );
 }
 
-export default ToggleTheme
+export default ToggleTheme;

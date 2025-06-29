@@ -1,0 +1,83 @@
+form ul li {
+  margin-bottom: 0 !important;
+}
+
+.btn-outline-primary:hover {
+  background-color: #7A4E2E !important;
+  color: white;
+  border-color: #7A4E2E !important;
+}
+
+.table-light th {
+  color: #7A4E2E;
+  font-weight: 600;
+}
+
+.btn-link:hover img {
+  filter: brightness(0.7);
+  cursor: pointer;
+}
+
+.table tbody td {
+  vertical-align: middle;
+  font-size: 0.95rem;
+}
+
+table th:nth-child(1),
+table td:nth-child(1) {
+  width: 4%;
+  max-width: 40px;
+  white-space: nowrap;
+}
+
+table th:nth-child(2),
+table td:nth-child(2) {
+  width: 4%;
+  max-width: 80px;
+  white-space: nowrap;
+}
+
+table th:nth-child(5),
+table td:nth-child(5) {
+  width: 5%;
+  white-space: nowrap;
+}
+
+table th:nth-child(6),
+table td:nth-child(6) {
+  width: 7%;
+  white-space: nowrap;
+}
+
+.btn-outline-secondary:disabled {
+  opacity: 0.5 !important;
+  cursor: not-allowed !important;
+  pointer-events: none !important;
+}
+
+tfoot span {
+  font-weight: 600 !important;
+  font-size: 0.9rem !important;
+}
+
+.btn-events {
+  background-color: #eeebe7 !important;
+  display: block;
+  padding: 10px 15px !important;
+  color: #7A4E2E !important;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background-color 0.3s, color 0.3s !important;
+}
+
+.btn-events:hover {
+  background-color: #e6ddd3 !important;
+  color: #5b3a1a !important;
+}
+
+.btn-events:active {
+  background-color: #7A4E2E !important; /* 主色背景 */
+  color: white !important;
+  font-weight: 600;
+  box-shadow: 0 0 8px #7A4E2Eaa !important;
+}

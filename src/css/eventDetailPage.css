@@ -1,0 +1,42 @@
+.btn-blue {
+    background-color: #00aaf5 !important;
+}
+
+.btn-blue:hover {
+    background-color: #00aaf5 !important;
+    opacity: .8;
+}
+
+.btn-heart:hover {
+    opacity: .8;    
+}
+
+.bg-heart {
+    color: #fff !important;
+    background-color: #eb2540 !important;
+}
+
+body.dark-theme .bg-white {
+    background-color: #1f1f1f !important;
+}
+
+body.dark-theme .btn-blue {
+    color: #eee;
+    background-color: #6e6d6d !important;
+}
+
+body.dark-theme .btn-blue:hover {
+    opacity: .8;
+}
+
+body.dark-theme .btn-heart {
+    color: #ccc !important;
+}
+
+body.dark-theme .btn-heart:hover {
+    opacity: .8;
+}
+
+body.dark-theme .text-secondary {
+    color: #ccc !important;
+}

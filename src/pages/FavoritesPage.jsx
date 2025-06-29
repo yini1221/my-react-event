@@ -1,78 +1,109 @@
+import { Link, useParams, useLocation } from 'react-router-dom';
+import dayjs from 'dayjs';
 import { useState, useEffect } from 'react';
-import RegisterButton from '../components/RegisterButton';
+import RegisterButton from '../components/registerButton';
 import '../css/favoritesPage.css';
 
+const API_URL = 'http://localhost:8084/user/favorites'; // 後台 API
+
 function FavoritesPage() {
+
+  const { userId } = useParams();
   const [favorites, setFavorites] = useState([]);
 
-useEffect(() => {
-  // 模擬假資料
-  const fakeData = [
-    {
-      id: 1,
-      title: "春季馬拉松",
-      imageUrl: "https://fakeimg.pl/350x300/ECF5FF?text=350x300",
-      date: "2025-05-30",
-      location: "台北市",
-      description: "一場健康又歡樂的路跑活動",
-      registeredCount: 12,
-      capacity: 40,
-    },
-    {
-      id: 2011,
-      title: "【茶香繚繞・仕紳雅聚】手作茶香袋體驗",
-      imageUrl: "https://fakeimg.pl/350x300/D2E9FF?text=350x300",
-      date: "2025-06-7",
-      location: "台灣台北市大同區民生西路309號",
-      description: "過期茶包也能很有品味？香包袋用完就丟太可惜？來場結合環保設計與香氣美學的體驗，為生活注入溫度與儀式感。本次選用『猴子設計』以大稻埕風景為靈感的手作布袋，搭配大稻埕名店『聯通漢芳』嚴選的天然香草原料，讓茶葉與茶包不再只是廢棄物，而是有故事、有風格的香氣祝福。",
-      registeredCount: 25,
-      capacity: 50,
-    },
-    {
-      id: 2,
-      title: "AI 藝術展",
-      imageUrl: "https://fakeimg.pl/350x300/D2E9FF?text=350x300",
-      date: "2025-06-10",
-      location: "華山文創園區",
-      description: "人工智慧與藝術的交織",
-      registeredCount: 25,
-      capacity: 50,
+  const fetchFavorites = async () => {
+    console.log('userId: ', userId)
+      try {
+        const res = await fetch(`${API_URL}/${userId}`, {
+            credentials: "include"
+        });
+        if (!res.ok) {
+            throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        const result = await res.json();
+        console.log('API 回傳內容：', result);
+        setFavorites(result.data || []);
+      } catch (error) {
+          console.error('讀取錯誤:', error);
+      }
+  };
+
+    const handleDelete = async (id) => {
+        console.log('eventId: ', id)
+    if (!window.confirm('確定要取消收藏嗎？')) return;
+    try {
+        const res = await fetch(`${API_URL}/${userId}/${id}`, {
+          method: 'DELETE',
+          credentials: 'include',
+        });
+        const result = await res.json();
+        if(res.ok) {
+            fetchFavorites();
+        } else {
+            alert(result.message || '取消失敗');
+        }
+    } catch (err) {
+      console.error('取消錯誤:', err);
     }
-  ];
-  setFavorites(fakeData);
-}, []);
+  };
+
+  useEffect(() => {
+    if(userId) {
+        fetchFavorites();
+    }
+  }, [userId]);
+
+  const formatDateTime = (datetime, type) => {
+    if (!datetime) return 'N/A';
+    if (type === 'startTime' || type === 'endTime') {
+        return dayjs(datetime).format('YYYY-MM-DD HH:mm');
+        }
+    return dayjs(datetime).format('YYYY-MM-DD HH:mm:ss');
+  };
 
   return (
-    <div className="container-fluid mt-4">
-      <h1>我的收藏</h1>
-      <ul className='list-unstyled'>
-        {favorites.map((event) => (
-          <li className='bg-light p-4 rounded-3'>
-            <div className='d-flex justify-content-between align-items-center active'>
-              <h2>{event.title}</h2>
-              <button className="btn btn-sm btn-outline-danger px-3">X</button>
-            </div>
-            <div className='row mt-3'>
-              <div className='col-6'>
-                <img className='rounded-3' src={event.imageUrl} alt={event.title} />
-              </div>
-              <div className='col-6 d-flex flex-column'>
-                <div className="p-3 mb-3 bg-white rounded-3 shadow-sm events-color overflow-auto p-height">
-                    {event.description}
-                </div>                
-                <div className='d-flex flex-column mt-md-auto'>
-                  <div className='d-flex justify-content-between'>
-                    <span>📅 {event.date}</span>
-                    <span>📍 {event.location}</span>
-                  </div>
-                  <RegisterButton eventId={event.id} />
+        <div className="container-fluid">
+            <div className='px-3 mx-auto' style={{'maxWidth': '1080px'}}>
+                <div className="p-4 d-flex flex-column align-items-center position-relative w-100">
+                    <div className="d-flex align-items-center mb-4 gap-2 border-bottom border-3 border-warning pb-2">
+                        <img 
+                            src={`${import.meta.env.BASE_URL}images/favorite.png`} 
+                            alt="我的收藏" 
+                            style={{ width: '36px', filter: 'drop-shadow(0 0 3px #7A4E2E88)' }} 
+                        />
+                        <h2 className="m-0 fw-bold" style={{ color: '#7A4E2E', fontSize: '2rem' }}>
+                            我的收藏
+                        </h2>
+                    </div>
+                    <div className='w-100'>
+                        <ul className='list-unstyled w-100'>
+                            {
+                                favorites.map((favorite, index) => (
+                                <li key={favorite.id} className={`row w-100 rounded-4 shadow p-3 mb-3 bg-favo position-relative ${index !== favorites.length - 1 ? 'border-bottom' : ''}`}>
+                                    <div className='col-md-5'>
+                                        <img className='rounded-4' src={`data:image/jpeg;base64,${favorite.imageBase64}`}/>
+                                    </div>
+                                    <div className='col-md-7 text-start p-3 h-100'>
+                                        <div>
+                                            <Link to={`/events/${favorite.id}`} className='event-link'>
+                                                <h3>{favorite.title}</h3>
+                                            </Link>
+                                            <p className='m-1 text-secondary'>{formatDateTime(favorite.startTime, 'startTime')}</p>
+                                            <div className='mb-3 mb-md-0'>{favorite.location}</div>
+                                        </div>
+                                        <div className='position-absolute bottom-0 end-0 translate-middle'>
+                                            <RegisterButton className='btn btn-sm btn-blue text-white me-1' eventId={favorite.id} />
+                                            <button onClick={() => handleDelete(favorite.id)} className='btn btn-sm btn-red text-white' >取消收藏</button>
+                                        </div>
+                                    </div>
+                                </li>
+                            ))}
+                        </ul>
+                            <div>目前共載入 {favorites.length} 筆資料</div>
+                    </div>
                 </div>
-              </div>
             </div>
-          </li>
-        ))}
-      </ul>
-    </div>
+        </div>
   );
 }
 

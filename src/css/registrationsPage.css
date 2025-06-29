@@ -1,0 +1,54 @@
+.bd-registration {
+    background-color: #faf6f3;
+}
+
+.fs-sm {
+    font-size: 13px;
+}
+
+.btn-blue {
+    background-color: #00aaf5 !important;
+}
+.btn-blue:hover {
+    opacity: .8;
+}
+
+.btn-red {
+    background-color: #eb5252 !important;
+}
+.btn-red:hover {
+    opacity: .8;
+}
+
+.bg-reg {
+    background-color: #f6efe8;
+}
+
+.bd-registration {
+  background-color: #f7ede1;
+  border-radius: 1rem;
+  box-shadow: 0 4px 15px rgb(122 78 46 / 0.15);
+}
+
+.btn-blue {
+  background-color: #7A4E2E;
+  border: none;
+}
+
+.btn-blue:hover {
+  background-color: #997141;
+}
+
+.btn-red {
+  background-color: #d9534f;
+  border: none;
+}
+
+.btn-red:hover {
+  background-color: #c9302c;
+}
+
+.event-link:hover h3 {
+  color: #997141;
+  text-decoration: underline;
+}

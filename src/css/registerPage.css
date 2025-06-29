@@ -1,0 +1,27 @@
+.text-gray {
+    color: #6d7278;
+}
+.fs-14 {
+    font-size: 14px;
+}
+
+.event-link {
+    color: #282828;
+}
+
+.event-link:hover {
+    color: #00aaf5;
+    opacity: .8;
+}
+
+.btn-blue {
+    background-color: #00aaf5 !important;
+}
+
+.btn-blue:hover {
+    opacity: .8;
+}
+
+body.dark-theme .event-link {
+  color: #ccc !important;
+}

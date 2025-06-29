@@ -1,17 +1,18 @@
 import { useNavigate } from 'react-router-dom';
 
-function RegisterButton({ eventId, className = "btn btn-primary px-4", label = '報名'}) {
+function registerButton({ eventId, className = "btn btn-blue px-4 text-white", label = '我要報名'}) {
+
     const navigate = useNavigate();
 
-    const goToRegisterPage = (eventId) => {
+    const goToRegisterPage = () => {
         navigate(`/user/events/register/${eventId}`);
     };
 
     return(
-        <button onClick={goToRegisterPage} className={className}>
+        <button onClick={goToRegisterPage} type='button' className={className}>
             {label}
         </button>
     )
 }
 
-export default RegisterButton
+export default registerButton
